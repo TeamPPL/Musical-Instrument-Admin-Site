@@ -6,6 +6,8 @@ const detailController = require('../controllers/detailController');
 /* GET home page. */
 router.get('/', productController.index);
 router.get('/detail/:id', detailController.index);
+
 router.post('/upload', productController.addProduct);
+router.post('/remove', productController.removeProduct);
 
 module.exports = router;

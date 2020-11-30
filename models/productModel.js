@@ -50,6 +50,15 @@ exports.lastestProducts = async (id) => {
 
     return lastestProducts;
 }
+
+exports.removeOne = async (id) => {
+    const productsCollection = db().collection('product-test');
+    let result = await productsCollection.deleteOne({
+        _id: ObjectId(id)
+    });
+    console.log(result);
+    return result;
+}
   
 /*
 return [

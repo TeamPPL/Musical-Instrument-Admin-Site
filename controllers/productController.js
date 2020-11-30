@@ -36,3 +36,17 @@ exports.addProduct = (req,res) => {
         });
       });
   }
+
+  exports.removeProduct = async (req, res, next) => {
+    let id = req.body.id;
+    console.log(id);
+    const result = await productModel.removeOne(id);
+
+    console.log(result.deletedCount);
+
+    if (result.deletedCount === 0)
+      res.send("Remove failed!");
+    else
+      res.redirect('/');
+    //console.log(productItems);
+};
