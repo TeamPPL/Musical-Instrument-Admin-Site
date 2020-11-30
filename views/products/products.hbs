@@ -1,0 +1,176 @@
+<link href="vendors/jquery-ui/jquery-ui.css" rel="stylesheet">
+<!--================Categories Banner Area =================-->
+<section class="categories_banner_area">
+    <div class="container">
+        <div class="c_banner_inner">
+            <h3>Products</h3>
+        </div>
+    </div>
+</section>
+<!--================End Categories Banner Area =================-->
+
+<!--================Categories Product Area =================-->
+<section class="categories_product_main p_80">
+    <div class="container">
+        <div class="categories_main_inner">
+            <div class="row row_disable">
+                <div class="col-lg-9 float-md-right">
+                    <div class="showing_fillter">
+                        <div class="row m0">
+                            <div class="first_fillter">
+                                <h4>Showing 1 to 12 of 30 total</h4>
+                            </div>
+                            <div class="secand_fillter">
+                                <h4>SORT BY :</h4>
+                                <select class="selectpicker">
+                                    <option>Name</option>
+                                    <option>Name 2</option>
+                                    <option>Name 3</option>
+                                </select>
+                            </div>
+                            <div class="third_fillter">
+                                <h4>Show : </h4>
+                                <select class="selectpicker">
+                                    <option>09</option>
+                                    <option>10</option>
+                                    <option>10</option>
+                                </select>
+                            </div>
+                            <div class="four_fillter">
+                                <h4>View</h4>
+                                <a class="active" href="#"><i class="icon_grid-2x2"></i></a>
+                                <a href="#"><i class="icon_grid-3x3"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--================Products & Paging Area =================-->
+                    {{>productItems}}
+                    <!--================End Products & Paging Area =================-->
+                </div>
+                <div class="col-lg-3 float-md-right">
+                    <div class="categories_sidebar">
+                        <aside class="l_widgest l_p_categories_widget">
+                            <div class="l_w_title">
+                                <h3>Categories</h3>
+                            </div>
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Guitar
+                                    <i class="icon_plus" aria-hidden="true"></i>
+                                    <i class="icon_minus-06" aria-hidden="true"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item"><a class="nav-link" href="#">Classic</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Ascoutic</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Electric</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Violin
+                                    <i class="icon_plus" aria-hidden="true"></i>
+                                    <i class="icon_minus-06" aria-hidden="true"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item"><a class="nav-link" href="#">Classic</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Ascoutic</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Electric</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Piano
+                                    <i class="icon_plus" aria-hidden="true"></i>
+                                    <i class="icon_minus-06" aria-hidden="true"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item"><a class="nav-link" href="#">Classic</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Ascoutic</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Electric</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Drum
+                                    <i class="icon_plus" aria-hidden="true"></i>
+                                    <i class="icon_minus-06" aria-hidden="true"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item"><a class="nav-link" href="#">Classic</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Ascoutic</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Electric</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Other
+                                    <i class="icon_plus" aria-hidden="true"></i>
+                                    <i class="icon_minus-06" aria-hidden="true"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item"><a class="nav-link" href="#">Classic</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Ascoutic</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Electric</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </aside>
+                        <aside class="l_widgest l_fillter_widget">
+                            <div class="l_w_title">
+                                <h3>Filter section</h3>
+                            </div>
+                            <div id="slider-range" class="ui_slider"></div>
+                            <label for="amount">Price:</label>
+                            <input type="text" id="amount" readonly>
+                        </aside>
+                        <aside class="l_widgest l_color_widget">
+                            <div class="l_w_title">
+                                <h3>Color</h3>
+                            </div>
+                            <ul>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                            </ul>
+                        </aside>
+                        <aside class="l_widgest l_menufacture_widget">
+                            <div class="l_w_title">
+                                <h3>Manufacturer</h3>
+                            </div>
+                            <ul>
+                                <li><a href="#">Gibson</a></li>
+                                <li><a href="#">Steinway</a></li>
+                                <li><a href="#">Sennheiser</a></li>
+                                <li><a href="#">Yamaha</a></li>
+                                <li><a href="#">Roland</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Categories Product Area =================-->

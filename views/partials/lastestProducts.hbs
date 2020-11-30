@@ -1,0 +1,45 @@
+<section class="fillter_latest_product">
+    <div class="container">
+        <div class="single_c_title">
+            <h2>Our Latest Product</h2>
+        </div>
+        <div class="fillter_l_p_inner">
+            <ul class="fillter_l_p">
+                <li class="active" data-filter="*"><a href="#">All</a></li>
+                <li data-filter=".guitar"><a href="#">Guitars</a></li>
+                <li data-filter=".violin"><a href="#">Violins</a></li>
+                <li data-filter=".piano"><a href="#">Keyboards</a></li>
+                <li data-filter=".drum"><a href="#">Drums</a></li>
+            </ul>
+            <div class="row isotope_l_p_inner">
+            {{#each lastestProductItems}}                
+                <div class="col-lg-3 col-md-4 col-sm-6 {{filter}}">
+                    <div class="l_product_item">
+                        <div class="l_p_img">
+                            {{!-- <img class="img-fluid" src={{cover}} alt=""> --}}
+                            {{!-- <img height="480px" src={{cover}} alt=""> --}}
+                            {{!-- <form method="POST" action="./products/detail/{{id}}">
+                                <input type="image" src="{{cover}}" alt="Submit" width="270" height="480">
+                            </form> --}}
+                            <a href="/products/detail/{{_id}}" ><img src="{{cover}}" width="270" height="480"></a>
+                        </div>
+                        <div class="l_p_text">
+                            <ul>
+                                <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
+                                <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
+                                <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
+                            </ul>
+                            <h4>{{title}}</h4>
+                            {{#if discount}}
+                            <h5><del>${{price}}</del>  ${{discount}}</h5>
+                            {{else}}
+                            <h5>${{price}}</h5>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>                
+            {{/each}}
+            </div>
+        </div>
+    </div>
+</section>

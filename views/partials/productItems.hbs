@@ -1,0 +1,42 @@
+<div class="categories_product_area">
+    <div class="row">
+        {{#each productItems}}
+        <div class="col-lg-4 col-sm-6">
+            <div class="l_product_item">
+                <div class="l_p_img">
+                    {{!-- <img src={{cover}} height="500px" alt=""> --}}
+                    {{!-- <h5 class="new">New</h5> --}}
+                    {{!-- <form method="POST" action="./products/detail/{{id}}">
+                        <input type="image" src="{{cover}}" alt="Submit" width="270" height="480">
+                    </form> --}}
+                    <a href="/products/detail/{{_id}}" ><img src="{{cover}}" width="270" height="480"></a>
+                </div>
+                <div class="l_p_text">
+                    <ul>
+                        <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
+                        <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
+                        <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
+                    </ul>
+                    <h4>{{title}}</h4>
+                    {{#if discount}}
+                        <h5><del>${{price}}</del>  ${{discount}}</h5>
+                    {{else}}
+                        <h5>${{price}}</h5>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <nav aria-label="Page navigation example" class="pagination_area">
+        <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item"><a class="page-link" href="#">6</a></li>
+        <li class="page-item next"><a class="page-link" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+        </ul>
+    </nav>
+</div>

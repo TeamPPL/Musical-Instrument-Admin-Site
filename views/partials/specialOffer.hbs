@@ -1,0 +1,20 @@
+<section class="special_offer_area">
+    <div class="container">
+        <div class="row">
+            {{#each specialOfferItems}}
+            <div class="col-lg-6">
+                <div class="special_offer_item2">
+                    {{!-- <img class="img-fluid" src={{cover}} alt=""> --}}
+                    <img class="" height="200px" src={{cover}} alt="">
+
+                    <div class="hover_text">
+                        <h4 class="special_offer_text">{{title}}</h4>
+                        <h5 class="special_offer_text2">{{content}}</h5>
+                        <a class="shop_now_btn" href="#">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section>
