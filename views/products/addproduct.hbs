@@ -1,0 +1,47 @@
+<!--================Add Product=================-->
+<section class="login_area p_100">
+    <div class="container">
+        <div class="login_inner">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-lg-8">
+                    <div class="login_title">
+                        <h2>create account</h2>
+                        <p>Follow the steps below to create email account enjoy the great mail.com emailing experience. Vivamus tempus risus vel felis condimentum, non vehicula est iaculis.</p>
+                    </div>
+                    <form class="login_form row" action="/products/addproduct" method="POST" onkeydown="return event.key != 'Enter';">
+                        <div class="col-lg-6 form-group">
+                            <input class="form-control" type="text" name="title" placeholder="Product name">
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <input class="form-control" type="text" name="manufacturer" placeholder="Manufacturer">
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <input class="form-control" type="file" name="cover">
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <textarea class="form-control" type="text" name="description" placeholder="Description"></textarea>
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <input class="form-control" type="text" name="filter" placeholder="Filter">
+                        </div>
+                        <div class="col-lg-4 form-group">
+                            <input class="form-control" type="number" name="price" min="0" step="10" placeholder="Price ($)">
+                        </div>
+                        <div class="col-lg-4 form-group">
+                            <input class="form-control" type="number" name="inStock" min="0" placeholder="In stock">
+                        </div>
+                        <div class="col-lg-4 form-group">
+                            <input class="form-control" type="number" min="0" placeholder="sold" value="0">
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <button type="submit" value="submit" class="btn subs_btn form-control" onkeydown="return event.key != 'Enter';">Add Product</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End login Area =================-->
