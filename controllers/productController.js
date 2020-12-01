@@ -41,12 +41,12 @@ exports.index = async (req, res, next) => {
     console.log(id);
     const result = await productModel.removeOne(id);
 
-    console.log(result.deletedCount);
+    console.log(req);
 
     if (result.deletedCount === 0)
       res.send("Remove failed!");
     else
-      res.redirect('/');
+      res.redirect(req.get('referer')); //refresh
     //console.log(productItems);
 };
 
@@ -80,5 +80,5 @@ exports.addProduct = async (req, res, next) => {
   };
   productModel.insertOne(productDetail);
   
-  res.redirect('/');
+  res.redirect(req.get('referer'));
 }
