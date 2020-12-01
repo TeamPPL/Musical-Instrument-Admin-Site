@@ -50,3 +50,36 @@ exports.addProduct = (req,res) => {
       res.redirect('/');
     //console.log(productItems);
 };
+
+exports.getAddProduct =(req, res, next) => {
+  res.render('products/addproduct');
+}
+
+exports.addProduct = async (req, res, next) => {
+  const title = req.body.title;
+  const cover = req.body.cover;
+  const description = req.body.description;
+  const filter = req.body.filter;
+  const price = req.body.price;
+  const inStock = req.body.inStock;
+  const sold = req.body.sold;
+  const manufacturer = req.body.manufacturer;
+ 
+  console.dir(req.cover);
+
+  let productDetail = {
+      "title": title,
+      "cover": cover,
+      "description": description,
+      "filter": filter,
+      "price": price,
+      "inStock": inStock,
+      "sold": sold,
+      "manufacturer": manufacturer,
+      "createdDate": new Date(),
+      "modifiedDate": new Date()
+  };
+  productModel.insertOne(productDetail);
+  
+  res.redirect('/');
+}

@@ -52,11 +52,17 @@ exports.lastestProducts = async (id) => {
 }
 
 exports.removeOne = async (id) => {
-    const productsCollection = db().collection('product-test');
-    let result = await productsCollection.deleteOne({
-        _id: ObjectId(id)
-    });
-    console.log(result);
+    const productsCollection = db().collection('product');
+    let result;
+    try {
+        result = await productsCollection.deleteOne({
+            _id: ObjectId(id)
+        });
+    } catch (err) {
+        return console.log('Database Connection Error!', err.message);
+    }
+
+    //console.log(result);
     return result;
 }
   
