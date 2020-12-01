@@ -50,7 +50,7 @@ exports.addProduct = async (req, res, next) => {
   const inStock = req.body.inStock;
   const sold = req.body.sold;
   const manufacturer = req.body.manufacturer;
- 
+
 
   let productDetail = {
       "title": title,
@@ -64,6 +64,14 @@ exports.addProduct = async (req, res, next) => {
       "createdDate": new Date(),
       "modifiedDate": new Date()
   };
-  productModel.insertOne(productDetail);
-  next();
+  try {
+    productModel.insertOne(productDetail);
+    var message="ADDED SUCCESSFULLY";
+    res.render('products/addproduct',{productDetail,message});
+  }
+  catch(err){
+    
+  }
+
+  //next();
 }

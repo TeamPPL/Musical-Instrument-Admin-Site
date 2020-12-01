@@ -15,13 +15,8 @@
             {{#each lastestProductItems}}                
                 <div class="col-lg-3 col-md-4 col-sm-6 {{filter}}">
                     <div class="l_product_item">
-                        <div class="l_p_img">
-                            {{!-- <img class="img-fluid" src={{cover}} alt=""> --}}
-                            {{!-- <img height="480px" src={{cover}} alt=""> --}}
-                            {{!-- <form method="POST" action="./products/detail/{{id}}">
-                                <input type="image" src="{{cover}}" alt="Submit" width="270" height="480">
-                            </form> --}}
-                            <a href="/products/detail/{{_id}}" ><img src="{{cover}}" width="270" height="480"></a>
+                        <div class="l_p_img aspect-ratio-box">
+                            <a href="/products/detail/{{_id}}" ><img src="{{cover}}"></a>
                         </div>
                         <div class="l_p_text">
                             <ul>

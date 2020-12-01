@@ -6,44 +6,59 @@
                 <div class="col"></div>
                 <div class="col-lg-8">
                     <div class="login_title">
-                        <h2>create account</h2>
-                        <p>Follow the steps below to create email account enjoy the great mail.com emailing experience. Vivamus tempus risus vel felis condimentum, non vehicula est iaculis.</p>
+                        {{#if productDetail}}
+                        <p>{{message}}</p>
+                        <ul>
+                            <li>Name: {{productDetail.title}}</li>
+                            <li>Manufacturer: {{productDetail.manufacturer}}</li>
+                            <li>Image: {{productDetail.cover}}</li>
+                            <li>Des: {{productDetail.description}}</li>
+                            <li>Tag: {{productDetail.filter}}</li>
+                            <li>Price: {{productDetail.price}}</li>
+                            <li>In Stock: {{productDetail.inStock}}</li>
+                            <li>Sold: {{productDetail.sold}}</li>
+                            <li>Date Added: {{productDetail.createdDate}}</li>
+                        </ul>
+                        <h2>Add another product</h2>
+                        {{else}}
+                        <h2>Add a product</h2>
+                        {{/if}}
                     </div>
                     <form class="login_form row" action="/products/addproduct" method="POST" onkeydown="return event.key != 'Enter';">
                         <div class="col-lg-6 form-group">
-                            <input class="form-control" type="text" name="title" placeholder="Product name">
+                            <input class="form-control" type="text" name="title" placeholder="Product name" required>
                         </div>
                         <div class="col-lg-6 form-group">
-                            <input class="form-control" type="text" name="manufacturer" placeholder="Manufacturer">
+                            <input class="form-control" type="text" name="manufacturer" placeholder="Manufacturer" required>
                         </div>
-                        {{!-- <div class="col-lg-6 form-group">
-                            <input class="form-control" type="file" name="cover">
-                        </div> --}}
-                        <div class="col-lg-3 form-group">
+                        <div class="col-lg-12 form-group">
+                            <input class="form-control" type="text" name="cover" required>
+                        </div>
+                        {{!-- <div class="col-lg-3 form-group">
                             <label class="upload-label">Upload cover image:</label>
                         </div>
                         <div class="col-lg-9 form-group">
                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
                             <div id="fakeDiv">
-                                <input type="file" id="selectedFile" name=cover/>
+                                <input type="file" id="selectedFile" name="cover"/>
                                 <input type="text" id="fakeInput" readonly="readonly"/>
                                 <span onclick="document.getElementById('selectedFile').click();" id="buttonImage" >Browse</span>
                             </div>
+                        </div> --}}
+                        <div class="col-lg-12 form-group">
+                            <textarea class="form-control" type="text" name="description" placeholder="Description" required></textarea>
                         </div>
                         <div class="col-lg-12 form-group">
-                            <textarea class="form-control" type="text" name="description" placeholder="Description"></textarea>
-                        </div>
-                        <div class="col-lg-12 form-group">
-                            <input class="form-control" type="text" name="filter" placeholder="Filter">
+                            <input class="form-control" type="text" name="filter" placeholder="Filter" required>
                         </div>
                         <div class="col-lg-4 form-group">
-                            <input class="form-control" type="number" name="price" min="0" step="10" placeholder="Price ($)">
+                            <input class="form-control" type="number" name="price" min="0" placeholder="Price ($)" required>
                         </div>
                         <div class="col-lg-4 form-group">
-                            <input class="form-control" type="number" name="inStock" min="0" placeholder="In stock">
+                            <input class="form-control" type="number" name="inStock" min="0" placeholder="In stock" required>
                         </div>
                         <div class="col-lg-4 form-group">
-                            <input class="form-control" type="number" min="0" placeholder="sold" value="0">
+                            <input class="form-control" type="number" min="0" placeholder="sold" value="0" required>
                         </div>
                         <div class="col-lg-6 form-group">
                             <button type="submit" value="submit" class="btn subs_btn form-control" onkeydown="return event.key != 'Enter';">Add Product</button>
@@ -56,3 +71,26 @@
     </div>
 </section>
 <!--================End login Area =================-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        let imagesPreview = function(input, placeToInsertImagePreview) {
+          if (input.files) {
+            let filesAmount = input.files.length;
+            for (i = 0; i < filesAmount; i++) {
+              let reader = new FileReader();
+              reader.onload = function(event) {
+                $($.parseHTML("<img>"))
+                  .attr("src", event.target.result)
+                  .appendTo(placeToInsertImagePreview);
+              };
+              reader.readAsDataURL(input.files[i]);
+            }
+          }
+        };
+        $("#selectedFile").on("change", function() {
+          imagesPreview(this, "div.preview-images");
+        });
+      });
+    </script>

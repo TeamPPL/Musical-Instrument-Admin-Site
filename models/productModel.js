@@ -53,12 +53,12 @@ exports.lastestProducts = async (id) => {
 
 exports.insertOne = async (newProduct) => {
     const productsCollection = db().collection('product');
-    try {
+    // try {
         await productsCollection.insertOne(newProduct);
-        console.log('success');
-    } catch (err) {
-        return console.log('Database Connection Error!', err.message);
-    }
+    //     console.log('success');
+    // } catch (err) {
+    //     return console.log('Database Connection Error!', err.message);
+    // }
 }
   
 /*

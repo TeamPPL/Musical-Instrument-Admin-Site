@@ -6910,6 +6910,11 @@ i:before {
 .box_footer .footer_widgets {
   border: none;
 }
+/* End Parallax Footer Area css
+============================================================================================ */
+/*---------------------------------------------------- */
+
+/*# sourceMappingURL=style.css.map */
 
 input#fakeInput {
   width: 100%;
@@ -6949,8 +6954,32 @@ input#fakeInput {
   font-size: 14px;
   margin-left: 10px;
 }
-/* End Parallax Footer Area css
-============================================================================================ */
-/*---------------------------------------------------- */
 
-/*# sourceMappingURL=style.css.map */
+.image-cover {
+  display: block;
+  max-width: 270px;
+  max-height: 480px;
+}
+
+/* Position child elements relative to this element */
+.aspect-ratio-box {
+  position: relative;
+}
+
+/* Create a pseudo element that uses padding-bottom to take up space */
+.aspect-ratio-box::after {
+  display: block;
+  content: '';
+  /* aspect ratio */
+  padding-bottom: 200%;
+}
+
+/* Image is positioned absolutely relative to the parent element */
+.aspect-ratio-box img {
+  /* Image should match parent box size */
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
