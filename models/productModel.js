@@ -39,13 +39,13 @@ exports.relatedProducts = async (id) => {
 
 exports.lastestProducts = async (id) => {
     const productsCollection = db().collection('product');
-    db().collection('test-product').insert({
-        title: 'TEST',
-        cover: 'https://i.pinimg.com/originals/b6/f7/d6/b6f7d6ac3fc2a93d04cb0020877c7fea.jpg',
-        filter: 'guitar',
-        price: 500,
-        discount: 0,
-    });
+    // db().collection('test-product').insert({
+    //     title: 'TEST',
+    //     cover: 'https://i.pinimg.com/originals/b6/f7/d6/b6f7d6ac3fc2a93d04cb0020877c7fea.jpg',
+    //     filter: 'guitar',
+    //     price: 500,
+    //     discount: 0,
+    // });
     let lastestProducts = await productsCollection.find({}).sort({uploadedDate: -1}).limit(8).toArray();
 
     return lastestProducts;
@@ -53,11 +53,26 @@ exports.lastestProducts = async (id) => {
 
 exports.removeOne = async (id) => {
     const productsCollection = db().collection('product-test');
-    let result = await productsCollection.deleteOne({
-        _id: ObjectId(id)
-    });
-    console.log(result);
+    try {
+        let result = await productsCollection.deleteOne({
+            _id: ObjectId(id)
+        });
+    } catch (err) {
+        return console.log('Database Connection Error!', err.message);
+    }
+
+    //console.log(result);
     return result;
+}
+
+exports.insertOne = async (newProduct) => {
+    const productsCollection = db().collection('product');
+    try {
+        await productsCollection.insertOne(newProduct);
+        //console.log('insert success');
+    } catch (err) {
+        return console.log('Database Connection Error!', err.message);
+    }
 }
   
 /*
