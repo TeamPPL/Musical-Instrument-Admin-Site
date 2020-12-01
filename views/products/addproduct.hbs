@@ -6,8 +6,7 @@
                 <div class="col"></div>
                 <div class="col-lg-8">
                     <div class="login_title">
-                        <h2>create account</h2>
-                        <p>Follow the steps below to create email account enjoy the great mail.com emailing experience. Vivamus tempus risus vel felis condimentum, non vehicula est iaculis.</p>
+                        <h2>Add new product</h2>
                     </div>
                     <form class="login_form row" action="/products/addproduct" method="POST" onkeydown="return event.key != 'Enter';">
                         <div class="col-lg-6 form-group">
@@ -16,16 +15,16 @@
                         <div class="col-lg-6 form-group">
                             <input class="form-control" type="text" name="manufacturer" placeholder="Manufacturer">
                         </div>
-                        {{!-- <div class="col-lg-6 form-group">
+                        <!-- <div class="col-lg-6 form-group">
                             <input class="form-control" type="file" name="cover">
-                        </div> --}}
+                        </div> -->
                         <div class="col-lg-3 form-group">
                             <label class="upload-label">Upload cover image:</label>
                         </div>
                         <div class="col-lg-9 form-group">
                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
                             <div id="fakeDiv">
-                                <input type="file" id="selectedFile" name=cover/>
+                                <input type="file" id="selectedFile" name="cover"/>
                                 <input type="text" id="fakeInput" readonly="readonly"/>
                                 <span onclick="document.getElementById('selectedFile').click();" id="buttonImage" >Browse</span>
                             </div>

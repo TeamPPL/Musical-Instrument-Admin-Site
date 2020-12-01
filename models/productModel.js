@@ -52,9 +52,10 @@ exports.lastestProducts = async (id) => {
 }
 
 exports.removeOne = async (id) => {
-    const productsCollection = db().collection('product-test');
+    const productsCollection = db().collection('product');
+    let result;
     try {
-        let result = await productsCollection.deleteOne({
+        result = await productsCollection.deleteOne({
             _id: ObjectId(id)
         });
     } catch (err) {
