@@ -50,8 +50,9 @@
                 </div>
             </div>
             <div class="col-lg-7">
-                <div class="product_details_text">
-                    <h3>{{productItems.title}}</h3>
+                <form class="product_details_text" action="/products/detail/updateproduct" method="POST" onkeydown="return event.key != 'Enter';">
+                    <input name="title" type="text" class="nameProductInput" value="{{productItems.title}}"><br>
+                    <input style="display: none;" name="id" value="{{productItems._id}}"/>
                     <ul class="p_rating">
                         <li><a href="#"><i class="fa fa-star"></i></a></li>
                         <li><a href="#"><i class="fa fa-star"></i></a></li>
@@ -63,12 +64,32 @@
                         <a href="#">5 Reviews</a>
                         <a href="#">Add your review</a>
                     </div>
-                    {{#if productItems.discount}}
+                    <div>
+                        <label for="price" class="labeltext">Price: </label>
+                        <input name="price" type="text" class="priceProduct" value="${{productItems.price}}"><br>
+                    </div>
+                    <div>
+                        <label for="description" class="labeltext">Description: </label>
+                        <textarea name="description" type="text" class="descriptionProduct" value="{{productItems.description}}"></textarea><br>
+                    </div>
+                    <div>
+                        <label for="instruments">Choose a Instrument:&nbsp;&nbsp;&nbsp;</label>
+                        <select class="comboboxSelect" name="instruments" id="instruments">
+                            {{!-- <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option> --}}
+                            {{#each filterProducts}}
+                                <option value="{{type}}">{{type}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    {{!-- {{#if productItems.discount}}
                         <h5><del>${{productItems.price}}</del>  ${{productItems.discount}}</h5>
                     {{else}}
                         <h5>${{productItems.price}}</h5>
-                    {{/if}}
-                    <p>Curabitur semper varius lectus sed consequat. Nam accumsan dapibus sem, sed lobortis nisi porta vitae. Ut quam tortor, facilisis nec laoreet consequat, malesuada a massa. Proin pretium tristique leo et imperdiet.</p>
+                    {{/if}} --}}
+                    {{!-- <p>Curabitur semper varius lectus sed consequat. Nam accumsan dapibus sem, sed lobortis nisi porta vitae. Ut quam tortor, facilisis nec laoreet consequat, malesuada a massa. Proin pretium tristique leo et imperdiet.</p> --}}
                     {{!-- <div class="p_color">
                         <h4 class="p_d_title">color <span>*</span></h4>
                         <ul class="color_list">
@@ -89,12 +110,13 @@
                         </select>
                     </div> --}}
                     <div class="quantity">
+                        <label for="qty" class="labeltext">In stock: </label>
                         <div class="custom">
                             <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
-                            <input type="text" name="qty" id="sst" maxlength="12" value="01" title="Quantity:" class="input-text qty">
+                            <input type="text" name="qty" id="sst" maxlength="12" value="{{productItems.inStock}}" title="Quantity:" class="input-text qty">
                             <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;" class="increase items-count" type="button"><i class="icon_plus"></i></button>
                         </div>
-                        <a class="add_cart_btn" href="#">add to cart</a>
+                        <button type="submit" class="add_cart_btn">Save</button>
                     </div>
                     <div class="shareing_icon">
                         <h5>share :</h5>
@@ -106,7 +128,7 @@
                             <li><a href="#"><i class="social_youtube"></i></a></li>
                         </ul>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

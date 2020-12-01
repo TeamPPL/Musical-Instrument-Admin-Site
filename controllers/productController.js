@@ -35,6 +35,37 @@ exports.index = async (req, res, next) => {
 //         });
 //       });
 //   }
+exports.updateProduct = async (req, res, next) => {
+
+  const inStock = req.body.qty;
+  const id = req.body.id;
+  const title = req.body.title;
+  const price = req.body.price;
+  const description = req.body.description;
+  const instruments = req.body.instruments;
+
+  let productDetail = {
+    id:id,
+    title: title,
+    description: description,
+    filter: instruments,
+    price: parseInt(price.substring(1, )),
+    inStock: parseInt(inStock),
+};
+
+  console.log("stat: " + id);
+
+  const result = await productModel.updateAProduct(productDetail);
+
+  // console.log(result);
+
+  // if (result. === 0)
+  //   res.send("Remove failed!");
+  // else
+  res.redirect('/products/detail/' + id);
+  //console.log(productItems);
+
+};
 
   exports.removeProduct = async (req, res, next) => {
     let id = req.body.id;

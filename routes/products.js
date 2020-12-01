@@ -4,7 +4,10 @@ const productController = require('../controllers/productController');
 const detailController = require('../controllers/detailController');
 
 /* GET home page. */
-router.get('/', productController.getAddProduct);
+// router.get('/', productController.getAddProduct);
+router.get('/', productController.index);
+
+router.post('/detail/updateproduct', productController.updateProduct)
 router.get('/detail/:id', detailController.index);
 
 router.post('/upload', productController.addProduct);

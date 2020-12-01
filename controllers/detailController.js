@@ -1,4 +1,5 @@
 const productModel = require('../models/productModel');
+const filterModel = require('../models/filterModel')
 
 const MAX_RELATED_PRODUCT_PER_PAGE = 4;
 
@@ -6,6 +7,7 @@ exports.index = async (req, res, next) => {
     const idProduct = req.params.id;
     const productItems = await productModel.findById(idProduct);
     const allRelatedProducts = await productModel.relatedProducts(idProduct);
+    const filterProducts = await filterModel.list();
 
     //console.log(currentProduct);
 
@@ -34,5 +36,5 @@ exports.index = async (req, res, next) => {
         return relatedProducts;
     };
 */
-    res.render('products/detail/detail', {productItems, allRelatedProducts});
+    res.render('products/detail/detail', {productItems, allRelatedProducts, filterProducts});
 };

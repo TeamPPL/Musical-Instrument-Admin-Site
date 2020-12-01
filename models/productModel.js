@@ -74,6 +74,31 @@ exports.insertOne = async (newProduct) => {
         return console.log('Database Connection Error!', err.message);
     }
 }
+exports.updateAProduct = async (updatedProduct) => {
+    const productsCollection = db().collection('product');
+    console.log(updatedProduct.id);
+    let result = undefined;
+    try {
+        result = await productsCollection.updateOne(
+            {
+            _id: ObjectId(updatedProduct.id)
+            },
+            {
+                $set :
+                {
+                    title: updatedProduct.title,
+                    description: updatedProduct.description,
+                    filter: updatedProduct.filter,
+                    price: updatedProduct.price,
+                    inStock: updatedProduct.inStock,
+                }
+            });
+    } catch (err) {
+        return console.log('Database Connection Error!', err.message);
+    }
+    return result;
+
+}
   
 /*
 return [
