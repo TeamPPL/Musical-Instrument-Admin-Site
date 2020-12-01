@@ -64,6 +64,7 @@ exports.addProduct = async (req, res, next) => {
   const sold = req.body.sold;
   const manufacturer = req.body.manufacturer;
  
+  //console.dir(req.cover);
 
   let productDetail = {
       "title": title,
@@ -78,5 +79,6 @@ exports.addProduct = async (req, res, next) => {
       "modifiedDate": new Date()
   };
   productModel.insertOne(productDetail);
-  next();
+  
+  res.redirect('/');
 }
