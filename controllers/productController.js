@@ -1,5 +1,7 @@
 const { MongoClient, MongoParseError, ObjectID } = require('mongodb');
 const productModel = require('../models/productModel');
+const cloudinary = require('../cloudinary/cloudinary');
+const formidable = require('formidable');
 
 exports.index = async (req, res, next) => {
   const productItems = await productModel.list();
@@ -86,35 +88,48 @@ exports.getAddProduct =(req, res, next) => {
 }
 
 exports.addProduct = async (req, res, next) => {
-  const title = req.body.title;
-  const cover = req.body.cover;
-  const description = req.body.description;
-  const filter = req.body.filter;
-  const price = req.body.price;
-  const inStock = req.body.inStock;
-  const sold = req.body.sold;
-  const manufacturer = req.body.manufacturer;
-
-  let productDetail = {
-      "title": title,
-      "cover": cover,
-      "description": description,
-      "filter": filter,
-      "price": price,
-      "inStock": inStock,
-      "sold": sold,
-      "manufacturer": manufacturer,
-      "createdDate": new Date(),
-      "modifiedDate": new Date()
-  };
-  try {
-    productModel.insertOne(productDetail);
-    var message="ADDED SUCCESSFULLY";
-    res.render('products/addproduct',{productDetail,message});
-  }
-  catch(err){
+  const form = formidable({ multiples: true });
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    if (files) {
+      let temp_path = files.cover.path;
+      let upload = await cloudinary.uploader.upload(temp_path ,{folder: "imgdb"}, function(error, result) {console.log(result, error)});
+      const title = fields.title;
+      const cover = upload.secure_url;
+      const description = fields.description;
+      const filter = fields.filter;
+      const price = fields.price;
+      const inStock = fields.inStock;
+      const sold = fields.sold;
+      const manufacturer = fields.manufacturer;
     
-  }
+      let productDetail = {
+          "title": title,
+          "cover": cover,
+          "description": description,
+          "filter": filter,
+          "price": price,
+          "inStock": inStock,
+          "sold": sold,
+          "manufacturer": manufacturer,
+          "createdDate": new Date(),
+          "modifiedDate": new Date()
+      };
+      try {
+        productModel.insertOne(productDetail);
+        var message="ADDED SUCCESSFULLY";
+        res.render('products/addproduct',{productDetail,message});
+      }
+      catch(err){
+        
+      }  
+    }
+    await console.log(upload.secure_url);
+  });
+
 
   //next();
 }

@@ -6,10 +6,12 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "cloudinary": "^1.23.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "^4.16.4",
     "express-handlebars": "^5.2.0",
+    "formidable": "^1.2.2",
     "hbs": "^4.1.1",
     "http-errors": "~1.6.3",
     "mongodb": "^3.6.3",
