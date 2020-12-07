@@ -1,7 +1,8 @@
 <section class="fillter_latest_product">
     <div class="container">
+        
         <div class="single_c_title">
-            <h2>Our Latest Product</h2>
+            <h2>Products List</h2>
         </div>
         <div class="fillter_l_p_inner">
             <ul class="fillter_l_p">
@@ -12,7 +13,7 @@
                 <li data-filter=".drum"><a href="#">Drums</a></li>
             </ul>
             <div class="row isotope_l_p_inner">
-            {{#each lastestProductItems}}                
+            {{#each productsListItems}}                
                 <div class="col-lg-3 col-md-4 col-sm-6 {{filter}}">
                     <div class="l_product_item">
                         <div class="l_p_img aspect-ratio-box">
@@ -20,9 +21,13 @@
                         </div>
                         <div class="l_p_text">
                             <ul>
-                                <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
-                                <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
-                                <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
+                                <!-- <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li> -->
+                                <li>
+                                    <form method="POST" action="/products/remove">
+                                        <button name="id" value="{{_id}}" class="add_cart_btn">Remove product</button>
+                                    </form>
+                                </li>
+                                <!-- <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li> -->
                             </ul>
                             <h4>{{title}}</h4>
                             {{#if discount}}

@@ -17,7 +17,6 @@ exports.index = async (req, res, next) => {
 //         filter: req.body.filter,
 //         cover: req.body.cover,
 //     });
-    
 //     return item
 //       .save()
 //       .then((newProduct) => {
@@ -36,6 +35,51 @@ exports.index = async (req, res, next) => {
 //         });
 //       });
 //   }
+exports.updateProduct = async (req, res, next) => {
+
+  const inStock = req.body.qty;
+  const id = req.body.id;
+  const title = req.body.title;
+  const price = req.body.price;
+  const description = req.body.description;
+  const instruments = req.body.instruments;
+
+  let productDetail = {
+    id:id,
+    title: title,
+    description: description,
+    filter: instruments,
+    price: parseInt(price.substring(1, )),
+    inStock: parseInt(inStock),
+};
+
+  console.log("stat: " + id);
+
+  const result = await productModel.updateAProduct(productDetail);
+
+  // console.log(result);
+
+  // if (result. === 0)
+  //   res.send("Remove failed!");
+  // else
+  res.redirect('/products/detail/' + id);
+  //console.log(productItems);
+
+};
+
+  exports.removeProduct = async (req, res, next) => {
+    let id = req.body.id;
+    console.log(id);
+    const result = await productModel.removeOne(id);
+
+    console.log(req);
+
+    if (result.deletedCount === 0)
+      res.send("Remove failed!");
+    else
+      res.redirect(req.get('referer')); //refresh
+    //console.log(productItems);
+};
 
 exports.getAddProduct =(req, res, next) => {
   res.render('products/addproduct');
@@ -50,7 +94,6 @@ exports.addProduct = async (req, res, next) => {
   const inStock = req.body.inStock;
   const sold = req.body.sold;
   const manufacturer = req.body.manufacturer;
-
 
   let productDetail = {
       "title": title,

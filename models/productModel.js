@@ -51,14 +51,49 @@ exports.lastestProducts = async (id) => {
     return lastestProducts;
 }
 
+exports.removeOne = async (id) => {
+    const productsCollection = db().collection('product');
+    let result;
+    try {
+        result = await productsCollection.deleteOne({
+            _id: ObjectId(id)
+        });
+    } catch (err) {
+        return console.log('Database Connection Error!', err.message);
+    }
+
+    //console.log(result);
+    return result;
+}
+
 exports.insertOne = async (newProduct) => {
     const productsCollection = db().collection('product');
-    // try {
-        await productsCollection.insertOne(newProduct);
-    //     console.log('success');
-    // } catch (err) {
-    //     return console.log('Database Connection Error!', err.message);
-    // }
+    await productsCollection.insertOne(newProduct);
+}
+exports.updateAProduct = async (updatedProduct) => {
+    const productsCollection = db().collection('product');
+    console.log(updatedProduct.id);
+    let result = undefined;
+    try {
+        result = await productsCollection.updateOne(
+            {
+            _id: ObjectId(updatedProduct.id)
+            },
+            {
+                $set :
+                {
+                    title: updatedProduct.title,
+                    description: updatedProduct.description,
+                    filter: updatedProduct.filter,
+                    price: updatedProduct.price,
+                    inStock: updatedProduct.inStock,
+                }
+            });
+    } catch (err) {
+        return console.log('Database Connection Error!', err.message);
+    }
+    return result;
+
 }
   
 /*

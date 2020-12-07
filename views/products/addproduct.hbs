@@ -6,23 +6,7 @@
                 <div class="col"></div>
                 <div class="col-lg-8">
                     <div class="login_title">
-                        {{#if productDetail}}
-                        <p>{{message}}</p>
-                        <ul>
-                            <li>Name: {{productDetail.title}}</li>
-                            <li>Manufacturer: {{productDetail.manufacturer}}</li>
-                            <li>Image: {{productDetail.cover}}</li>
-                            <li>Des: {{productDetail.description}}</li>
-                            <li>Tag: {{productDetail.filter}}</li>
-                            <li>Price: {{productDetail.price}}</li>
-                            <li>In Stock: {{productDetail.inStock}}</li>
-                            <li>Sold: {{productDetail.sold}}</li>
-                            <li>Date Added: {{productDetail.createdDate}}</li>
-                        </ul>
-                        <h2>Add another product</h2>
-                        {{else}}
-                        <h2>Add a product</h2>
-                        {{/if}}
+                        <h2>Add new product</h2>
                     </div>
                     <form class="login_form row" action="/products/addproduct" method="POST" onkeydown="return event.key != 'Enter';">
                         <div class="col-lg-6 form-group">
@@ -31,10 +15,10 @@
                         <div class="col-lg-6 form-group">
                             <input class="form-control" type="text" name="manufacturer" placeholder="Manufacturer" required>
                         </div>
-                        <div class="col-lg-12 form-group">
-                            <input class="form-control" type="text" name="cover" placeholder="Image URL" required>
-                        </div>
-                        {{!-- <div class="col-lg-3 form-group">
+                        <!-- <div class="col-lg-6 form-group">
+                            <input class="form-control" type="file" name="cover">
+                        </div> -->
+                        <div class="col-lg-3 form-group">
                             <label class="upload-label">Upload cover image:</label>
                         </div>
                         <div class="col-lg-9 form-group">
