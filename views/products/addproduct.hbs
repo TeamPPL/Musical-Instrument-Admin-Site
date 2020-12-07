@@ -6,7 +6,23 @@
                 <div class="col"></div>
                 <div class="col-lg-8">
                     <div class="login_title">
-                        <h2>Add new product</h2>
+                        {{#if productDetail}}
+                        <p>{{message}}</p>
+                        <ul>
+                            <li>Name: {{productDetail.title}}</li>
+                            <li>Manufacturer: {{productDetail.manufacturer}}</li>
+                            <li>Image: {{productDetail.cover}}</li>
+                            <li>Des: {{productDetail.description}}</li>
+                            <li>Tag: {{productDetail.filter}}</li>
+                            <li>Price: {{productDetail.price}}</li>
+                            <li>In Stock: {{productDetail.inStock}}</li>
+                            <li>Sold: {{productDetail.sold}}</li>
+                            <li>Date Added: {{productDetail.createdDate}}</li>
+                        </ul>
+                        <h2>Add another product</h2>
+                        {{else}}
+                        <h2>Add a product</h2>
+                        {{/if}}
                     </div>
                     <form class="login_form row" action="/products/addproduct" method="POST" onkeydown="return event.key != 'Enter';">
                         <div class="col-lg-6 form-group">
@@ -28,7 +44,7 @@
                                 <input type="text" id="fakeInput" readonly="readonly"/>
                                 <span onclick="document.getElementById('selectedFile').click();" id="buttonImage" >Browse</span>
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="col-lg-12 form-group">
                             <textarea class="form-control" type="text" name="description" placeholder="Description" required></textarea>
                         </div>
