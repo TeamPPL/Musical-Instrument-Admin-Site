@@ -104,7 +104,7 @@ exports.filter = async (req, res, next) => {
 
   //console.log(`${pageNumber}  ${nPerPage}`);
   const productItems = await productModel.filter(sorted, nPerPage, pageNumber, searchText);
-  const totalCount = await productModel.getTotalCount();
+  const totalCount = await productModel.getTotalCount(searchText);
 
   //console.log(productItems);
 
