@@ -75,6 +75,7 @@ exports.updateAProduct = async (updatedProduct) => {
             {
                 $set :
                 {
+                    cover: updatedProduct.cover,
                     title: updatedProduct.title,
                     description: updatedProduct.description,
                     filter: updatedProduct.filter,
@@ -82,6 +83,7 @@ exports.updateAProduct = async (updatedProduct) => {
                     inStock: updatedProduct.inStock,
                 }
             });
+        
     } catch (err) {
         return console.log('Database Connection Error!', err.message);
     }

@@ -200,32 +200,59 @@ exports.filter = async (req, res, next) => {
 //   }
 exports.updateProduct = async (req, res, next) => {
 
-  const inStock = req.body.qty;
-  const id = req.body.id;
-  const title = req.body.title;
-  const price = req.body.price;
-  const description = req.body.description;
-  const instruments = req.body.instruments;
-
-  let productDetail = {
-    id:id,
-    title: title,
-    description: description,
-    filter: instruments,
-    price: parseInt(price.substring(1, )),
-    inStock: parseInt(inStock),
-};
-
-  console.log("stat: " + id);
-
-  const result = await productModel.updateAProduct(productDetail);
+  const form = formidable({ multiples: true });
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    let imgCover = fields.oldCover;
+    try{
+    if (files) {
+      let temp_path = files.cover.path;
+      let upload = await cloudinary.uploader.upload(temp_path ,{folder: "imgdb"}, function(error, result) {console.log(result, error)});  
+      imgCover = upload.secure_url;
+    }
+  }
+  catch(e){
+    
+  }
+    const id = fields.id;
+    const title = fields.title;
+    const description = fields.description;
+    const filter = fields.filter;
+    const price = fields.price;
+    const inStock = fields.inStock;
+    const sold = fields.sold;
+    const manufacturer = fields.manufacturer;
+  
+    let productDetail = {
+        "id": id,
+        "title": title,
+        "cover": imgCover,
+        "description": description,
+        "filter": filter,
+        "price": price,
+        "inStock": inStock,
+        "sold": sold,
+        "manufacturer": manufacturer,
+        "modifiedDate": new Date()
+    };
+    try {
+      await productModel.updateAProduct(productDetail);
+      res.redirect('/products/detail/' + id);
+    }
+    catch(error){
+      
+    } 
+    //await console.log(upload.secure_url);
+  });
 
   // console.log(result);
 
   // if (result. === 0)
   //   res.send("Remove failed!");
   // else
-  res.redirect('/products/detail/' + id);
   //console.log(productItems);
 
 };
