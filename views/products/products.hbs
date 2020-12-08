@@ -18,33 +18,38 @@
                     <div class="showing_fillter">
                         <div class="row m0">
                             <div class="first_fillter">
-                                <h4>Showing 1 to 12 of 30 total</h4>
+                                <h4>Showing {{pageInfo.firstItemOfPage}} to {{pageInfo.lastItemOfPage}} of {{pageInfo.totalCount}} total</h4>
                             </div>
                             <div class="secand_fillter">
                                 <h4>SORT BY :</h4>
-                                <select class="selectpicker">
-                                    <option>Name</option>
-                                    <option>Name 2</option>
-                                    <option>Name 3</option>
+                                <select id="sorted" name="sorted" class="selectpicker">
+                                    <option value="alphabet-asc">Name (A-Z)</option>
+                                    <option value="alphabet-desc">Name (Z-A)</option>
+                                    <option value="lastest">Lastest</option>
+                                    <option value="oldest">Oldest</option>
                                 </select>
                             </div>
                             <div class="third_fillter">
                                 <h4>Show : </h4>
-                                <select class="selectpicker">
-                                    <option>09</option>
-                                    <option>10</option>
-                                    <option>10</option>
+                                <select id="n-per-page" name="n-per-page" class="selectpicker">
+                                    <option value="9">09</option>
+                                    <option value="15">15</option>
+                                    <option value="24">24</option>
                                 </select>
                             </div>
+                            <!--
                             <div class="four_fillter">
                                 <h4>View</h4>
                                 <a class="active" href="#"><i class="icon_grid-2x2"></i></a>
                                 <a href="#"><i class="icon_grid-3x3"></i></a>
                             </div>
+                            -->
                         </div>
                     </div>
                     <!--================Products & Paging Area =================-->
-                    {{>productItems}}
+                    <div id="product-items-partial-displayer" >
+                        {{>productItems}}
+                    </div>
                     <!--================End Products & Paging Area =================-->
                 </div>
                 <div class="col-lg-3 float-md-right">
@@ -173,4 +178,103 @@
         </div>
     </div>
 </section>
+
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+<script>
+    $(document).ready(function(){
+        
+        Handlebars.registerHelper("log", function(something) {
+        console.log(something);
+        });
+
+        $('.selectpicker').change(triggerAjaxFilter);
+
+        $('#product-items-partial-displayer').on("click", '.pagination_area .pagination li a', (e) => {
+            e.preventDefault();
+            let classList = $(e.target).attr("class");
+            let classArr = classList.split(" ");
+            let pageNumber;
+            let isNextOrPrevBtn = false;
+            console.log(e.target);
+            console.log(classArr);
+            classArr.forEach(element => {
+                if (element === "fa-angle-right" || element === "next") {
+                    pageNumber = parseInt($('.pagination_area .pagination a.current').html()) + 1;
+                    isNextOrPrevBtn = true;
+                } else if (element === "fa-angle-left" || element === "prev") {
+                    pageNumber = parseInt($('.pagination_area .pagination a.current').html()) - 1;
+                    isNextOrPrevBtn = true;
+                }
+            })
+
+            if (!isNextOrPrevBtn) {
+                pageNumber = parseInt($(e.target).html());
+            }
+            console.log(pageNumber);
+            let data = {
+                sorted: $('#sorted').children("option:selected").val(),
+                nPerPage: $('#n-per-page').children("option:selected").val(),
+                pageNumber
+            }
+            sendRequest(data);
+        });
+
+        function triggerAjaxFilter() {
+            let data = {
+                sorted: $('#sorted').children("option:selected").val(),
+                nPerPage: $('#n-per-page').children("option:selected").val(),
+                pageNumber: 1
+            }
+            console.log(data);
+            sendRequest(data);
+            return;
+        }
+        
+        function sendRequest(data) {
+            $.post('/products', data, (result, status) => {
+                //alert("Data: " + data + "\nStatus: " + status);
+                //console.log(data);
+                //Handlebars.registerPartial('productItems', '{{productItems}}');
+                //productItems = data.productItems;
+
+                //let productItemsPartial = Handlebars.partials[productItems];
+                //console.log(productItemsPartial);
+                //$('#product-items-partial-displayer').html(productItemsPartial(result));
+                console.log(status);
+                let source   = result.partials;
+                
+                console.log(source);
+                let template = Handlebars.compile(source);
+                //console.log(template);
+                let htmlCompiled = template(result);
+                //let htmlCompiled = Handlebars.template(template);
+                //console.log(htmlCompiled);
+                // you will now have some html that you will need to insert into your page
+                document.getElementById("product-items-partial-displayer").innerHTML = htmlCompiled;
+                
+            });
+            return;
+        }
+    });
+
+    //});
+    /*
+    function submitForm() {
+        form = document.getElementById('fillter-form');
+        console.log(form);
+        form.submit();
+    }
+    */
+</script>
 <!--================End Categories Product Area =================-->
+
+<!--
+    
+            <form method="GET" action="/products" id="fillter-form">
+                    <script id="product-items-partial" type="text/x-handlebars-template">
+                    </script>
+                    
+                    <div id="product-items-partial-displayer" >
+                    </div>
+                    -->

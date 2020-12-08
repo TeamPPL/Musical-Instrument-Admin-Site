@@ -10,6 +10,7 @@ router.get('/', accountController.index);
 router.get('/login', accountController.login);
 router.get('/signup', accountController.signup);
 
+router.post('/', accountController.filter);
 router.post('/remove', accountController.remove)
 
 module.exports = router;

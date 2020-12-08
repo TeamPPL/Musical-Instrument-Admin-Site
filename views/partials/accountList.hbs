@@ -1,11 +1,4 @@
-
-    <div class="container">
-        <div class="single_c_title">
-            <h2>Account List</h2>
-        </div>    
-<div class="row">
-  <div class="col">
-        <div class="table mt-4">
+<div class="table mt-4">
           <table style="width: 100%;">
             <thead>
               <tr>
@@ -48,7 +41,27 @@
             </tbody>
           </table>
         </div>
+        <nav aria-label="Page navigation example" class="pagination_area">
+        <ul class="pagination" id="pagination">
+            {{#if pageInfo.isFirstPage }}
+                <!-- Do nothing -->
+            {{else}}
+                <li class="page-item prev"><a class="page-link prev" ><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+            {{/if}}
+
+            {{#each pageInfo.pageList}}
+                {{#if this.isCurrentPage}}
+                    <li class="page-item current"><a class="page-link current" >{{this.index}}</a></li>
+                {{else}}
+                    <li class="page-item"><a class="page-link" >{{this.index}}</a></li>
+                {{/if}}
+            {{/each}}
+            
+            {{#if pageInfo.isLastPage }}
+                <!-- Do nothing -->
+            {{else}}
+                <li class="page-item next"><a class="page-link next" ><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+            {{/if}}
+        </ul>
+    </nav>
   </div>
-</div>
-        
-    </div>

@@ -6209,6 +6209,7 @@ i:before {
   -webkit-transition: all 400ms linear 0s;
   -o-transition: all 400ms linear 0s;
   transition: all 400ms linear 0s;
+  cursor: pointer;
 }
 
 .pagination_area .pagination li:first-child a {
@@ -6263,7 +6264,7 @@ i:before {
 }
 
 .showing_fillter .secand_fillter .bootstrap-select {
-  width: 85px !important;
+  width: 140px !important;
   display: inline-block;
   text-transform: uppercase;
   position: relative;
@@ -6341,7 +6342,7 @@ i:before {
 }
 
 .showing_fillter .third_fillter .bootstrap-select {
-  width: 70px !important;
+  width: 75px !important;
   display: inline-block;
   text-transform: uppercase;
   position: relative;
