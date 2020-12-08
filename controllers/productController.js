@@ -215,8 +215,9 @@ exports.updateProduct = async (req, res, next) => {
     }
   }
   catch(e){
-    
+
   }
+
     const id = fields.id;
     const title = fields.title;
     const description = fields.description;
@@ -226,6 +227,7 @@ exports.updateProduct = async (req, res, next) => {
     const sold = fields.sold;
     const manufacturer = fields.manufacturer;
   
+    
     let productDetail = {
         "id": id,
         "title": title,
@@ -238,6 +240,7 @@ exports.updateProduct = async (req, res, next) => {
         "manufacturer": manufacturer,
         "modifiedDate": new Date()
     };
+    console.log(productDetail);
     try {
       await productModel.updateAProduct(productDetail);
       res.redirect('/products/detail/' + id);

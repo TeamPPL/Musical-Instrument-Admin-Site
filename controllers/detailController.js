@@ -8,7 +8,6 @@ exports.index = async (req, res, next) => {
     const productItems = await productModel.findById(idProduct);
     const allRelatedProducts = await productModel.relatedProducts(idProduct);
     const filterProducts = await filterModel.list();
-
     //console.log(currentProduct);
 
 /*

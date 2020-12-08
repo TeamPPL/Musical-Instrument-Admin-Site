@@ -66,6 +66,7 @@ exports.insertOne = async (newProduct) => {
 exports.updateAProduct = async (updatedProduct) => {
     const productsCollection = db().collection('product');
     console.log(updatedProduct.id);
+    //console.log(updatedProduct);
     let result = undefined;
     try {
         result = await productsCollection.updateOne(
