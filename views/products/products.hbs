@@ -16,6 +16,10 @@
             <div class="row row_disable">
                 <div class="col-lg-9 float-md-right">
                     <div class="showing_fillter">
+                        <div class="search-container">
+                            <input id="search-box" type="text" placeholder="Search.." name="searchText">
+                            <button id="search-button" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
                         <div class="row m0">
                             <div class="first_fillter">
                                 <h4>Showing {{pageInfo.firstItemOfPage}} to {{pageInfo.lastItemOfPage}} of {{pageInfo.totalCount}} total</h4>
@@ -189,6 +193,14 @@
         });
 
         $('.selectpicker').change(triggerAjaxFilter);
+        $("#search-button").click(triggerAjaxFilter)
+        $('#search-box').bind("enterKey",triggerAjaxFilter);
+        $('#search-box').keyup(function(e){
+            if(e.keyCode == 13)
+            {
+                $(this).trigger("enterKey");
+            }
+        });
 
         $('#product-items-partial-displayer').on("click", '.pagination_area .pagination li a', (e) => {
             e.preventDefault();
@@ -213,6 +225,7 @@
             }
             console.log(pageNumber);
             let data = {
+                search: $('#search-box').val(),
                 sorted: $('#sorted').children("option:selected").val(),
                 nPerPage: $('#n-per-page').children("option:selected").val(),
                 pageNumber
@@ -222,10 +235,12 @@
 
         function triggerAjaxFilter() {
             let data = {
+                 search: $('#search-box').val(),
                 sorted: $('#sorted').children("option:selected").val(),
                 nPerPage: $('#n-per-page').children("option:selected").val(),
                 pageNumber: 1
             }
+            
             console.log(data);
             sendRequest(data);
             return;
