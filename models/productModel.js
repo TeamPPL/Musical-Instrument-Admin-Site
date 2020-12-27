@@ -66,6 +66,7 @@ exports.insertOne = async (newProduct) => {
 exports.updateAProduct = async (updatedProduct) => {
     const productsCollection = db().collection('product');
     console.log(updatedProduct.id);
+    //console.log(updatedProduct);
     let result = undefined;
     try {
         result = await productsCollection.updateOne(
@@ -75,6 +76,7 @@ exports.updateAProduct = async (updatedProduct) => {
             {
                 $set :
                 {
+                    cover: updatedProduct.cover,
                     title: updatedProduct.title,
                     description: updatedProduct.description,
                     filter: updatedProduct.filter,
@@ -82,11 +84,54 @@ exports.updateAProduct = async (updatedProduct) => {
                     inStock: updatedProduct.inStock,
                 }
             });
+        
     } catch (err) {
         return console.log('Database Connection Error!', err.message);
     }
     return result;
 
+}
+
+exports.getTotalCount = async (search) => {
+    const productsCollection = db().collection('product');
+    let products = await productsCollection.find({title: {'$regex' : new RegExp(search, "i") }})
+    //let totalNum = await productsCollection.countDocuments();
+    let totalNum = await products.count();
+    //console.log(totalNum);
+    return totalNum;
+}
+
+exports.getProductsAtPage = async (pageNumber, nPerPage) => {
+    const productsCollection = db().collection('product');
+    let products = await productsCollection.find({})
+        .skip( pageNumber > 0 ? ( ( pageNumber - 1 ) * nPerPage ) : 0 )
+        .sort({title: 1})
+        .limit(nPerPage)
+        .toArray();
+    //console.log(products);
+    return products;
+}
+
+exports.filter = async (sorted, nPerPage, pageNumber, search) => {
+    const productsCollection = db().collection('product');
+    let sortQuery = {};
+
+    if (sorted === "alphabet-asc") {
+        sortQuery.title = 1;
+    } else if (sorted === "alphabet-desc") {
+        sortQuery.title = -1;
+    } else if (sorted === "lastest") {
+        sortQuery.createdDate = -1;
+    } else if (sorted === "oldest") {
+        sortQuery.createdDate = 1;
+    }
+    let products = await productsCollection.find({title: {'$regex' : new RegExp(search, "i") }})
+        .sort(sortQuery)
+        .skip( pageNumber > 0 ? ( ( pageNumber - 1 ) * nPerPage ) : 0 )
+        .limit(nPerPage)
+        .toArray();
+    //console.log(products);
+    return products;
 }
   
 /*

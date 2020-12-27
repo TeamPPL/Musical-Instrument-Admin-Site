@@ -6209,6 +6209,7 @@ i:before {
   -webkit-transition: all 400ms linear 0s;
   -o-transition: all 400ms linear 0s;
   transition: all 400ms linear 0s;
+  cursor: pointer;
 }
 
 .pagination_area .pagination li:first-child a {
@@ -6263,7 +6264,7 @@ i:before {
 }
 
 .showing_fillter .secand_fillter .bootstrap-select {
-  width: 85px !important;
+  width: 140px !important;
   display: inline-block;
   text-transform: uppercase;
   position: relative;
@@ -6341,7 +6342,7 @@ i:before {
 }
 
 .showing_fillter .third_fillter .bootstrap-select {
-  width: 70px !important;
+  width: 75px !important;
   display: inline-block;
   text-transform: uppercase;
   position: relative;
@@ -6930,13 +6931,13 @@ input#fakeInput {
   float: right;
   position: absolute;
   right: 0;
-  top: 0;
+  top: 8px;
   background: orange;
-  padding:10px;
+  text-align: center;
+  padding: 10px;
   color: white;
   font-weight: bold;
   border-radius: 0px 8px 8px 0px;
-  height: 100%;
 }
 #fakeDiv {
   width: 100%;
@@ -6982,4 +6983,36 @@ input#fakeInput {
   top: 0;
   width: 100%;
   height: 100%;
+}
+
+.search-container {
+  float: right;
+}
+
+input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border-left: none;
+  border-top: none;
+  border-bottom: solid gray;
+  border-right: none;
+}
+
+.search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border-right: none;
+  border-top: none;
+  border-bottom: solid gray;
+  border-left: none;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background: #ccc;
 }

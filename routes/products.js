@@ -11,6 +11,7 @@ router.post('/detail/updateproduct', productController.updateProduct)
 router.get('/detail/:id', detailController.index);
 router.get('/addproduct', productController.getAddProduct);
 
+router.post('/', productController.filter);
 router.post('/upload', productController.addProduct);
 router.post('/remove', productController.removeProduct);
 //router.get('/addproduct', productController.getAddProduct)

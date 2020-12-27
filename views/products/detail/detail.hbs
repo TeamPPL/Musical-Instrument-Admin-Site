@@ -29,29 +29,25 @@
                                 <img src="{{productItems.cover}}"  alt=""  width="1920" height="1080" data-lazyload="{{productItems.cover}}" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
                                 <!-- LAYERS -->
                             </li>
-                            <li data-index="rs-303" data-transition="scaledownfromleft" data-slotamount="default"  data-easein="default" data-easeout="default" data-masterspeed="1500"  data-thumb="{{productItems.cover}}"  data-rotate="0"  data-saveperformance="off"  data-title="The Dreaming Girl" data-param1="September 6, 2015" data-param2="Lol" data-description="">
-                                <!-- MAIN IMAGE -->
+                            <!--<li data-index="rs-303" data-transition="scaledownfromleft" data-slotamount="default"  data-easein="default" data-easeout="default" data-masterspeed="1500"  data-thumb="{{productItems.cover}}"  data-rotate="0"  data-saveperformance="off"  data-title="The Dreaming Girl" data-param1="September 6, 2015" data-param2="Lol" data-description="">
                                 <img src="{{productItems.cover}}"  alt=""  width="1920" height="1080" data-lazyload="{{productItems.cover}}" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-                                <!-- LAYERS -->
                             </li>
-                            <!-- SLIDE  -->
                             <li data-index="rs-301" data-transition="scaledownfromleft" data-slotamount="default"  data-easein="default" data-easeout="default" data-masterspeed="1500"  data-thumb="{{productItems.cover}}"  data-rotate="0"  data-saveperformance="off"  data-title="Ride my Bike" data-param1="September 4, 2015" data-param2="Why not another Image?" data-description="">
-                                <!-- MAIN IMAGE -->
-                                <img src="{{productItems.cover}}"  alt=""  width="1920" height="1080" data-lazyload="{{productItems.cover}}" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-                                <!-- LAYERS -->
+                 
+            
                             </li>
-                            <!-- SLIDE  -->
+        
                             <li data-index="rs-302" data-transition="scaledownfromleft" data-slotamount="default"  data-easein="default" data-easeout="default" data-masterspeed="1500"  data-thumb="{{productItems.cover}}"  data-rotate="0"  data-saveperformance="off"  data-title="Ride my Bike" data-param1="September 4, 2015" data-param2="Why not another Image?" data-description="">
-                                <!-- MAIN IMAGE -->
+                
                                 <img src="{{productItems.cover}}"  alt=""  width="1920" height="1080" data-lazyload="{{productItems.cover}}" data-bgposition="center center" data-bgfit="contain" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-                                <!-- LAYERS -->
-                            </li>
+                
+                            </li>-->
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col-lg-7">
-                <form class="product_details_text" action="/products/detail/updateproduct" method="POST" onkeydown="return event.key != 'Enter';">
+                <form enctype="multipart/form-data" class="product_details_text" action="/products/detail/updateproduct" method="POST" onkeydown="return event.key != 'Enter';">
                     <input name="title" type="text" class="nameProductInput" value="{{productItems.title}}"><br>
                     <input style="display: none;" name="id" value="{{productItems._id}}"/>
                     <ul class="p_rating">
@@ -66,12 +62,24 @@
                         <a href="#">Add your review</a>
                     </div>
                     <div>
+                        <div id="fakeDiv">
+                            <input type="file" id="selectedFile" name="cover" onchange="readURL(this);"/>
+                            <input type="text" id="fakeInput" readonly="readonly"/>
+                            <span onclick="document.getElementById('selectedFile').click();" id="buttonImage" >Browse</span>
+                        </div>
+                        <img id="blah" src="#" alt="new Cover" />
+                    </div>
+                    <div>
+                        <label for="oldCover" class="labeltext">Or change this URL: </label>
+                        <input name="oldCover" type="text" class="priceProduct" value="{{productItems.cover}}"><br>
+                    </div>
+                    <div>
                         <label for="price" class="labeltext">Price: </label>
-                        <input name="price" type="text" class="priceProduct" value="${{productItems.price}}"><br>
+                        <input name="price" type="text" class="priceProduct" value="{{productItems.price}}"><br>
                     </div>
                     <div>
                         <label for="description" class="labeltext">Description: </label>
-                        <textarea name="description" type="text" class="descriptionProduct" value="{{productItems.description}}"></textarea><br>
+                        <textarea name="description" type="text" class="descriptionProduct">{{productItems.description}}</textarea><br>
                     </div>
                     <div>
                         <label for="instruments">Choose a Instrument:&nbsp;&nbsp;&nbsp;</label>
@@ -114,7 +122,7 @@
                         <label for="qty" class="labeltext">In stock: </label>
                         <div class="custom">
                             <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
-                            <input type="text" name="qty" id="sst" maxlength="12" value="{{productItems.inStock}}" title="Quantity:" class="input-text qty">
+                            <input type="text" name="inStock" id="sst" maxlength="12" value="{{productItems.inStock}}" title="Quantity:" class="input-text qty">
                             <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;" class="increase items-count" type="button"><i class="icon_plus"></i></button>
                         </div>
                         <button type="submit" class="add_cart_btn">Save</button>
