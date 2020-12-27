@@ -24,6 +24,7 @@
     word-break: break-word;
     margin: 4px 0;
     height: 200px;
+    padding: 5%;
 }
 .labeltext {
     font-size: 16px;
@@ -38,4 +39,19 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+.editButton {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    z-index: 99999;
+    right: 5%;
+    background-image: url("/img/imageediting.png");
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-position: 0px 0px;
+    /* border: none; */
+    cursor: pointer;
+    vertical-align: middle;
 }

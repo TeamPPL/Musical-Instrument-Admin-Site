@@ -53,7 +53,7 @@ exports.updateProduct = async (req, res, next) => {
     filter: instruments,
     price: parseInt(price.substring(1, )),
     inStock: parseInt(inStock),
-};
+  };
 
   console.log("stat: " + id);
 
