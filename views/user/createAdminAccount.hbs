@@ -1,0 +1,395 @@
+<!--================login Area =================-->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <section class="login_area p_100">
+            <div class="container">
+                <div class="login_inner">
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col-lg-8">
+                            <div class="login_title">
+                                <h2>create account</h2>
+                                <p>Fill in all the information needed to create an account.</p>
+                            </div>
+                            <form id="signupForm" class="login_form row" action="/admin/new-admin" method="POST">
+                                <div class="col-lg-6 form-group">
+                                    <label style="margin-bottom: 0px;" for="name">Your Name: </label>
+                                    <input id="name" class="form-control" type="text" name="name" placeholder="Name">
+                                    <div id="name-notification" style="display: none;" class="text-danger">
+                                        <svg style="margin-top: 5px;" role="img" height="16" width="16" viewBox="0 0 24 24" aria-label="Error indicator">
+                                            <circle cx="12" cy="12" r="9.5" fill="none" stroke="#dc3545"></circle>
+                                            <line x1="12" y1="14" x2="12" y2="7" fill="#dc3545" stroke="#dc3545"></line>
+                                            <circle cx="12" cy="16.65" r=".35" fill="#dc3545" stroke="#dc3545"></circle>
+                                        </svg>
+                                        <span>You need to enter your name.</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 form-group">
+                                    <label style="margin-bottom: 0px;" for="email">Email: </label>
+                                    <input id="email" class="form-control" style="margin-top: 8px;" type="email" name="email" placeholder="Email">
+                                    <div id="email-notification" style="display: none;" class="text-danger">
+                                        <svg style="margin-top: 5px;" role="img" height="16" width="16" viewBox="0 0 24 24" aria-label="Error indicator">
+                                            <circle cx="12" cy="12" r="9.5" fill="none" stroke="#dc3545"></circle>
+                                            <line x1="12" y1="14" x2="12" y2="7" fill="#dc3545" stroke="#dc3545"></line>
+                                            <circle cx="12" cy="16.65" r=".35" fill="#dc3545" stroke="#dc3545"></circle>
+                                        </svg>
+                                        <span>You need to enter your email.</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 form-group">
+                                    <label style="margin-bottom: 0px;" for="username">Username: </label>
+                                    <input id="username" class="form-control" type="text" name="username" placeholder="User Name">
+                                    <div id="username-notification" style="display: none;" class="text-danger">
+                                        <svg style="margin-top: 5px;" role="img" height="16" width="16" viewBox="0 0 24 24" aria-label="Error indicator">
+                                            <circle cx="12" cy="12" r="9.5" fill="none" stroke="#dc3545"></circle>
+                                            <line x1="12" y1="14" x2="12" y2="7" fill="#dc3545" stroke="#dc3545"></line>
+                                            <circle cx="12" cy="16.65" r=".35" fill="#dc3545" stroke="#dc3545"></circle>
+                                        </svg>
+                                        <span>You need to enter your username.</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 form-group">
+                                    <label style="margin-bottom: 0px;" for="phone">Phone number: </label>
+                                    <input id="phone" class="form-control" type="text" name="phone" placeholder="Phone">
+                                    <div id="phone-notification" style="display: none;" class="text-danger">
+                                        <svg style="margin-top: 5px;" role="img" height="16" width="16" viewBox="0 0 24 24" aria-label="Error indicator">
+                                            <circle cx="12" cy="12" r="9.5" fill="none" stroke="#dc3545"></circle>
+                                            <line x1="12" y1="14" x2="12" y2="7" fill="#dc3545" stroke="#dc3545"></line>
+                                            <circle cx="12" cy="16.65" r=".35" fill="#dc3545" stroke="#dc3545"></circle>
+                                        </svg>
+                                        <span>You need to enter your phone number.</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 form-group">
+                                    <label style="margin-bottom: 0px;" for="password">Password: </label>
+                                    <input id="pass" class="form-control" type="password" name="password" placeholder="Password">
+                                    <div id="pass-notification" style="display: none;" class="text-danger">
+                                        <svg style="margin-top: 5px;" role="img" height="16" width="16" viewBox="0 0 24 24" aria-label="Error indicator">
+                                            <circle cx="12" cy="12" r="9.5" fill="none" stroke="#dc3545"></circle>
+                                            <line x1="12" y1="14" x2="12" y2="7" fill="#dc3545" stroke="#dc3545"></line>
+                                            <circle cx="12" cy="16.65" r=".35" fill="#dc3545" stroke="#dc3545"></circle>
+                                        </svg>
+                                        <span>You need to enter your password.</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 form-group">
+                                    <label style="margin-bottom: 0px;" for="re-password">Comfirm password: </label>
+                                    <input id="repass" class="form-control" type="password" placeholder="Re-Password">
+                                    <div id="repass-notification" style="display: none;" class="text-danger">
+                                        <svg style="margin-top: 5px;" role="img" height="16" width="16" viewBox="0 0 24 24" aria-label="Error indicator">
+                                            <circle cx="12" cy="12" r="9.5" fill="none" stroke="#dc3545"></circle>
+                                            <line x1="12" y1="14" x2="12" y2="7" fill="#dc3545" stroke="#dc3545"></line>
+                                            <circle cx="12" cy="16.65" r=".35" fill="#dc3545" stroke="#dc3545"></circle>
+                                        </svg>
+                                        <span>You need to enter your comfirm password.</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 form-group">
+                                    <div class="g-recaptcha" data-sitekey="6Lf1IygaAAAAALSvxobrDtV3cjXX9UfevGkLysgx"></div>
+                                    <div id="captcha-notification" style="display: none;" class="text-danger">
+                                        <svg style="margin-top: 5px;" role="img" height="16" width="16" viewBox="0 0 24 24" aria-label="Error indicator">
+                                            <circle cx="12" cy="12" r="9.5" fill="none" stroke="#dc3545"></circle>
+                                            <line x1="12" y1="14" x2="12" y2="7" fill="#dc3545" stroke="#dc3545"></line>
+                                            <circle cx="12" cy="16.65" r=".35" fill="#dc3545" stroke="#dc3545"></circle>
+                                        </svg>
+                                        <span>You need to select captcha.</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 mb-5">
+                                    <input id="termCheck" name="termCheck" value="true" type="checkbox"/>
+                                    <label for="termCheck">By checking this box, you agree to our <a target="_blank" href="https://www.termsfeed.com/live/367abce2-d8a4-46e6-a330-1eb70ac544fc">Privacy Policy</a></label>
+                                </div>
+
+                                <div id="loader" class="col-lg-6 ml-3" style="visibility: hidden; position: absolute;">
+                                    <img src="/img/loading.gif"/>
+                                </div>
+
+                                <div class="col-lg-6 form-group">
+                                    <button disabled id="submitBtn" type="submit" class="btn subs_btn form-control">register now</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================End login Area =================-->
+
+        <script src="/js/jquery-3.2.1.min.js"></script>
+        <script>
+        $(document).ready( function(){
+        
+            $('#name').focusout(checkName);
+            $('#email').focusout(checkEmail);
+            $('#username').focusout(checkUsername);
+            $('#phone').focusout(checkPhone);
+            $('#pass').focusout(checkPassword);
+            $('#repass').focusout(checkRePassword);
+            $('#termCheck').click(checkCheckBox);
+
+            function checkName() {
+                let name = $('#name').val();
+
+                if (name === "")
+                {
+                    $('#name').addClass("error-input");
+                    $('#name-notification').css("display", "block");
+                    return false;
+                }
+                else 
+                {
+                    $('#name').removeClass("error-input");
+                    $('#name-notification').css("display", "none");
+                }
+
+                return true;
+            }
+
+            function validateEmail(email) {
+                const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            }
+
+            async function checkEmail() {
+                let email = $('#email').val();
+                
+                if (email === "")
+                {
+                    $('#email').addClass("error-input");
+                    $('#email-notification').css("display", "block");
+                    $('#email-notification span').text("You need to enter your email.");
+                    return false;
+                }
+                else 
+                {
+                    //Check email valid
+                    if (!validateEmail(email))
+                    {
+                        $('#email').addClass("error-input");
+                        $('#email-notification').css("display", "block");
+                        $('#email-notification span').text("This email is invalid. Make sure it's written like example@email.com");
+                        return false;
+
+                    }
+                    else
+                    {
+                        let data = {
+                            email: email
+                        }
+                        let isok = false;
+                        await $.post('/admin/new-admin/checkdata', data, (result, status) => {
+                            if (result.status === -1)
+                            {
+                                $('#email').addClass("error-input");
+                                $('#email-notification').css("display", "block");
+                                $('#email-notification span').text("You need to enter your email.");
+                                isok = false;
+
+                            } else if (result.status === 0)
+                            {
+                                $('#email').addClass("error-input");
+                                $('#email-notification').css("display", "block");
+                                $('#email-notification span').text("This email is already used by other account.");
+                                isok = false;
+                            } else if (result.status === 1)
+                            {
+                                $('#email').removeClass("error-input");
+                                $('#email-notification').css("display", "none");
+                                isok = true;
+                            }
+                            return;
+                        });
+
+                        return isok;
+                    }
+                }
+            }
+
+            async function checkUsername() {
+                let username = $('#username').val();
+                
+                if (username === "")
+                {
+                    $('#username').addClass("error-input");
+                    $('#username-notification').css("display", "block");
+                    $('#username-notification span').text("You need to enter your username.");
+                    return false;
+                }
+                else 
+                {
+                    
+                    let data = {
+                        username: username
+                    }
+                    let isok = false;
+                    await $.post('/admin/new-admin/checkdata', data, (result, status) => {
+                        if (result.status === -1)
+                            {
+                                $('#username').addClass("error-input");
+                                $('#username-notification').css("display", "block");
+                                $('#username-notification span').text("You need to enter your username.");
+                                isok = false;
+                            } else if (result.status === 0)
+                            {
+                                $('#username').addClass("error-input");
+                                $('#username-notification').css("display", "block");
+                                $('#username-notification span').text("This username is already used by other account.");
+                                isok = false;
+                            } else if (result.status === 1)
+                            {
+                                $('#username').removeClass("error-input");
+                                $('#username-notification').css("display", "none");
+                                isok = true;
+                            }
+                            return;
+                    });
+                    return isok;
+                }
+            }
+
+            function checkPhone() {
+                let phone = $('#phone').val();
+
+                if (phone === "")
+                {
+                    $('#phone').addClass("error-input");
+                    $('#phone-notification').css("display", "block");
+                    return false;
+                }
+                else 
+                {
+                    $('#phone').removeClass("error-input");
+                    $('#phone-notification').css("display", "none");
+                }
+
+                return true;
+            }
+
+            function checkPassword() {
+                let pass = $('#pass').val();
+
+                if (pass === "")
+                {
+                    $('#pass').addClass("error-input");
+                    $('#pass-notification').css("display", "block");
+                    return false;
+                }
+                else
+                {
+                    $('#pass').removeClass("error-input");
+                    $('#pass-notification').css("display", "none");
+                }
+
+                return true;
+            }
+
+            function checkRePassword() {
+                let pass = $('#pass').val();
+                let repass = $('#repass').val();
+
+                if (repass === "")
+                {
+                    $('#repass').addClass("error-input");
+                    $('#repass-notification').css("display", "block");
+                    $('#repass-notification span').text("You need to enter your comfirm password.");
+                    return false;
+                }
+                else if (pass !== repass)
+                {
+                    $('#repass').addClass("error-input");
+                    $('#repass-notification').css("display", "block");
+                    $('#repass-notification span').text("Comfirm password don't match.");
+                    return false;
+                } else 
+                {
+                    $('#repass').removeClass("error-input");
+                    $('#repass-notification').css("display", "none");
+                }
+
+                return true;
+            }
+
+            function checkCheckBox() {
+                console.log(this.checked);
+                if (this.checked)
+                {
+                    console.log(this.checked);
+                    $('#submitBtn').prop("disabled", false);
+                    return true;
+                }
+
+                $('#submitBtn').prop("disabled", true);
+            }
+            
+
+            $('#submitBtn').click(validateForm);
+
+            async function validateForm() {
+                //event.preventDefault();
+                let isCheckName = await checkName();
+                let isCheckEmail = await checkEmail();
+                let isCheckUsername = await checkUsername();
+                let isCheckPhone = await checkPhone();
+                let isCheckPass = await checkPassword();
+                let isCheckRePass = await checkRePassword();
+
+                if ( isCheckName && isCheckEmail && isCheckUsername && isCheckPhone && isCheckPass && isCheckRePass)
+                {
+                    $('#signupForm').submit();
+                    return true;
+                }
+                return false;
+            }
+            /*
+            document.getElementById('signupForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                $("#loader").css("visibility", "visible");
+                $("#loader").css("position", "relative");
+                $('#captcha-notification').css("display", "none");
+
+                let isCheckName = await checkName();
+                let isCheckEmail = await checkEmail();
+                let isCheckUsername = await checkUsername();
+                let isCheckPhone = await checkPhone();
+                let isCheckPass = await checkPassword();
+                let isCheckRePass = await checkRePassword();
+
+                if ( isCheckName && isCheckEmail && isCheckUsername && isCheckPhone && isCheckPass && isCheckRePass)
+                {
+                    const name = document.querySelector('#name').value;
+                    const email = document.querySelector('#email').value;
+                    const username = document.querySelector('#username').value;
+                    const phone = document.querySelector('#phone').value;
+                    const password = document.querySelector('#pass').value;
+
+                    console.log(captcha);
+                    return fetch('/user/signup', {
+                        method: 'POST',
+                        headers: { 'Content-type': 'application/json' },
+                        body: JSON.stringify({ name, email, username, phone, password, captcha, termCheck })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            
+                            if (data.noCaptcha)
+                                {
+                                    $('#captcha-notification').css("display", "block");
+                                    $("#loader").css("visibility", "hidden");
+                                    $("#loader").css("position", "absolute");
+                                    return false;
+                                }
+
+                            if (data.reload) return location.reload();
+
+                            if (data.success) return window.location.href = data.path;
+                    });
+
+                }
+                return false;
+            })
+            */
+        });
+</script>

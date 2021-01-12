@@ -7016,3 +7016,17 @@ input[type=text] {
 .search-container button:hover {
   background: #ccc;
 }
+
+.pagination_area .pagination li.current a {
+  border: 1px solid #000002;
+}
+
+.pagination_area .pagination li.next a {
+  background: #333333;
+  color: #fff;
+}
+
+.pagination_area .pagination li:hover a {
+  background: #333333;
+  color: #fff;
+}

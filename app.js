@@ -1,15 +1,20 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const flash = require('connect-flash');
+require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const adminRouter = require('./routes/admin');
 const productsRouter = require('./routes/products');
 const shoppingCartRouter = require('./routes/checkout')
-// const loginRouter = require('./routes/login');
-// const signupRouter = require('./routes/signup');
+
+const auth = require('./authenticate/auth');
+
 const { handlebars } = require('hbs');
 const hbs = require('express-handlebars');
 
@@ -32,18 +37,46 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+      secure: false,
+      maxAge: 3600000 //1 hour
+  }
+})
+);
+
+auth(app);
+app.use(flash());
+
+//global user info on header bar
+app.use((req, res, next) => {
+  let userInfo =
+    {
+      isLogin: req.isAuthenticated(),
+      info: req.user
+    }
+
+  res.locals.userInfo = userInfo;
+
+  let message = {
+    info: req.flash('message-info'),
+    warning: req.flash('message-warning'),
+    danger: req.flash('message-danger'),
+    error: req.flash('error'),
+  }
+  console.log(message);
+  res.locals.message = message;
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
-// app.use('/login', loginRouter);
-// app.use('/signup', signupRouter);
+app.use('/admin', adminRouter);
 app.use('/products', productsRouter);
-// app.use('/detail', detailRouter);
 app.use('/checkout', shoppingCartRouter)
-/*
-app.use('/login', (req, res) => {
-  res.render('login');
-})
-*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

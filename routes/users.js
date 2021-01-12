@@ -1,16 +1,18 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
 
 /* controllers */
 const accountController = require('../controllers/accountControllers');
 
-/* GET users listing. */
-router.get('/', accountController.index);
+/*Middleware*/
+const ensureAuth = require('../authenticate/ensureAuth');
 
-router.get('/login', accountController.login);
-router.get('/signup', accountController.signup);
+/* GET users listing. */
+router.get('/', ensureAuth, accountController.index);
 
 router.post('/', accountController.filter);
-router.post('/remove', accountController.remove)
+router.post('/lock', accountController.lock);
+router.post('/unlock', accountController.unlock);
 
 module.exports = router;

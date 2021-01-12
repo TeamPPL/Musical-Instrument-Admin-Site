@@ -1,4 +1,3 @@
-const carouselModel = require('../models/carouselModel');
 const productModel = require('../models/productModel');
 const specialOfferModel = require('../models/specialOfferModel');
 

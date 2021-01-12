@@ -1,8 +1,8 @@
 const { MongoClient } = require('mongodb');
 
 const url = "mongodb://localhost:3000";
-const uri = "mongodb+srv://user_num_1:1_num_user@firstcluster.srzss.mongodb.net/musical-store?retryWrites=true&w=majority"
-const dbName = 'musical-store';
+const uri = process.env.DB_URI;
+const dbName = process.env.DB_NAME;
 
 let client = new MongoClient(uri, { useUnifiedTopology: true});
 

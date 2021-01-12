@@ -25,6 +25,10 @@
   
 <div class="row">
   
+    <div id="loader" class="row m0 d-flex justify-content-center" style="visibility: hidden; position: absolute;">
+        <img src="/img/loading.gif"/>
+    </div>
+
   <div id="account-list-partial-displayer" class="col">
         {{> accountList}}
   </div>
@@ -35,6 +39,20 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
 <script>
     $(document).ready(function(){
+
+        $('button.lock-button').click( e => {
+        //console.dir(e.target.attr("title"));
+        $.post('/user/lock', {id: $(e.target).attr("title")}, (result, status) => {
+          triggerAjaxFilter();
+        })
+      });
+
+      $('button.unlock-button').click( e => {
+        //console.dir(e.target.attr("title"));
+        $.post('/user/unlock', {id: $(e.target).attr("title")}, (result, status) => {
+          triggerAjaxFilter();
+        })
+      });
         
         $('.selectpicker').change(triggerAjaxFilter);
 
@@ -81,37 +99,105 @@
         
         function sendRequest(data) {
             $.post('/user', data, (result, status) => {
-                //alert("Data: " + data + "\nStatus: " + status);
-                //console.log(data);
-                //Handlebars.registerPartial('productItems', '{{productItems}}');
-                //productItems = data.productItems;
-
-                //let productItemsPartial = Handlebars.partials[productItems];
-                //console.log(productItemsPartial);
-                //$('#product-items-partial-displayer').html(productItemsPartial(result));
-                console.log(status);
-                let source   = result.partials;
                 
-                console.log(source);
+                //console.log(status);
+                let source   = `<div class="table mt-4">
+                                    <table style="width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Username</th>
+                                            <th>Full Name</th>
+                                            <th>Phone number</th>
+                                            <th>Email</th>
+                                            <th>State</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        \{\{#each accountListItems\}\}
+                                        <tr>
+                                            <td>\{\{_id\}\}</td>
+                                            <td>\{\{username\}\}</td>
+                                            <td>\{\{name\}\}</td>
+                                            <td>\{\{phone\}\}</td>
+                                            <td>\{\{email\}\}</td>
+                                            <td>
+                                            \{\{#if isLocked \}\}
+                                                <img style="width:20px;height:20px" src="/img/padlock.png" />
+                                            \{\{/if\}\}
+                                            </td>
+                                            <td>
+                                            <div class="dropdown">
+                                                <button type="button" class="btn btn-light btn-circle dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img src="/img/icon/more.png" style="width:15px;height:15px" />
+                                                </button>
+                                                <!--<button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                ***
+                                                </button> -->
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="/detail/\{\{_id\}\}">Detail</a>
+
+                                                \{\{#if isLocked \}\}
+                                                <button title="\{\{_id\}\}" style="cursor:pointer;" class="dropdown-item text-danger unlock-button">UnLock</button>
+                                                \{\{else\}\}
+                                                <button title="\{\{_id\}\}" style="cursor:pointer;" class="dropdown-item text-danger lock-button">Lock</button>
+                                                \{\{/if\}\}
+
+
+                                            </div>
+                                            </div>
+                                            </td>
+                                        </tr>              
+                                        \{\{/each\}\}
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                    <nav aria-label="Page navigation example" class="pagination_area">
+                                    <ul class="pagination" id="pagination">
+                                        \{\{#if pageInfo.isFirstPage \}\}
+                                            <!-- Do nothing -->
+                                        \{\{else\}\}
+                                            <li class="page-item prev"><a class="page-link prev" ><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+                                        \{\{/if\}\}
+
+                                        \{\{#each pageInfo.pageList\}\}
+                                            \{\{#if this.isCurrentPage\}\}
+                                                <li class="page-item current"><a class="page-link current" >\{\{this.index\}\}</a></li>
+                                            \{\{else\}\}
+                                                <li class="page-item"><a class="page-link" >\{\{this.index\}\}</a></li>
+                                            \{\{/if\}\}
+                                        \{\{/each\}\}
+                                        
+                                        \{\{#if pageInfo.isLastPage \}\}
+                                            <!-- Do nothing -->
+                                        \{\{else\}\}
+                                            <li class="page-item next"><a class="page-link next" ><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                                        \{\{/if\}\}
+                                    </ul>
+                                </nav>
+                            </div>`;
+                
+                //console.log(source);
                 let template = Handlebars.compile(source);
-                //console.log(template);
                 let htmlCompiled = template(result);
-                //let htmlCompiled = Handlebars.template(template);
-                //console.log(htmlCompiled);
-                // you will now have some html that you will need to insert into your page
                 document.getElementById("account-list-partial-displayer").innerHTML = htmlCompiled;
                 
             });
             return;
         }
-    });
 
-    //});
-    /*
-    function submitForm() {
-        form = document.getElementById('fillter-form');
-        console.log(form);
-        form.submit();
-    }
-    */
+        $(document).ajaxStart(() => {
+            document.getElementById("account-list-partial-displayer").innerHTML = "";
+                // Show image container
+                $("#loader").css("visibility", "visible");
+                $("#loader").css("position", "relative");
+            });
+            $(document).ajaxComplete(() => {
+                // Hide image container
+                $("#loader").css("visibility", "hidden");
+                $("#loader").css("position", "absolute");
+            });
+        });
+
 </script>

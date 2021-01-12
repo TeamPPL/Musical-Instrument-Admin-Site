@@ -1,5 +1,7 @@
 
 const fs = require("fs");
+const bcrypt = require('bcrypt');
+
 const accountModel = require('../models/accountModel');
 
 exports.index = async (req, res, next) => {
@@ -53,7 +55,7 @@ exports.index = async (req, res, next) => {
         isLastPage,
         pageList
     }
-
+    //console.dir(accountListItems);
     res.render('user/accounts', { accountListItems, pageInfo })
 }
 
@@ -130,28 +132,46 @@ exports.filter = async (req, res, next) => {
         pageList
     }
 
-    partials = fs.readFileSync('./views/partials/accountList.hbs', {encoding:'utf8', flag:'r'});
     console.log(pageInfo);
-    res.send({partials, pageInfo, accountListItems});
+    res.send({ pageInfo, accountListItems });
 };
 
-exports.login = (req, res, next) => {
-    res.render('user/login');
-};
-
-exports.signup = (req, res, next) => {
-    res.render('user/signup');
-};
-
-exports.remove = async (req, res, next) => {
+exports.lock = async (req, res, next) => {
     let id = req.body.id;
     console.log(id);
-    const result = await accountModel.removeOne(id);
+    const result = await accountModel.lockAccount(id);
+
+    //console.log(result.deletedCount);
+
+    if (!result)
+    {
+        req.flash("error", "Can't lock account.");
+        //res.redirect(req.get('referer'));
+    }
+    else
+    {
+        req.flash("message-info", "Account locked.");
+        //res.redirect(req.get('referer'));
+    }
+    next();
+}
+
+exports.unlock = async (req, res, next) => {
+    let id = req.body.id;
+    console.log(id);
+    const result = await accountModel.unlockAccount(id);
 
     console.log(result.deletedCount);
 
-    if (result.deletedCount === 0)
-      res.send("Remove failed!");
+    if (!result)
+    {
+        req.flash("error", "Can't unlock account.");
+        //res.redirect(req.get('referer'));
+    }
     else
-      res.redirect(req.get('referer'));
+    {
+        req.flash("message-info", "Account unlocked.");
+        //res.redirect(req.get('referer'));
+    }
+    next();
 }

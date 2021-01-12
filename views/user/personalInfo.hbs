@@ -1,0 +1,136 @@
+<style>
+  .image-container {
+    position: relative;
+    width: 100%;
+  }
+  .image {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    border-radius: 10px;
+  }
+
+  .middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+  }
+
+  .image-container:hover .image {
+    opacity: 0.3;
+  }
+
+  .image-container:hover .middle {
+    opacity: 1;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+.custom-file-upload {
+    display: block;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 5px;
+  }
+</style>
+
+<div class="container">
+  <form class="login_form" action="/admin/update" method="POST" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
+    <h2 class="text-center mb-4">PERSONAL INFO</h2>
+    <div class="row">
+      <div class="col-4 mr-5">
+        <label class="upload-label">Profile picture</label>
+        <div class="image-container" data-toggle="tooltip" data-placement="top" title="Profile picture">
+            <img id="avatar" class="image" src="
+              {{#if account.avatar}}
+                {{account.avatar}}
+              {{else}}
+                /img/image-not-available.jpg
+              {{/if}}
+            "/>
+          <div id="fakeDiv" class="middle">
+            <label for="selectedFile" class="custom-file-upload btn subs_btn">
+              Upload profile picture
+            </label>
+            <input type="file" id="selectedFile" name="cover" onchange="readURL(this);"/>
+          </div>
+        </div>
+      </div>
+        
+      <div class="col">
+          <div class="row form-group">
+              <label style="margin-bottom: 0px;" for="name">Your Name: </label>
+              <input class="form-control" type="text" name="name" value="{{account.name}}" placeholder="Name" data-toggle="tooltip" data-placement="top" title="Name">
+          </div>
+          <div class="row form-group">
+              <label style="margin-bottom: 0px;" for="email">Email: </label>
+              <input class="form-control" type="email" name="email" value="{{account.email}}" placeholder="Email" data-toggle="tooltip" data-placement="top" title="You cannot change your registered email. If you wish to do so, please contact admin for help!">
+          </div>
+          <div class="row form-group">
+              <label style="margin-bottom: 0px;" for="username">Username: </label>
+              <input class="form-control" type="text" name="username" value="{{account.username}}" placeholder="User Name" data-toggle="tooltip" data-placement="top" title="Username">
+          </div>
+          <div class="row form-group">
+              <label for="phone">Phone number: </label>
+              <input class="form-control" type="text" name="phone" value="{{account.phone}}" placeholder="Phone number" data-toggle="tooltip" data-placement="top" title="Phone number">
+          </div>
+          <div class="row form-group">
+              <button type="submit" value="submit" class="btn subs_btn form-control">Save profile</button>
+          </div>
+      </div>
+    
+    </div>
+  </form>
+
+  <div class="row mt-6" style="margin-top: 30px;">
+    <div class="col-4 mr-5"></div>
+    <form id="signupForm" class="login_form col" action="/admin/change-password" method="POST">
+      <div class="row form-group">
+          <label for="currentPassword">Current Password: </label>
+          <input id="pass" class="form-control" type="password" name="currentPassword" placeholder="Current Password" data-toggle="tooltip" data-placement="top" title="Current Password">
+      </div>
+      <div class="row form-group">
+          <label for="newPassword">New Password: </label>
+          <input id="pass" class="form-control" type="password" name="newPassword" placeholder="New Password" data-toggle="tooltip" data-placement="top" title="New Password">
+      </div>
+      <div class="row form-group">
+          <label for="reNewPassword">Comfirm New Password: </label>
+          <input id="repass" class="form-control" type="password" name="reNewPassword" placeholder="Comfirm New Password" data-toggle="tooltip" data-placement="top" title="Comfirm New Password">
+      </div>
+      <div class="row form-group">
+          <button id="submitPassBtn" class="btn subs_btn form-control">Change Password</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+            
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+
+$('#selectedFile').change(function () {
+  var a = $('#selectedFile').val().toString().split('\\');
+  $('#fakeInput').val(a[a.length -1]);
+});
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $('#avatar')
+        .attr('src', e.target.result);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
