@@ -43,7 +43,6 @@
 </style>
 
 <div class="container">
-  <form class="login_form" action="/user/update" method="POST" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
     <h2 style = "text-transform:uppercase;" class="text-center mb-4">{{account.name}}'S PERSONAL INFO</h2>
     <div class="row">
       <div class="col-4 mr-5">
@@ -77,13 +76,51 @@
               <p class="form-control">{{account.phone}}</p>
           </div>
           <div class="row form-group">
-              <label for="phone">Create Date: </label>
+              <label for="date">Create Date: </label>
               <p class="form-control">{{account.createdDate}}</p>
           </div>
+          <div class="row form-group">
+              <label for="phone">State: </label>
+              {{#if account.isLocked }}
+                <p class="form-control text-danger">Locked</p>
+              {{else}}
+                <p class="form-control text-danger">Unlocked</p>
+              {{/if}}
+          </div>
+          <div id="lock-button-displayer" class="col-lg-5 mt-4 form-group">
+            {{#if account.isLocked }}
+              <button id="lock-unlock-btn" class="btn btn-danger form-control"><img style="width:20px;height:20px;filter: invert(1);" src="/img/open-padlock.png" /> Unlock this user's account</button>
+            {{else}}
+              <button id="lock-unlock-btn" class="btn btn-danger form-control"><img style="width:20px;height:20px;filter: invert(1);" src="/img/padlock.png" /> Lock this user's account</button>
+            {{/if}}
+        </div>
       </div>
     
     </div>
-  </form>
 
 </div>
-          
+
+<script src="/js/jquery-3.2.1.min.js"></script>      
+<script>
+  $(document).ready(function(){
+  
+    $("#lock-unlock-btn").click( (e) => {
+      console.log("aaaa");
+      let data = {
+        id: "{{account._id}}"
+      };
+
+      let path = "/user/lock";
+      
+      if ({{account.isLocked}})
+      {
+        path = "/user/unlock";
+      }
+
+      $.post(path, data, (result, status) => {
+          location.reload();            
+      });
+
+    });
+  })
+</script>

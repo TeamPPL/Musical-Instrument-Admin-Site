@@ -146,14 +146,14 @@ exports.lock = async (req, res, next) => {
     if (!result)
     {
         req.flash("error", "Can't lock account.");
-        //res.redirect(req.get('referer'));
+        res.send({status : 0});
     }
     else
     {
         req.flash("message-info", "Account locked.");
-        //res.redirect(req.get('referer'));
+        res.send({status : 1});
     }
-    next();
+    //next();
 }
 
 exports.unlock = async (req, res, next) => {
@@ -166,12 +166,12 @@ exports.unlock = async (req, res, next) => {
     if (!result)
     {
         req.flash("error", "Can't unlock account.");
-        //res.redirect(req.get('referer'));
+        res.send({status : 0});
     }
     else
     {
         req.flash("message-info", "Account unlocked.");
-        //res.redirect(req.get('referer'));
+        res.send({status : 1});
     }
     next();
 }
