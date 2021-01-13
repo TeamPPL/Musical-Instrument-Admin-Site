@@ -7,6 +7,7 @@
                 <th>Full Name</th>
                 <th>Phone number</th>
                 <th>Email</th>
+                <th>State</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -19,6 +20,11 @@
                 <td>{{phone}}</td>
                 <td>{{email}}</td>
                 <td>
+                  {{#if isLocked }}
+                      <img style="width:20px;height:20px" src="/img/padlock.png" />
+                  {{/if}}
+                </td>
+                <td>
                   <div class="dropdown">
                     <button type="button" class="btn btn-light btn-circle dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <img src="/img/icon/more.png" style="width:15px;height:15px" />
@@ -27,11 +33,14 @@
                       ***
                     </button> -->
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/detail/{{_id}}">Detail</a>
+                    <a class="dropdown-item" href="/user/{{_id}}">Detail</a>
 
-                    <form method="POST" action="/user/remove">
-                      <button name="id" value="{{_id}}" class="dropdown-item text-danger">Remove</button>
-                    </form>
+                    {{#if isLocked }}
+                      <button title="{{_id}}"  style="cursor:pointer;" class="dropdown-item text-danger unlock-button">UnLock</button>
+                    {{else}}
+                      <button title="{{_id}}" style="cursor:pointer;" class="dropdown-item text-danger lock-button">Lock</button>
+                    {{/if}}
+
 
                   </div>
                   </div>

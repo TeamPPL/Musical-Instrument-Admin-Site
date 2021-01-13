@@ -49,11 +49,51 @@ exports.filter = async (sorted, nPerPage, pageNumber) => {
   return accounts;
 }
 
-exports.removeOne = async (id) => {
+exports.lockAccount = async (id) => {
   const accountCollection = db().collection('account');
-  let result = await accountCollection.deleteOne({
-    _id: ObjectId(id)
+  let result = undefined;
+
+  try {
+      result = await accountCollection.findOneAndUpdate(
+          {
+          _id: ObjectId(id)
+          },
+          {
+              $set : {
+                isLocked: true
+              }
+          });
+  } catch (err) {
+      return console.log('Database Connection Error!', err.message);
+  }
+  return result;
+}
+
+exports.unlockAccount = async (id) => {
+  const accountCollection = db().collection('account');
+  let result = undefined;
+
+  try {
+      result = await accountCollection.findOneAndUpdate(
+          {
+          _id: ObjectId(id)
+          },
+          {
+              $set : {
+                isLocked: false
+              }
+          });
+  } catch (err) {
+      return console.log('Database Connection Error!', err.message);
+  }
+  return result;
+}
+
+exports.findUserById = async (id) => {
+  const accountCollection = db().collection('account');
+  let account = await accountCollection.findOne({
+      _id: ObjectId(id)
   });
   
-  return result;
+  return account;
 }

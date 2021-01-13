@@ -1,25 +1,20 @@
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <!--================Headline Area =================-->
 <header class="shop_header_area carousel_menu_area">
     <div class="carousel_top_header row m0">
         <div class="container">
             <div class="carousel_top_h_inner">
-                <div class="float-md-left">
-                    <div class="top_header_left">
-                        <div class="selector">
-                            <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                                <option value='yt' data-image="/img/icon/flag-1.png" data-imagecss="flag yt" data-title="English">English</option>
-                            </select>
-                        </div>
-                        <select class="selectpicker usd_select">
-                            <option>USD</option>
-                            <option>VND</option>
-                        </select>
-                    </div>
-                </div>
+                
                 <div class="float-md-right">
                     <div class="top_header_middle">
-                        <a href="#"><i class="fa fa-phone"></i> Call Us: <span>+84 987 654 321</span></a>
-                        <a href="#"><i class="fa fa-envelope"></i> Email: <span>support@yourdomain.com</span></a>
+                        <span>
+                            {{#if userInfo.isLogin}}
+                                <span>Welcome back, <a class="text-primary" href="/admin">{{userInfo.info.username}}  {{#if userInfo.info.avatar}}<img style="border-radius: 7px;margin-top: 0px" height="25px" width="25px" src="{{userInfo.info.avatar}}" /> {{/if}} </a></span>
+                                <a class="text-secondary" href="/admin/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                            {{else}}
+                                <a class="text-secondary" href="/admin/login">Login</a>
+                            {{/if}}
+                        </span>
                     </div>
                 </div>
             </div>

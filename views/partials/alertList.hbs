@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+      {{#if message.info}}
+        {{#each message.info}}
+          <p class="col-lg-12 text-center mb-3 alert alert-info">{{this}}</p>
+        {{/each}}
+      {{/if}}
+
+      {{#if message.warning}}
+        {{#each message.warning}}
+          <p class="col-lg-12 text-center mb-3 alert alert-warning">{{this}}</p>
+        {{/each}}
+      {{/if}}
+
+      {{#if message.danger}}
+        {{#each message.danger}}
+          <p class="col-lg-12 text-center mb-3 alert alert-danger">{{this}}</p>
+        {{/each}}
+      {{/if}}
+
+      {{#if message.error}}
+          {{#each message.error}}
+            <p class="col-lg-12 text-center mb-3 alert alert-danger">{{this}}</p>
+          {{/each}}
+      {{/if}}
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+</div>
