@@ -7,7 +7,7 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products');
-const shoppingCartRouter = require('./routes/checkout')
+const receiptController = require('./routes/receipt')
 // const loginRouter = require('./routes/login');
 // const signupRouter = require('./routes/signup');
 const { handlebars } = require('hbs');
@@ -18,9 +18,13 @@ app.engine( 'hbs', hbs( {
   extname: 'hbs',
   defaultView: 'index',
   layoutsDir: __dirname + '/views/layouts',
-  partialsDir: __dirname + '/views/partials/'
+  partialsDir: __dirname + '/views/partials/',
+  helpers: {
+    minus: function(a, b) {
+      return a - b;
+    }
+  }
 }));
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,7 +42,7 @@ app.use('/user', usersRouter);
 // app.use('/signup', signupRouter);
 app.use('/products', productsRouter);
 // app.use('/detail', detailRouter);
-app.use('/checkout', shoppingCartRouter)
+app.use('/receipt', receiptController);
 /*
 app.use('/login', (req, res) => {
   res.render('login');

@@ -1,0 +1,85 @@
+<section class="billing_detail_banner_inner">
+    <div class="container">
+        <div class="c_banner_inner ">
+            <h3>Billing Detail</h3>
+        </div>
+    </div>
+</section>
+
+<section class="login_area p_100">
+    <div class="container">
+        <div class="login_inner">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-lg-3">
+                    <div class="login_title">
+                        <h2>Billing Information</h2>
+                    </div>
+                        <span>Full name: {{info.name}}</span><br>
+                        <span>Phone: {{info.phone}} </span><br>
+                        <span>Email: {{info.email}}</span><br>
+                        <span>Country: {{info.country}}</span><br>
+                        <span>State/Province: {{info.state}}</span><br>
+                        <span>City: {{info.city}} </span><br>
+                        <span>Address: {{info.address}}</span><br>
+                        <span>Payment types: {{info.payment}}</span><br>
+                </div>
+                <div class="col-lg-3">
+                    <div class="cart_product_list" id="cart_product_list">
+                        <h3 class="cart_single_title">Cart detail</h3>
+                        <div class="table-responsive-md">
+                            <table class="table-order">
+                                <thead>
+                                    <tr>
+                                        <td scope="col">Product</td>
+                                        <td class="table-2nd-col" scope="col">Total</td>
+                                    </tr>
+                                </thead>
+                                <tbody id="order-cart">
+                                    {{#each cartDetail}}
+                                    <tr class="cart-rows">
+                                        <td>
+                                            <a href="/products/detail/{{item._id}}">{{qty}}x {{item.title}}</a>
+                                        </td>
+                                        <td class="table-2nd-col">${{price}}</td>
+                                    </tr>
+                                    {{/each}}
+                                    <tr>
+                                        <td colspan="1" style="font-size:14px;font-weight:500" scope="col">Sumary:</td>
+                                        <td id="total_price" class="table-2nd-col"
+                                            style="font-size:14px;font-weight:500" scope="col">${{itemsPrice}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1" style="font-size:14px;font-weight:500" scope="col">Shipping fee
+                                        </td>
+                                        <td id="shipping_fee" class="table-2nd-col"
+                                            style="font-size:14px;font-weight:500" scope="col">${{shipping_fee}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1" style="font-size:16px;font-weight:600;color:orangered"
+                                            scope="col">Total payment</td>
+                                        <td id="total_payment" class="table-2nd-col"
+                                            style="font-size:16px;font-weight:600;color:orangered" scope="col">
+                                            ${{totalPrice}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+
+                </div>
+                <div id="dialog">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("html,body").animate({scrollTop: 300}, 500);
+    });
+</script>

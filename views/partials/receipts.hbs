@@ -1,0 +1,60 @@
+
+
+<h3 class="cart_single_title">Your Purchase History</h3>
+<table class='table table-bordered table-condensed table-striped table-hover'>
+    <thead>
+        <tr class='clickable-row' data-href='url://'>
+            <th scope="col">#</th>
+            <th scope="col">Owner</th>
+            <th scope="col">Status</th>
+            <th scope="col" style="text-align: center">Total Payment</th>
+            <th scope="col">Date</th>
+            <th scope="col" style="text-align: center">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each Receipts}}
+        <tr>
+            <th scope="row">{{@index}}</th>
+            <td>{{name}}</td>
+            <td id="{{_id}}">{{status}}</td>
+            <td style="text-align: center">${{totalPrice}}</td>
+            <td>{{createdDate}}</td>
+            <td style="text-align: center">
+                <button type="button" class="btn btn-light btn-circle dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: transparent; border:none;padding:0">
+                    <img src="/img/icon/setting.png" style="width:30px;height:30px" />
+                    </button>
+                <div class="dropdown-menu">
+                    <form method="POST" action="/receipt/purchase-history/detail">
+                        <button name="id" value="{{_id}}" class="dropdown-item">Detail</button>
+                    </form>
+                    <button name="id" value="{{_id}}" class="dropdown-item text-danger btn-cancel">Cancel this receipt</button>
+                </div>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<nav aria-label="Page navigation example" class="pagination_area">
+    <ul class="pagination" id="pagination">
+        {{#if pageInfo.isFirstPage }}
+            <!-- Do nothing -->
+        {{else}}
+            <li class="page-item prev"><a class="page-link prev" ><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+        {{/if}}
+
+        {{#each pageInfo.pageList}}
+            {{#if this.isCurrentPage}}
+                <li class="page-item current"><a class="page-link current" >{{this.index}}</a></li>
+            {{else}}
+                <li class="page-item"><a class="page-link" >{{this.index}}</a></li>
+            {{/if}}
+        {{/each}}
+        
+        {{#if pageInfo.isLastPage }}
+            <!-- Do nothing -->
+        {{else}}
+            <li class="page-item next"><a class="page-link next" ><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+        {{/if}}
+    </ul>
+</nav>

@@ -1,0 +1,139 @@
+<section class="billing_detail_banner_inner">
+    <div class="container">
+        <div class="c_banner_inner">
+            <h3>Purchase History</h3>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/receipt/purchase-history">Purchase history</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!--================Receipt Area =================-->
+<section class="shopping_cart_area p_100" id="shopping-cart">
+    <div class="container">
+
+        <div class="single_c_title">
+            <h2>Purchase History</h2>
+        </div>
+        <div class="row showing_fillter">
+            <div class="col secand_fillter">
+                <h4>SORT BY :</h4>
+                <select id="sorted" name="sorted" class="selectpicker">
+                    <option value="alphabet-asc">Price &uarr;</option>
+                    <option value="alphabet-desc">Price &darr;</option>
+                    <option value="lastest">Lastest</option>
+                    <option value="oldest">Oldest</option>
+                </select>
+            </div>
+            <div class="col third_fillter">
+                <h4>Show : </h4>
+                <select id="n-per-page" name="n-per-page" class="selectpicker">
+                    <option value="5">05</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="purchase_list" id="receipt-list-partial-displayer">
+                    {{>receipts}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("html,body").animate({ scrollTop: 600 }, 500);
+        $('.selectpicker').change(triggerAjaxFilter);
+        $('#receipt-list-partial-displayer').on("click", '.pagination_area .pagination li a', (e) => {
+            e.preventDefault();
+            let classList = $(e.target).attr("class");
+            let classArr = classList.split(" ");
+            let pageNumber;
+            let isNextOrPrevBtn = false;
+            console.log(e.target);
+            console.log(classArr);
+            classArr.forEach(element => {
+                if (element === "fa-angle-right" || element === "next") {
+                    pageNumber = parseInt($('.pagination_area .pagination a.current').html()) + 1;
+                    isNextOrPrevBtn = true;
+                } else if (element === "fa-angle-left" || element === "prev") {
+                    pageNumber = parseInt($('.pagination_area .pagination a.current').html()) - 1;
+                    isNextOrPrevBtn = true;
+                }
+            })
+
+            if (!isNextOrPrevBtn) {
+                pageNumber = parseInt($(e.target).html());
+            }
+            console.log(pageNumber);
+            let data = {
+                sorted: $('#sorted').children("option:selected").val(),
+                nPerPage: $('#n-per-page').children("option:selected").val(),
+                pageNumber
+            }
+            sendRequest(data);
+        });
+
+        function triggerAjaxFilter() {
+            let data = {
+                sorted: $('#sorted').children("option:selected").val(),
+                nPerPage: $('#n-per-page').children("option:selected").val(),
+                pageNumber: 1
+            }
+            console.log(data);
+            sendRequest(data);
+            return;
+        }
+
+        function sendRequest(data) {
+            $.post('/receipt/purchase-history', data, (result, status) => {
+                let source = result.partials;
+
+                console.log(source);
+                let template = Handlebars.compile(source);
+                //console.log(template);
+                let htmlCompiled = template(result);
+                document.getElementById("receipt-list-partial-displayer").innerHTML = htmlCompiled;
+
+            });
+            return;
+        }
+
+    });
+
+    $(document).on('click', '.btn-cancel', function () {
+        let data = {
+            id: $(this).val(),
+        };
+        cancel(data);
+        return;
+    });
+
+    function cancel(data) {
+        $.post('/receipt/cancel', data, (result, status) => {
+            if (status == "success") {
+                if (result.fail == 1) {
+                    alert("Cannot cancel receipt that is delivered or canceled");
+                    return;
+                }
+                document.getElementById(data.id).innerHTML = "Canceled";
+            }
+
+            else {
+                alert("Unknown error");
+            }
+
+        });
+        return;
+    }
+</script>

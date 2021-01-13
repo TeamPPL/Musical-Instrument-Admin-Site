@@ -130,7 +130,7 @@ exports.filter = async (req, res, next) => {
         pageList
     }
 
-    partials = fs.readFileSync('./views/partials/accountList.hbs', {encoding:'utf8', flag:'r'});
+    let partials = fs.readFileSync('./views/partials/accountList.hbs', {encoding:'utf8', flag:'r'});
     console.log(pageInfo);
     res.send({partials, pageInfo, accountListItems});
 };
