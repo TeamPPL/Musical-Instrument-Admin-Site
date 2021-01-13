@@ -88,3 +88,12 @@ exports.unlockAccount = async (id) => {
   }
   return result;
 }
+
+exports.findUserById = async (id) => {
+  const accountCollection = db().collection('account');
+  let account = await accountCollection.findOne({
+      _id: ObjectId(id)
+  });
+  
+  return account;
+}

@@ -1,0 +1,89 @@
+<style>
+  .image-container {
+    position: relative;
+    width: 100%;
+  }
+  .image {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    border-radius: 10px;
+  }
+
+  .middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+  }
+
+  .image-container:hover .image {
+    opacity: 0.3;
+  }
+
+  .image-container:hover .middle {
+    opacity: 1;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+.custom-file-upload {
+    display: block;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 5px;
+  }
+</style>
+
+<div class="container">
+  <form class="login_form" action="/user/update" method="POST" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
+    <h2 style = "text-transform:uppercase;" class="text-center mb-4">{{account.name}}'S PERSONAL INFO</h2>
+    <div class="row">
+      <div class="col-4 mr-5">
+        <label class="upload-label">Profile picture</label>
+        <div class="image-container" data-toggle="tooltip" data-placement="top" title="Profile picture">
+            <img id="avatar" class="image" src="
+              {{#if account.avatar}}
+                {{account.avatar}}
+              {{else}}
+                /img/image-not-available.jpg
+              {{/if}}
+            "/>
+        </div>
+      </div>
+        
+      <div class="col">
+          <div class="row form-group">
+              <label style="margin-bottom: 0px;" for="name">Name: </label>
+              <p class="form-control" >{{account.name}}</p>
+          </div>
+          <div class="row form-group">
+              <label style="margin-bottom: 0px;" for="email">Email: </label>
+              <p class="form-control" >{{account.email}}</p>
+          </div>
+          <div class="row form-group">
+              <label style="margin-bottom: 0px;" for="username">Username: </label>
+              <p class="form-control">{{account.username}}</p>
+          </div>
+          <div class="row form-group">
+              <label for="phone">Phone number: </label>
+              <p class="form-control">{{account.phone}}</p>
+          </div>
+          <div class="row form-group">
+              <label for="phone">Create Date: </label>
+              <p class="form-control">{{account.createdDate}}</p>
+          </div>
+      </div>
+    
+    </div>
+  </form>
+
+</div>
+          

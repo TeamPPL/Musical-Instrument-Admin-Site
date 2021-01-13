@@ -23,10 +23,10 @@
             </div>
           </div>
   
-<div class="row">
+<div class="row justify-content-center">
   
-    <div id="loader" class="row m0 d-flex justify-content-center" style="visibility: hidden; position: absolute;">
-        <img src="/img/loading.gif"/>
+    <div id="loader" class="row" style="visibility: hidden; position: absolute;">
+        <img class="col" src="/img/loading.gif"/>
     </div>
 
   <div id="account-list-partial-displayer" class="col">
@@ -136,7 +136,7 @@
                                                 ***
                                                 </button> -->
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="/detail/\{\{_id\}\}">Detail</a>
+                                                <a class="dropdown-item" href="/user/\{\{_id\}\}">Detail</a>
 
                                                 \{\{#if isLocked \}\}
                                                 <button title="\{\{_id\}\}" style="cursor:pointer;" class="dropdown-item text-danger unlock-button">UnLock</button>
@@ -188,12 +188,14 @@
         }
 
         $(document).ajaxStart(() => {
-            document.getElementById("account-list-partial-displayer").innerHTML = "";
+            $("#account-list-partial-displayer").html("");
+            $("#account-list-partial-displayer").css("position", "absolute");
                 // Show image container
                 $("#loader").css("visibility", "visible");
                 $("#loader").css("position", "relative");
             });
             $(document).ajaxComplete(() => {
+                $("#account-list-partial-displayer").css("position", "relative");
                 // Hide image container
                 $("#loader").css("visibility", "hidden");
                 $("#loader").css("position", "absolute");

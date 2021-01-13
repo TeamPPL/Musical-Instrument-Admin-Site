@@ -7,14 +7,14 @@ const adminAccountModel = require('../models/adminAccountsModel');
 const saltRounds = 10;
 
 exports.login = (req, res, next) => {
-    res.render('user/login');
+    res.render('admin/login');
 };
 
 exports.info = async (req, res, next) => {
     let username = req.user.username;
     let account = await adminAccountModel.findAdminByUsername(username);
   
-    res.render('user/personalInfo', {account});
+    res.render('admin/personalInfo', {account});
 }
 
 exports.changePassword = async (req, res, next) => {
@@ -121,7 +121,7 @@ exports.changePassword = async (req, res, next) => {
 }
 
 exports.getNewAdmin = (req, res, next) => {
-    res.render('user/createAdminAccount');
+    res.render('admin/createAdminAccount');
 };
 
 exports.createNewAccount = async (req, res, next) => {

@@ -175,3 +175,17 @@ exports.unlock = async (req, res, next) => {
     }
     next();
 }
+
+exports.getUserDetail = async (req, res, next) => {
+    let id = req.params.id;
+    console.log(id);
+    const account = await accountModel.findUserById(id);
+
+    if (!account)
+    {
+        req.flash("error", "User is not available.");
+        res.redirect(req.get('referer'));
+    }
+    
+    res.render('user/userAccountInfo', {account});
+}
