@@ -28,7 +28,10 @@
                     <form method="POST" action="/receipt/purchase-history/detail">
                         <button name="id" value="{{_id}}" class="dropdown-item">Detail</button>
                     </form>
-                    <button name="id" value="{{_id}}" class="dropdown-item text-danger btn-cancel">Cancel this receipt</button>
+                    <button name="id" value="{{_id}}" class="dropdown-item text-danger btn-mark-cancel">Cancel this receipt</button>
+                    <button name="id" value="{{_id}}" class="dropdown-item text-danger btn-mark-pending">Mark this receipt as pending</button>
+                    <button name="id" value="{{_id}}" class="dropdown-item text-danger btn-mark-delivering">Mark this receipt as delivering</button>
+                    <button name="id" value="{{_id}}" class="dropdown-item text-danger btn-mark-delivered">Mark this receipt as delivered</button>
                 </div>
             </td>
         </tr>

@@ -14,7 +14,7 @@
     <div class="container">
 
         <div class="single_c_title">
-            <h2>Purchase History</h2>
+            <h2>Customers Purchase Log</h2>
         </div>
         <div class="row showing_fillter">
             <div class="col secand_fillter">
@@ -111,9 +111,37 @@
 
     });
 
-    $(document).on('click', '.btn-cancel', function () {
+    $(document).on('click', '.btn-mark-cancel', function () {
         let data = {
             id: $(this).val(),
+            status: -1
+        };
+        cancel(data);
+        return;
+    });
+
+    $(document).on('click', '.btn-mark-pending', function () {
+        let data = {
+            id: $(this).val(),
+            status: -1
+        };
+        cancel(data);
+        return;
+    });
+
+    $(document).on('click', '.btn-mark-delivering', function () {
+        let data = {
+            id: $(this).val(),
+            status: 1
+        };
+        cancel(data);
+        return;
+    });
+
+    $(document).on('click', '.btn-mark-delivered', function () {
+        let data = {
+            id: $(this).val(),
+            status: 2
         };
         cancel(data);
         return;
@@ -122,11 +150,7 @@
     function cancel(data) {
         $.post('/receipt/cancel', data, (result, status) => {
             if (status == "success") {
-                if (result.fail == 1) {
-                    alert("Cannot cancel receipt that is delivered or canceled");
-                    return;
-                }
-                document.getElementById(data.id).innerHTML = "Canceled";
+                document.getElementById(data.id).innerHTML = result.status;
             }
 
             else {

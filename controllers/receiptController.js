@@ -256,18 +256,21 @@ exports.detail = async (req, res, next) => {
 
 exports.cancel = async(req, res, next) => {
     let id = req.body.id;
-    console.log(id);
+    let newStatus = req.body.status;
 
-    let receipt = await receiptModel.findById(id);
-    //console.log(receipt);
-    if (receipt.status == 2 || receipt.status == -1){
-        res.send({fail: 1});
-        return;
+    await receiptModel.updateStatusOne(id,newStatus);
+
+    if (newStatus == 0) {
+        status = "Pending";
+    } else if (newStatus == 1) {
+        status = "Delivering";
+    } else if (newStatus == 2) {
+        status = "Delivered";
+    } else if (newStatus == -1) {
+        status = "Canceled";
+    } else {
+        status = "Unknown";
     }
     
-    await receiptModel.updateStatusOne(id,-1);
-
-    //receipt = await receiptModel.findById(id);
-    //console.log(receipt);
-    res.send({fail: 0});
+    res.send({fail: 0, status});
 }

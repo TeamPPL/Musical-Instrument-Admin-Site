@@ -68,7 +68,7 @@ exports.updateStatusOne = async (id, status) => {
   receiptCollection.findOneAndUpdate(
     { "_id": ObjectId(id) },
     {
-      $set: { 'status': -1 }
+      $set: { 'status': status }
     },
     {
       returnNewDocument: true
