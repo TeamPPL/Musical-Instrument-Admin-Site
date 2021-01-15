@@ -37,7 +37,7 @@ hbs.create({}).handlebars.registerHelper('SingularOrPlural', function(number, bl
 });
 hbs.create({}).handlebars.registerHelper('MiniImgSlider', function(nameImg, block) {
   let converter = null;
-  if(nameImg !== undefined){
+  if(nameImg !== undefined && nameImg.length > 0){
     converter = block.fn(this);
   }
 
