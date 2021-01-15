@@ -318,7 +318,7 @@ exports.updateProduct = async (req, res, next) => {
         cover = upload.secure_url;
       }
       catch {
-        cover = "";
+        cover = fields.fakeinput;
       }
 
       let upload2 = undefined;
@@ -330,7 +330,7 @@ exports.updateProduct = async (req, res, next) => {
           upload2 = await cloudinary.uploader.upload(temp_path2, { folder: "imgdb" }, function (error, result) { console.log(result, error) });
           cover2 = upload2.secure_url;
         } catch {
-          cover2 = "";
+          cover2 = fields.fakeinput2;
         }
       }
       const temp_path3 = files.cover3.path;
@@ -340,7 +340,7 @@ exports.updateProduct = async (req, res, next) => {
           upload3 = await cloudinary.uploader.upload(temp_path3, { folder: "imgdb" }, function (error, result) { console.log(result, error) });
           cover3 = upload3.secure_url;
         } catch {
-          cover3 = "";
+          cover3 = fields.fakeinput3;
         }
       }
       const temp_path4 = files.cover4.path;
@@ -349,10 +349,10 @@ exports.updateProduct = async (req, res, next) => {
           upload4 = await cloudinary.uploader.upload(temp_path4, { folder: "imgdb" }, function (error, result) { console.log(result, error) });
           cover4 = upload4.secure_url;
         } catch {
-          cover4 = "";
+          cover4 = fields.fakeinput4;
         }
       }
-
+      const id = fields.id;
       const title = fields.title;
       const description = fields.description;
       const filter = fields.filter;
@@ -364,6 +364,7 @@ exports.updateProduct = async (req, res, next) => {
       const sellPrice = price - discount;
 
       let productDetail = {
+        "id": id,
         "title": title,
         "cover": cover,
         "cover2": cover2,
@@ -383,7 +384,8 @@ exports.updateProduct = async (req, res, next) => {
       try {
         productModel.updateAProduct(productDetail);
         //var message = "ADDED SUCCESSFULLY";
-         res.redirect('products/detail/' + productDetail._id);
+         res.redirect('/products/detail/' + productDetail.id);
+         return;
         //res.render('products/addproduct', { productDetail, message });
       }
       catch (error) {
@@ -393,7 +395,7 @@ exports.updateProduct = async (req, res, next) => {
     else{
       res.send("error");
     }
-    await console.log(upload.secure_url);
+    //await console.log(upload.secure_url);
   });
 
 
