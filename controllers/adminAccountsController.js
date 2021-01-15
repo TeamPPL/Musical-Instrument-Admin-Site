@@ -164,6 +164,7 @@ exports.createNewAccount = async (req, res, next) => {
             "createdDate": new Date(),
             "modifiedDate": new Date(),
             "isLocked": false,
+            "isAdminAccount": true,
         };
 
         adminAccountModel.insertOne(accountInfos);
@@ -214,5 +215,68 @@ exports.checkSignupData = async (req, res, next) => {
 
 exports.logout = async (req, res, next) => {
   req.logout();
-  res.redirect(req.get('referer'));
+  return res.redirect(req.get('referer'));
+}
+
+exports.lock = async (req, res, next) => {
+  let id = req.body.id;
+  console.log(id);
+  if (!req.user.isSuperAdmin)
+  {
+    req.flash("message-warning", "Only super admin can lock/unlock admin's accounts!")
+    return res.send({status: 0});
+  }
+  const result = await adminAccountModel.lockAccount(id);
+
+  //console.log(result.deletedCount);
+
+  if (!result)
+  {
+      req.flash("error", "Can't lock account.");
+      res.send({status : 0});
+  }
+  else
+  {
+      req.flash("message-info", "Account locked.");
+      res.send({status : 1});
+  }
+  //next();
+}
+
+exports.unlock = async (req, res, next) => {
+  let id = req.body.id;
+  console.log(id);
+  if (!req.user.isSuperAdmin)
+  {
+    req.flash("message-warning", "Only super admin can lock/unlock admin's accounts!")
+    return res.send({status: 0});
+  }
+  const result = await adminAccountModel.unlockAccount(id);
+
+
+  if (!result)
+  {
+      req.flash("error", "Can't unlock account.");
+      res.send({status : 0});
+  }
+  else
+  {
+      req.flash("message-info", "Account unlocked.");
+      res.send({status : 1});
+  }
+  next();
+}
+
+exports.getUserDetail = async (req, res, next) => {
+  let id = req.params.id;
+  console.log(id);
+  const account = await adminAccountModel.findAdminById(id);
+
+  if (!account)
+  {
+      req.flash("error", "User is not available.");
+      res.redirect(req.get('referer'));
+  }
+  
+  res.render('user/userAccountInfo', {account});
 }

@@ -3,6 +3,7 @@ const fs = require("fs");
 const bcrypt = require('bcrypt');
 
 const accountModel = require('../models/accountModel');
+const adminAccountsModel = require('../models/adminAccountsModel');
 
 exports.index = async (req, res, next) => {
     let pageNumber = 1;
@@ -62,6 +63,7 @@ exports.index = async (req, res, next) => {
 exports.filter = async (req, res, next) => {
     let sorted = req.body.sorted;
     let nPerPage = req.body.nPerPage;
+    let typeAccount = req.body.typeAccount;
     let pageNumber = req.body.pageNumber;
 
     console.log(`${sorted} ${nPerPage}`);
@@ -81,9 +83,20 @@ exports.filter = async (req, res, next) => {
             pageNumber = 1;
     }
 
-    //console.log(`${pageNumber}  ${nPerPage}`);
-    const accountListItems = await accountModel.filter(sorted, nPerPage, pageNumber);
-    const totalCount = await accountModel.getTotalCount();
+    let accountListItems = null;
+    let totalCount = null;
+    let isAdminAccounts = false;
+    if (typeAccount === "user")
+    {
+        accountListItems = await accountModel.filter(sorted, nPerPage, pageNumber);
+        totalCount = await accountModel.getTotalCount();
+    }
+    else if (typeAccount === "admin") 
+    {
+        isAdminAccounts = true;
+        accountListItems = await adminAccountsModel.filter(sorted, nPerPage, pageNumber);
+        totalCount = await adminAccountsModel.getTotalCount();
+    }
 
     //console.log(accountListItems);
 
@@ -129,7 +142,12 @@ exports.filter = async (req, res, next) => {
         lastItemOfPage: accountListItems.length < nPerPage ? (pageNumber - 1) * nPerPage +  accountListItems.length :  pageNumber * nPerPage - 1,
         isFirstPage,
         isLastPage,
-        pageList
+        pageList,
+    }
+
+    for(let i = 0; i< accountListItems.length; ++i)
+    {
+        accountListItems[i].isAdminAccount = isAdminAccounts;
     }
 
     console.log(pageInfo);

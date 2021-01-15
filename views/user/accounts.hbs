@@ -3,7 +3,7 @@
         <div class="single_c_title">
             <h2>Account List</h2>
         </div>    
-          <div class="row showing_fillter">
+          <div class="row mt-3 showing_fillter">
             <div class="col secand_fillter">
               <h4>SORT BY :</h4>
               <select id="sorted" name="sorted" class="selectpicker">
@@ -19,6 +19,13 @@
                     <option value="5">05</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
+                </select>
+            </div>
+            <div  class="col secand_fillter">
+                <h4>Type : </h4>
+                <select id="type-account" name="n-per-page" class="selectpicker">
+                    <option value="user">User Accounts</option>
+                    <option value="admin">Admin Accounts</option>
                 </select>
             </div>
           </div>
@@ -42,16 +49,43 @@
 
         $('.dropdown-menu #lock-button').click( e => {
             console.dir($(e.target).attr("title"));
-            $.post('/user/lock', {id: $(e.target).attr("title")}, (result, status) => {
-                triggerAjaxFilter();
-            })
+
+            let type = $('#type-account').children("option:selected").val();
+
+            if (type === "user")
+            {
+                $.post('/user/lock', {id: $(e.target).attr("title")}, (result, status) => {
+                    triggerAjaxFilter();
+                })
+            } else if (type === "admin")
+            {
+                $.post('/admin/lock', {id: $(e.target).attr("title")}, (result, status) => {
+                    triggerAjaxFilter();
+                })
+            }
+
         });
 
         $('.dropdown-menu #unlock-button').click( e => {
             console.dir($(e.target).attr("title"));
+
+            let type = $('#type-account').children("option:selected").val();
+
+            if (type === "user")
+            {
+                $.post('/user/unlock', {id: $(e.target).attr("title")}, (result, status) => {
+                    triggerAjaxFilter();
+                })
+            } else if (type === "admin")
+            {
+                $.post('/admin/unlock', {id: $(e.target).attr("title")}, (result, status) => {
+                    triggerAjaxFilter();
+                })
+            }
+/*
             $.post('/user/unlock', {id: $(e.target).attr("title")}, (result, status) => {
             triggerAjaxFilter();
-            })
+            })*/
         });
         
         $('.selectpicker').change(triggerAjaxFilter);
@@ -81,6 +115,7 @@
             let data = {
                 sorted: $('#sorted').children("option:selected").val(),
                 nPerPage: $('#n-per-page').children("option:selected").val(),
+                typeAccount: $('#type-account').children("option:selected").val(),
                 pageNumber
             }
             sendRequest(data);
@@ -90,6 +125,7 @@
             let data = {
                 sorted: $('#sorted').children("option:selected").val(),
                 nPerPage: $('#n-per-page').children("option:selected").val(),
+                typeAccount: $('#type-account').children("option:selected").val(),
                 pageNumber: 1
             }
             console.log(data);
@@ -136,10 +172,14 @@
                                                 ***
                                                 </button> -->
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="/user/\{\{_id\}\}">Detail</a>
+                                                \{\{#if isAdminAccount\}\}
+                                                    <a class="dropdown-item" href="/admin/\{\{_id\}\}">Detail</a>
+                                                \{\{else\}\}
+                                                    <a class="dropdown-item" href="/user/\{\{_id\}\}">Detail</a>
+                                                \{\{/if\}\}
 
                                                 \{\{#if isLocked \}\}
-                                                    <button title="\{\{_id\}\}" style="cursor:pointer;" class="dropdown-item text-danger" id="unlock-button">Unlock</button>
+                                                        <button title="\{\{_id\}\}" style="cursor:pointer;" class="dropdown-item text-danger" id="unlock-button">Unlock</button>
                                                 \{\{else\}\}
                                                     <button title="\{\{_id\}\}" style="cursor:pointer;" class="dropdown-item text-danger" id="lock-button">Lock</button>
                                                 \{\{/if\}\}
@@ -202,18 +242,47 @@
                 $("#loader").css("position", "absolute");
 
                 $('.dropdown-menu #lock-button').click( e => {
-            console.dir($(e.target).attr("title"));
-            $.post('/user/lock', {id: $(e.target).attr("title")}, (result, status) => {
-                triggerAjaxFilter();
-            })
-        });
+                    console.dir($(e.target).attr("title"));
 
-        $('.dropdown-menu #unlock-button').click( e => {
-            console.dir($(e.target).attr("title"));
-            $.post('/user/unlock', {id: $(e.target).attr("title")}, (result, status) => {
-            triggerAjaxFilter();
-            })
-        });
+                    let type = $('#type-account').children("option:selected").val();
+
+                    if (type === "user")
+                    {
+                        $.post('/user/lock', {id: $(e.target).attr("title")}, (result, status) => {
+                                triggerAjaxFilter();
+                        })
+                    } else if (type === "admin")
+                    {
+                        $.post('/admin/lock', {id: $(e.target).attr("title")}, (result, status) => {
+                            console.log(result);
+                            if (result.status)
+                                triggerAjaxFilter();
+                            else
+                                location.reload();
+                        })
+                    }
+                });
+
+                $('.dropdown-menu #unlock-button').click( e => {
+                    console.dir($(e.target).attr("title"));
+
+                    let type = $('#type-account').children("option:selected").val();
+
+                    if (type === "user")
+                    {
+                        $.post('/user/unlock', {id: $(e.target).attr("title")}, (result, status) => {
+                            triggerAjaxFilter();
+                        })
+                    } else if (type === "admin")
+                    {
+                        $.post('/admin/unlock', {id: $(e.target).attr("title")}, (result, status) => {
+                            if (result.status)
+                                triggerAjaxFilter();
+                            else
+                                location.reload();
+                        })
+                    }
+                });
 
             });
         });
