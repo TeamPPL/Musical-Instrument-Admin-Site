@@ -358,8 +358,8 @@ exports.updateProduct = async (req, res, next) => {
       const description = fields.description;
       const filter = fields.filter;
       const price = parseFloat(fields.price);
-      const inStock = fields.inStock;
-      const sold = fields.sold;
+      const inStock = parseInt(fields.inStock);
+      const sold = parseInt(fields.sold);
       const manufacturer = fields.manufacturer;
       const discount = parseFloat(fields.discount);
       const sellPrice = price - discount;
@@ -551,8 +551,8 @@ exports.addProduct = async (req, res, next) => {
       const description = fields.description;
       const filter = fields.filter;
       const price = parseFloat(fields.price);
-      const inStock = fields.inStock;
-      const sold = fields.sold;
+      const inStock = parseInt(fields.inStock);
+      const sold = parseInt(fields.sold);
       const manufacturer = fields.manufacturer;
       const discount = parseFloat(fields.discount);
       const sellPrice = price - discount;
