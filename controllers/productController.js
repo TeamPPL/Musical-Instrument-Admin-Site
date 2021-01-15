@@ -592,3 +592,21 @@ exports.addProduct = async (req, res, next) => {
 
   //next();
 }
+
+exports.top10Sale = async (req, res, next) => {
+  const topSales = await productModel.top10Sale();
+  let sellers = [];
+  topSales.forEach(element => {
+    let seller = {
+      'title': element.title,
+      'price': element.price,
+      'sold': element.sold,
+      'createdDate': element.createdDate,
+      'id': element._id 
+    }
+    sellers.push(seller);
+  });
+  
+  console.log(sellers);
+  res.render('products/topSale', { sellers });
+}

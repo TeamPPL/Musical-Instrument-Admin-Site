@@ -230,7 +230,31 @@ exports.filter = async (sorted, nPerPage, pageNumber, search, minPrice, maxPrice
 
     return products;
 }
-  
+
+exports.top10Sale = async () => {
+    const productsCollection = db().collection('product');
+    let topSeller = await productsCollection.find({}).sort({sold: -1}).limit(10).toArray();
+    return topSeller;
+}
+
+exports.updateStock = async (id, qty) => {
+    const productsCollection = db().collection('product');
+    let sold = -qty;
+    console.log(qty);
+    await productsCollection.findOneAndUpdate(
+      { "_id": ObjectId(id) },
+      {
+        $inc: { 'inStock': qty, 'sold': sold }
+        
+      },
+      {
+        returnNewDocument: true
+      }
+      , function (error, result) {
+        return error;
+      }
+    );
+}
 /*
 return [
         {

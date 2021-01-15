@@ -362,13 +362,39 @@
             if (!isNextOrPrevBtn) {
                 pageNumber = parseInt($(e.target).html());
             }
-            console.log(pageNumber);
+            let price = $('#amount').val().split(" - ");
+            let priceMin = price[0];
+            let priceMax = price[1];
+
+            let search = $('#search-box').val();
+            let sorted = $('#sorted').children("option:selected").val();
+            let nPerPage = $('#n-per-page').children("option:selected").val();
+            let filter = $('#product-filter-selector li a.filter-selected').attr("title");
+            let manufacturer = $('#manufacturer-selector li a.manufacturer-selected').attr("title");
+
             let data = {
-                search: $('#search-box').val(),
-                sorted: $('#sorted').children("option:selected").val(),
-                nPerPage: $('#n-per-page').children("option:selected").val(),
-                pageNumber
+                sorted,
+                nPerPage,
+                pageNumber,
+                search,
+                priceMin,
+                priceMax,
+                filter,
+                manufacturer,
             }
+            //console.log(data);
+
+            //Change url
+            url.searchParams.set('sorted', sorted);
+            url.searchParams.set('nPerPage', nPerPage);
+            url.searchParams.set('pageNumber', pageNumber);
+            url.searchParams.set('search', search);
+            url.searchParams.set('priceMin', priceMin);
+            url.searchParams.set('priceMax', priceMax);
+            url.searchParams.set('filter', filter);
+            url.searchParams.set('manufacturer', manufacturer);
+            window.history.pushState({}, '', url);
+
             sendRequest(data);
         });
 

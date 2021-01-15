@@ -1,6 +1,7 @@
 
 const fs = require("fs");
 const bcrypt = require('bcrypt');
+const formidable = require('formidable');
 
 const adminAccountModel = require('../models/adminAccountsModel');
 

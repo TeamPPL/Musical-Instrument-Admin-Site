@@ -1,6 +1,6 @@
-const { fail } = require('assert');
 const fs = require('fs');
 const receiptModel = require('../models/receiptModel');
+const productModel = require('../models/productModel');
 
 exports.purchaseHistory = async (req, res, next) => {
     // if (req.user == undefined) {
@@ -15,7 +15,7 @@ exports.purchaseHistory = async (req, res, next) => {
             _id: item._id,
             name: item.info.name,
             createdDate: item.createdDate,
-            totalPrice: item.totalPrice,
+            totalPrice: item.totalPrice + item.shipping_fee,
             status: ""
         }
         let newStatus = item.status;
@@ -99,7 +99,7 @@ exports.index = async (req, res, next) => {
             _id: item._id,
             name: item.info.name,
             createdDate: item.createdDate,
-            totalPrice: item.totalPrice,
+            totalPrice: item.totalPrice + item.shipping_fee,
             status: ""
         }
         let newStatus = item.status;
@@ -204,7 +204,7 @@ exports.filter = async (req, res, next) => {
             _id: item._id,
             name: item.info.name,
             createdDate: item.createdDate.toString(),
-            totalPrice: item.totalPrice,
+            totalPrice: item.totalPrice + item.shipping_fee,
             status: ""
         }
         let newStatus = item.status;
@@ -231,12 +231,12 @@ exports.detail = async (req, res, next) => {
     let receipt = await receiptModel.findById(id);
     let info = receipt.info;
 
-    let totalPrice = receipt.totalPrice;
+    let itemsPrice = receipt.totalPrice;
     let shipping_fee = receipt.shipping_fee;
     let cartDetail = receipt.detail;
     let createdDate = receipt.createdDate;
     let status = "";
-    let itemsPrice = totalPrice - shipping_fee;
+    let totalPrice = itemsPrice + shipping_fee;
 
     let newStatus = receipt.status;
     if (newStatus == 0) {
@@ -250,15 +250,21 @@ exports.detail = async (req, res, next) => {
     } else {
         status = "Unknown";
     }
-    res.render('receipt/detail/receiptDetail', {status, totalPrice, shipping_fee, cartDetail, createdDate, info, itemsPrice});
+    res.render('receipt/detail/receiptDetail', { status, totalPrice, shipping_fee, cartDetail, createdDate, info, itemsPrice });
 }
 
 
-exports.cancel = async(req, res, next) => {
+exports.cancel = async (req, res, next) => {
     let id = req.body.id;
     let newStatus = req.body.status;
+    let status = "";
+    let receipt = await receiptModel.findById(id);
+    //console.log(receipt);
+    if (receipt.status == -1) {
+        res.send({ fail: 1, status });
+        return;
+    }
 
-    await receiptModel.updateStatusOne(id,newStatus);
 
     if (newStatus == 0) {
         status = "Pending";
@@ -267,10 +273,18 @@ exports.cancel = async(req, res, next) => {
     } else if (newStatus == 2) {
         status = "Delivered";
     } else if (newStatus == -1) {
+        let items = receipt.detail;
+        console.log(items);
+
+        for (var i in items) {
+            console.log(i);
+            await productModel.updateStock(items[i].item._id, items[i].qty);
+        }
         status = "Canceled";
     } else {
         status = "Unknown";
     }
-    
-    res.send({fail: 0, status});
+    await receiptModel.updateStatusOne(id, newStatus);
+
+    res.send({ fail: 0, status });
 }
