@@ -162,7 +162,7 @@ exports.index = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   const idProduct = req.params.id;
   const product = await productModel.findById(idProduct);
-  res.render('products/updateProduct', {product});
+  res.render('products/updateproduct', {product});
 }
 
 exports.filter = async (req, res, next) => {
