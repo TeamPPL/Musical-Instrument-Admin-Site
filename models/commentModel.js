@@ -43,7 +43,7 @@ exports.insertOne = async(objectCmt) => {
 
 exports.totalComment = async(idProduct) => {
     const CommentCollection = db().collection('Comments');
-    let comments = await CommentCollection.find({ID_Product : id}).toArray();
+    let comments = await CommentCollection.find({ID_Product : idProduct}).toArray();
 
     return comments.countDocuments();
 }
