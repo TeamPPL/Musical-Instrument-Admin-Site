@@ -16,6 +16,35 @@ const receiptRouter = require('./routes/receipt');
 const { handlebars } = require('hbs');
 const hbs = require('express-handlebars');
 
+hbs.create({}).handlebars.registerHelper('starCmt', function(n, block) {
+  let ulBlock = '<ul  class="p_rating">';
+  for(let i = 0; i < n; ++i){
+    ulBlock += block.fn(i);    
+  }
+  return (ulBlock + "</ul>");
+});
+hbs.create({}).handlebars.registerHelper('SingularOrPlural', function(number, block) {
+  let converter = block.fn(this);
+
+  if(number == 1){
+    converter = number + converter.substring(0, converter.length - 1);
+  }
+  else {
+    converter = number + converter;
+  }
+
+  return converter;
+});
+hbs.create({}).handlebars.registerHelper('MiniImgSlider', function(nameImg, block) {
+  let converter = null;
+  if(nameImg !== undefined){
+    converter = block.fn(this);
+  }
+
+  return converter;
+});
+
+
 const app = express();
 app.engine( 'hbs', hbs( {
   extname: 'hbs',

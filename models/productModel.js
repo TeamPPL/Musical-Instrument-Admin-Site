@@ -26,15 +26,34 @@ exports.relatedProducts = async (id) => {
     let product = await productsCollection.findOne({
         _id: ObjectId(id)
     });
-
     let relatedProducts = await productsCollection.find({
         filter: product.filter
-    }).toArray();
+    }).limit(5).toArray();
+
+    console.log(product._id);
+    let key = -1;
+    // for      // cần loại trừ những sản phẩm trùng
+    for(let entity of relatedProducts){
+        console.log(entity);
+        key = key + 1;
+        if(entity._id.equals(product._id)){
+            break;
+        }
+        else {
+            // do nothing
+        }
+    }
+
+    result = relatedProducts.slice(0,key).concat(relatedProducts.slice(key+1,relatedProducts.length));
+    if(result.length > 4){
+        result.pop();   
+    }
+
     //console.log(id);
     //console.log(productsCollection);
     //console.log(products);
     
-    return relatedProducts;
+    return result;
 }
 
 exports.lastestProducts = async (id) => {
