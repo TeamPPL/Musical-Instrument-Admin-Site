@@ -15,14 +15,11 @@
         <div class="categories_main_inner">
             <div class="row row_disable">
                 <div class="col-lg-9 float-md-right">
-                    <div class="showing_fillter">
-                        <div class="search-container">
-                            <input id="search-box" type="text" placeholder="Search.." name="searchText">
-                            <button id="search-button" type="submit"><i class="fa fa-search"></i></button>
-                        </div>
+                    <div id="scrolling-anchor" class="showing_fillter">
                         <div class="row m0">
-                            <div class="first_fillter">
-                                <h4>Showing {{pageInfo.firstItemOfPage}} to {{pageInfo.lastItemOfPage}} of {{pageInfo.totalCount}} total</h4>
+                            <div id="currentPageInfo" class="first_fillter">
+                                <h4>Showing {{pageInfo.firstItemOfPage}} to {{pageInfo.lastItemOfPage}} of
+                                    {{pageInfo.totalCount}} total</h4>
                             </div>
                             <div class="secand_fillter">
                                 <h4>SORT BY :</h4>
@@ -41,18 +38,25 @@
                                     <option value="24">24</option>
                                 </select>
                             </div>
-                            <!--
-                            <div class="four_fillter">
-                                <h4>View</h4>
-                                <a class="active" href="#"><i class="icon_grid-2x2"></i></a>
-                                <a href="#"><i class="icon_grid-3x3"></i></a>
+                            <div class="search-container input-group">
+                                <input id="search-box" class="form-control" type="text" placeholder="Search.."
+                                    name="searchText">
+                                <button id="search-button" type="submit"><i class="fa fa-search"></i></button>
                             </div>
-                            -->
+                            <!--================Products & Paging Area =================-->
                         </div>
                     </div>
-                    <!--================Products & Paging Area =================-->
-                    <div id="product-items-partial-displayer" >
+
+                    <div id="loader" class="row m0 d-flex justify-content-center"
+                        style="visibility: hidden; position: fixed;">
+                        <img src="/img/loading.gif" />
+                    </div>
+
+                    <div id="product-items-partial-displayer">
+                        <ul>
+
                         {{>productItems}}
+                        </ul>
                     </div>
                     <!--================End Products & Paging Area =================-->
                 </div>
@@ -62,77 +66,58 @@
                             <div class="l_w_title">
                                 <h3>Categories</h3>
                             </div>
-                            <ul class="navbar-nav">
+                            <ul id="product-filter-selector" class="navbar-nav">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a title="guitar" class="nav-link dropdown-toggle
+                                        {{#if filterOption.isGuitar}} filter-selected {{/if}}
+                                    ">
                                     Guitar
-                                    <i class="icon_plus" aria-hidden="true"></i>
-                                    <i class="icon_minus-06" aria-hidden="true"></i>
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li class="nav-item"><a class="nav-link" href="#">Classic</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Ascoutic</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Electric</a></li>
-                                    </ul>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <li class="nav-item dropdown
+                                ">
+                                    <a title="violin" class="nav-link dropdown-toggle
+                                        {{#if filterOption.isViolin}} filter-selected {{/if}}
+                                    ">
                                     Violin
-                                    <i class="icon_plus" aria-hidden="true"></i>
-                                    <i class="icon_minus-06" aria-hidden="true"></i>
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li class="nav-item"><a class="nav-link" href="#">Classic</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Ascoutic</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Electric</a></li>
-                                    </ul>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <li class="nav-item dropdown
+                                ">
+                                    <a title="piano" class="nav-link dropdown-toggle
+                                        {{#if filterOption.isPiano}} filter-selected {{/if}}
+                                    ">
                                     Piano
-                                    <i class="icon_plus" aria-hidden="true"></i>
-                                    <i class="icon_minus-06" aria-hidden="true"></i>
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li class="nav-item"><a class="nav-link" href="#">Classic</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Ascoutic</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Electric</a></li>
-                                    </ul>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <li class="nav-item dropdown
+                                ">
+                                    <a title="drum" class="nav-link dropdown-toggle
+                                        {{#if filterOption.isDrum}} filter-selected {{/if}}
+                                    ">
                                     Drum
-                                    <i class="icon_plus" aria-hidden="true"></i>
-                                    <i class="icon_minus-06" aria-hidden="true"></i>
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li class="nav-item"><a class="nav-link" href="#">Classic</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Ascoutic</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Electric</a></li>
-                                    </ul>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Other
-                                    <i class="icon_plus" aria-hidden="true"></i>
-                                    <i class="icon_minus-06" aria-hidden="true"></i>
+                                <li class="nav-item dropdown
+                                ">
+                                    <a title="all" class="nav-link dropdown-toggle
+                                        {{#if filterOption.isAll}} filter-selected {{/if}}
+                                    ">
+                                    All
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li class="nav-item"><a class="nav-link" href="#">Classic</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Ascoutic</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Electric</a></li>
-                                    </ul>
                                 </li>
                             </ul>
                         </aside>
                         <aside class="l_widgest l_fillter_widget">
                             <div class="l_w_title">
-                                <h3>Filter section</h3>
+                                <h3>Price</h3>
                             </div>
                             <div id="slider-range" class="ui_slider"></div>
                             <label for="amount">Price:</label>
-                            <input type="text" id="amount" readonly>
+                            <input width="250px" type="text" id="amount" readonly>
+                            <button id="price-range-button" class="ml-5">Filter</button>
                         </aside>
+                        <!--
                         <aside class="l_widgest l_color_widget">
                             <div class="l_w_title">
                                 <h3>Color</h3>
@@ -164,16 +149,48 @@
                                 <li><a href="#"></a></li>
                             </ul>
                         </aside>
+                        -->
                         <aside class="l_widgest l_menufacture_widget">
                             <div class="l_w_title">
                                 <h3>Manufacturer</h3>
                             </div>
-                            <ul>
-                                <li><a href="#">Gibson</a></li>
-                                <li><a href="#">Steinway</a></li>
-                                <li><a href="#">Sennheiser</a></li>
-                                <li><a href="#">Yamaha</a></li>
-                                <li><a href="#">Roland</a></li>
+                            <ul id="manufacturer-selector">
+                                <li class="nav-item-manufacturer
+                                ">
+                                    <a title="gibson" class="
+                                        {{#if filterOption.isGibson}} manufacturer-selected {{/if}}
+                                    ">Gibson</a>
+                                </li>
+                                <li class="nav-item-manufacturer
+                                ">
+                                    <a title="steinway" class="
+                                        {{#if filterOption.isSteinway}} manufacturer-selected {{/if}}
+                                    ">Steinway</a>
+                                </li>
+                                <li class="nav-item-manufacturer
+                                ">
+                                    <a title="sennheiser" class="
+                                        {{#if filterOption.isSennheiser}} manufacturer-selected {{/if}}
+                                    ">Sennheiser</a>
+                                </li>
+                                <li class="nav-item-manufacturer
+                                ">
+                                    <a title="yamaha" class="
+                                        {{#if filterOption.isYamaha}} manufacturer-selected {{/if}}
+                                    ">Yamaha</a>
+                                </li>
+                                <li class="nav-item-manufacturer
+                                ">
+                                    <a title="roland" class="
+                                        {{#if filterOption.isRoland}} manufacturer-selected {{/if}}
+                                    ">Roland</a>
+                                </li>
+                                <li class="nav-item-manufacturer
+                                ">
+                                    <a title="all" class="
+                                        {{#if filterOption.isAllManufacturer}} manufacturer-selected {{/if}}
+                                    ">All
+                                </li>
                             </ul>
                         </aside>
                     </div>
@@ -183,27 +200,149 @@
     </div>
 </section>
 
+
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
+<link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css" rel="stylesheet"
+    type="text/css" />
+
 <script>
     $(document).ready(function(){
-        
+        const url = new URL(window.location);
+        let trigger = true;
         Handlebars.registerHelper("log", function(something) {
         console.log(something);
         });
+        Handlebars.registerHelper("minus", function (a, b) { return a - b; });
 
         $('.selectpicker').change(triggerAjaxFilter);
-        $("#search-button").click(triggerAjaxFilter)
-        $('#search-box').bind("enterKey",triggerAjaxFilter);
-        $('#search-box').keyup(function(e){
-            if(e.keyCode == 13)
-            {
+        $("#search-button").click(triggerAjaxFilter);
+        $('#search-box').bind("enterKey", triggerAjaxFilter);
+        $('#search-box').keyup(function (e) {
+            if (e.keyCode == 13) {
                 $(this).trigger("enterKey");
             }
         });
 
+        //add to cart dialog
+        $('#dialog').dialog({
+            autoOpen: false,
+            draggable: true,
+            dialogClass: "no-close",
+            title: "Cart Report",
+            show: "blind",
+            hide: "explode",
+            buttons: [
+                {
+                    class: "dialog_btn",
+                    text: "View Cart",
+                    click: function () {
+                        window.location.href = '/cart';
+
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    class: "dialog_btn",
+                    text: "Continue Shopping",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            ],
+            open: function (event, ui) {
+                $(".ui-widget-overlay").click(function () {
+                    $('#dialog').dialog('close');
+                });
+            }
+
+        });
+
+        ///Add to cart
+        $("#product-items-partial-displayer").on("click", ".btn-add-to-cart",function (e) {
+            trigger = true;
+            let data = {
+                id: $(this).val(),
+            }
+
+            $('#product-items-partial-displayer').css('pointerEvents', 'none');
+            document.getElementById("product-items-partial-displayer").style.opacity = "0.5";
+            $(this).html('Adding');
+            trigger = false;
+            $.post('/cart/add-to-cart', data, (result, status) => {
+                if (status == "success") {
+                    //set dialog html
+                    let name = result.item_name;
+                    if (result.fail != 1) { //success
+                        $(this).html('Add To Cart');
+                        $(this).blur();
+                        $('#go_to_cart').html(result.cartCount);
+                        let qty = result.item_qty;
+                        let total = result.item_total;
+
+                        $('#dialog').html("Product: " + name + "<br>" + "In cart: " + qty + "<br>Total: $" + total);
+
+                    }
+                    else { // out of stock
+                        $('#dialog').html("This product is out of stock:<br>"+name);
+                    }
+
+                    //set position
+                    e.pageX += 25;
+                    e.pageY += 40;
+                    var pos = { my: "left top", at: "left bottom", of: e }
+
+                    $("#dialog").dialog("option", "position", pos)
+                        .dialog("open");
+
+                    let dialog_popup = document.getElementById("dialog");
+                    if (!elementInViewport(dialog_popup)) {
+                        dialog_popup.scrollIntoView();
+                    }
+                }
+                else {
+
+                }
+                document.getElementById("product-items-partial-displayer").style.opacity = "1";
+                $('#product-items-partial-displayer').css('pointerEvents', 'auto');
+                
+
+                return;
+            })
+        });
+        ////////////////
+
+        //Filter product
+        $('#product-filter-selector li a').click( (e) => {
+            console.log(e.target);
+            //Remove effect for previous button
+            $('#product-filter-selector li a.filter-selected').removeClass("filter-selected");
+
+            //Add effect for previous button
+            $(e.target).addClass("filter-selected");
+            triggerAjaxFilter();
+        });
+
+        //Manufacturer
+        $('#manufacturer-selector li a').click( (e) => {
+            $('#manufacturer-selector li a.manufacturer-selected').removeClass("manufacturer-selected");
+
+            $(e.target).addClass("manufacturer-selected");
+            triggerAjaxFilter();
+        });
+
+        //Price range button
+        $('#price-range-button').click(triggerAjaxFilter);
+
+        //Paginate
         $('#product-items-partial-displayer').on("click", '.pagination_area .pagination li a', (e) => {
             e.preventDefault();
+            //Scroll to top
+            $('body,html').animate({
+                scrollTop: $("#scrolling-anchor").offset().top - 50,
+            }, 700);
+
             let classList = $(e.target).attr("class");
             let classArr = classList.split(" ");
             let pageNumber;
@@ -234,62 +373,137 @@
         });
 
         function triggerAjaxFilter() {
+            let price = $('#amount').val().split(" - ");
+            let priceMin = price[0];
+            let priceMax = price[1];
+
+            let search = $('#search-box').val();
+            let sorted = $('#sorted').children("option:selected").val();
+            let nPerPage = $('#n-per-page').children("option:selected").val();
+            let filter = $('#product-filter-selector li a.filter-selected').attr("title");
+            let manufacturer = $('#manufacturer-selector li a.manufacturer-selected').attr("title");
+            let pageNumber = 1;
+
             let data = {
-                search: $('#search-box').val(),
-                sorted: $('#sorted').children("option:selected").val(),
-                nPerPage: $('#n-per-page').children("option:selected").val(),
-                pageNumber: 1
+                sorted,
+                nPerPage,
+                pageNumber,
+                search,
+                priceMin,
+                priceMax,
+                filter,
+                manufacturer,
             }
-            
-            console.log(data);
+            //console.log(data);
+
+            //Change url
+            url.searchParams.set('sorted', sorted);
+            url.searchParams.set('nPerPage', nPerPage);
+            url.searchParams.set('pageNumber', pageNumber);
+            url.searchParams.set('search', search);
+            url.searchParams.set('priceMin', priceMin);
+            url.searchParams.set('priceMax', priceMax);
+            url.searchParams.set('filter', filter);
+            url.searchParams.set('manufacturer', manufacturer);
+            window.history.pushState({}, '', url);
+
             sendRequest(data);
             return;
         }
-        
+
         function sendRequest(data) {
             $.post('/products', data, (result, status) => {
-                //alert("Data: " + data + "\nStatus: " + status);
-                //console.log(data);
-                //Handlebars.registerPartial('productItems', '{{productItems}}');
-                //productItems = data.productItems;
+                //console.log(status);
+                //let source   = result.partials;
+                let sourceProductsItem = `<div class="categories_product_area">
+                                <div class="row">
+                                    \{\{#each productItems\}\}
+                                    <div class="col-lg-4 col-sm-6">
+                                        <div class="l_product_item">
+                                            <div class="l_p_img">
+                                                <a href="/products/detail/\{\{_id\}\}" ><img src="\{\{cover\}\}" width="270" height="480"></a>
+                                            </div>
+                                            <div class="l_p_text">
+                                                <ul>
+                                                    <li>
+                                                        <form method="POST" action="/products/remove">
+                                                            <button style="cursor: pointer;" name="id" value="\{\{_id\}\}" class="add_cart_btn">Remove product</button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                                <h4>\{\{title\}\}</h4>
+                                                \{\{#if discount\}\}
+                                                    <h5><del>\$\{\{price\}\}</del>  \$\{\{minus price discount\}\}</h5>
+                                                \{\{else\}\}
+                                                    <h5>\$\{\{price\}\}</h5>
+                                                \{\{/if\}\}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    \{\{/each\}\}
+                                </div>
+                                \{\{#if pageInfo.isNotEmpty\}\}
+                                    <nav aria-label="Page navigation example" class="pagination_area">
+                                        <ul class="pagination" id="pagination">
+                                            \{\{#if pageInfo.isFirstPage \}\}
+                                                <!-- Do nothing -->
+                                            \{\{else\}\}
+                                                <li class="page-item prev"><a class="page-link prev" ><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+                                            \{\{/if\}\}
 
-                //let productItemsPartial = Handlebars.partials[productItems];
-                //console.log(productItemsPartial);
-                //$('#product-items-partial-displayer').html(productItemsPartial(result));
-                console.log(status);
-                let source   = result.partials;
-                
-                console.log(source);
-                let template = Handlebars.compile(source);
-                //console.log(template);
-                let htmlCompiled = template(result);
-                //let htmlCompiled = Handlebars.template(template);
-                //console.log(htmlCompiled);
-                // you will now have some html that you will need to insert into your page
-                document.getElementById("product-items-partial-displayer").innerHTML = htmlCompiled;
-                
+                                            \{\{#each pageInfo.pageList\}\}
+                                                \{\{#if this.isCurrentPage\}\}
+                                                    <li class="page-item current"><a class="page-link current" >\{\{this.index\}\}</a></li>
+                                                \{\{else\}\}
+                                                    <li class="page-item"><a class="page-link" >\{\{this.index\}\}</a></li>
+                                                \{\{/if\}\}
+                                            \{\{/each\}\}
+                                            \{\{#if pageInfo.isLastPage \}\}
+                                                <!-- Do nothing -->
+                                            \{\{else\}\}
+                                                <li class="page-item next"><a class="page-link next" ><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                                            \{\{/if\}\}
+                                        </ul>
+                                    </nav>
+                                \{\{else\}\}
+                                    <h6>No product available.</h6>
+                                \{\{/if\}\}
+                            </div>`;
+                let sourceCurrentPageInfo = `<h4>Showing \{\{pageInfo.firstItemOfPage\}\} to \{\{pageInfo.lastItemOfPage\}\} of \{\{pageInfo.totalCount\}\} total</h4>`
+                //console.log(source);
+                let templateProductsItem = Handlebars.compile(sourceProductsItem);
+                let templateCurrentPageInfo = Handlebars.compile(sourceCurrentPageInfo);
+
+                let htmlProductsItemCompiled = templateProductsItem(result);
+                let htmlCurrentPageInfoCompiled = templateCurrentPageInfo(result);
+
+                document.getElementById("product-items-partial-displayer").innerHTML = htmlProductsItemCompiled;
+                document.getElementById("currentPageInfo").innerHTML = htmlCurrentPageInfoCompiled;
+
+                //Scroll to top
+                $('body,html').animate({
+                    scrollTop: $("#scrolling-anchor").offset().top - 50,
+                }, 700);
+
             });
             return;
         }
-    });
 
-    //});
-    /*
-    function submitForm() {
-        form = document.getElementById('fillter-form');
-        console.log(form);
-        form.submit();
-    }
-    */
+        $(document).ajaxStart(() => {
+            if (trigger == true) {
+                document.getElementById("product-items-partial-displayer").innerHTML = "";
+                // Show image container
+                $("#loader").css("visibility", "visible");
+                $("#loader").css("position", "relative");
+            }
+        });
+        $(document).ajaxComplete(() => {
+            // Hide image container
+            if (trigger == true) {
+                $("#loader").css("visibility", "hidden");
+                $("#loader").css("position", "absolute");
+            }
+        });
+    });
 </script>
 <!--================End Categories Product Area =================-->
-
-<!--
-    
-            <form method="GET" action="/products" id="fillter-form">
-                    <script id="product-items-partial" type="text/x-handlebars-template">
-                    </script>
-                    
-                    <div id="product-items-partial-displayer" >
-                    </div>
-                    -->
