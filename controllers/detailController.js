@@ -1,5 +1,6 @@
 const productModel = require('../models/productModel');
-const filterModel = require('../models/filterModel')
+const filterModel = require('../models/filterModel');
+const commentModel = require('../models/commentModel');
 
 const MAX_RELATED_PRODUCT_PER_PAGE = 4;
 

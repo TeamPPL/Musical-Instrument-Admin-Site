@@ -1,5 +1,5 @@
 const ObjectId = require('mongodb').ObjectId;
-const {db} = require('../dal/db');
+const {db} = require('../dal/dal');
 
 
 exports.getCommentOfProducts = async(id) => {
