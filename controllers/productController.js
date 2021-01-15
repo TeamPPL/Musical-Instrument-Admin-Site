@@ -107,7 +107,7 @@ exports.index = async (req, res, next) => {
     prevPage: pageNumber - 1,
     nextPage: pageNumber + 1,
     firstItemOfPage: totalPage > 0 ? (pageNumber - 1) * nPerPage + 1 : 0,
-    lastItemOfPage: productItems.length < nPerPage ? (pageNumber - 1) * nPerPage + productItems.length : pageNumber * nPerPage - 1,
+    lastItemOfPage: productItems.length < nPerPage ? (pageNumber - 1) * nPerPage + productItems.length : pageNumber * nPerPage,
     isFirstPage,
     isLastPage,
     pageList,
@@ -260,7 +260,7 @@ exports.filter = async (req, res, next) => {
     prevPage: pageNumber - 1,
     nextPage: pageNumber + 1,
     firstItemOfPage: totalPage > 0 ? (pageNumber - 1) * nPerPage + 1 : 0,
-    lastItemOfPage: productItems.length < nPerPage ? (pageNumber - 1) * nPerPage + productItems.length : pageNumber * nPerPage - 1,
+    lastItemOfPage: productItems.length < nPerPage ? (pageNumber - 1) * nPerPage + productItems.length : pageNumber * nPerPage,
     isFirstPage,
     isLastPage,
     pageList,
@@ -485,7 +485,7 @@ exports.removeProduct = async (req, res, next) => {
   if (result.deletedCount === 0)
     res.send("Remove failed!");
   else
-    res.redirect(req.get('referer')); //refresh
+    res.redirect('/products'); //refresh
   //console.log(productItems);
 };
 
