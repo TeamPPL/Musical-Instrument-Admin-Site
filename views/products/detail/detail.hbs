@@ -97,7 +97,7 @@
                     <p>In stock: {{productItems.inStock}}</p>
 
                     <a href="/products/updateproduct/{{productItems._id}}"><button class="add_cart_btn" style="margin-top: 15px;">Edit this product</button></a>
-                    <form method="POST" action="/products/remove">
+                    <form method="POST" action="/products/remove" style="display: inline-block;">
                         <button class="add_cart_btn" style="margin-top: 15px;">Remove this product</button>
                         <input style="width: 0px; height: 0px; border: none;" name="id" value="{{productItems._id}}"/>
                     </form>
