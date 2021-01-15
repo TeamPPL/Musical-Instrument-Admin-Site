@@ -14,7 +14,7 @@ router.post('/detail/updateproduct', productController.updateProduct)
 router.get('/detail/:id', ensureAuth, detailController.index);
 router.get('/addproduct', ensureAuth, productController.getAddProduct);
 router.get('/updateproduct/:id', ensureAuth, productController.update);
-
+router.get('/top10sale', ensureAuth, productController.top10Sale);
 
 router.post('/', ensureAuth, productController.filter);
 router.post('/upload', ensureAuth, productController.addProduct);

@@ -1,0 +1,36 @@
+<section class="shopping_cart_area p_100" id="shopping-cart">
+    <div class="container">
+
+        <div class="single_c_title">
+            <h2>Top 10 sellers</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="purchase_list" id="receipt-list-partial-displayer">
+                    <table class='table table-bordered table-condensed table-striped table-hover'>
+                        <thead>
+                            <tr class='clickable-row' data-href='url://'>
+                                <th scope="col">#</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col" style="text-align: center">Price</th>
+                                <th scope="col" style="text-align: center">Sold</th>
+                                <th scope="col" style="text-align: center">Date Added</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each sellers}}
+                            <tr>
+                                <th scope="row">{{@index}}</th>
+                                <td><a href="/products/detail/{{id}}">{{title}}</a></td>
+                                <td>${{price}}</td>
+                                <td style="text-align: center">${{sold}}</td>
+                                <td>{{createdDate}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
