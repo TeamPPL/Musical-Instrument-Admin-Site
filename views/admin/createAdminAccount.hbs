@@ -84,29 +84,12 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 form-group">
-                                    <div class="g-recaptcha" data-sitekey="6Lf1IygaAAAAALSvxobrDtV3cjXX9UfevGkLysgx"></div>
-                                    <div id="captcha-notification" style="display: none;" class="text-danger">
-                                        <svg style="margin-top: 5px;" role="img" height="16" width="16" viewBox="0 0 24 24" aria-label="Error indicator">
-                                            <circle cx="12" cy="12" r="9.5" fill="none" stroke="#dc3545"></circle>
-                                            <line x1="12" y1="14" x2="12" y2="7" fill="#dc3545" stroke="#dc3545"></line>
-                                            <circle cx="12" cy="16.65" r=".35" fill="#dc3545" stroke="#dc3545"></circle>
-                                        </svg>
-                                        <span>You need to select captcha.</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 mb-5">
-                                    <input id="termCheck" name="termCheck" value="true" type="checkbox"/>
-                                    <label for="termCheck">By checking this box, you agree to our <a target="_blank" href="https://www.termsfeed.com/live/367abce2-d8a4-46e6-a330-1eb70ac544fc">Privacy Policy</a></label>
-                                </div>
-
                                 <div id="loader" class="col-lg-6 ml-3" style="visibility: hidden; position: absolute;">
                                     <img src="/img/loading.gif"/>
                                 </div>
 
                                 <div class="col-lg-6 form-group">
-                                    <button disabled id="submitBtn" type="submit" class="btn subs_btn form-control">register now</button>
+                                    <button id="submitBtn" type="submit" class="btn subs_btn form-control">register now</button>
                                 </div>
                             </form>
                         </div>
@@ -309,18 +292,6 @@
                 }
 
                 return true;
-            }
-
-            function checkCheckBox() {
-                console.log(this.checked);
-                if (this.checked)
-                {
-                    console.log(this.checked);
-                    $('#submitBtn').prop("disabled", false);
-                    return true;
-                }
-
-                $('#submitBtn').prop("disabled", true);
             }
             
 

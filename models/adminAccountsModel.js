@@ -1,6 +1,26 @@
 const ObjectId = require('mongodb').ObjectId;
 const {db} = require('../dal/dal');
 
+exports.checkSuperAdmin = async (username) => {
+  const accountCollection = db().collection('super-admin');
+  //console.log(name);
+  const account = await accountCollection.findOne({
+      username: username
+  });
+
+  return account;
+}
+
+exports.checkSuperAdminId = async (id) => {
+  const accountCollection = db().collection('super-admin');
+  //console.log(name);
+  const account = await accountCollection.findOne({
+      _id: ObjectId(id)
+  });
+
+  return account;
+}
+
 exports.findAdminByUsername = async (name) => {
   const accountCollection = db().collection('admin-accounts');
   //console.log(name);
@@ -97,6 +117,24 @@ exports.unlockAccount = async (id) => {
               $set : {
                 isLocked: false
               }
+          });
+  } catch (err) {
+      return console.log('Database Connection Error!', err.message);
+  }
+  return result;
+}
+
+exports.updatePassword = async (identifier, hashedPass) => {
+  const accountCollection = db().collection('account');
+  let result = undefined;
+
+  try {
+      result = await accountCollection.findOneAndUpdate(
+          identifier,
+          {
+            $set : {
+              password: hashedPass
+            }
           });
   } catch (err) {
       return console.log('Database Connection Error!', err.message);

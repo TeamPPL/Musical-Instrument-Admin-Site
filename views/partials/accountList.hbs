@@ -36,9 +36,9 @@
                     <a class="dropdown-item" href="/user/{{_id}}">Detail</a>
 
                     {{#if isLocked }}
-                      <button title="{{_id}}"  style="cursor:pointer;" class="dropdown-item text-danger unlock-button">UnLock</button>
+                      <button title="{{_id}}" style="cursor:pointer;" class="dropdown-item text-danger" id="unlock-button">Unlock</button>
                     {{else}}
-                      <button title="{{_id}}" style="cursor:pointer;" class="dropdown-item text-danger lock-button">Lock</button>
+                      <button title="{{_id}}" style="cursor:pointer;" class="dropdown-item text-danger" id="lock-button">Lock</button>
                     {{/if}}
 
 

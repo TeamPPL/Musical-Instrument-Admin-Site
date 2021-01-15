@@ -11,6 +11,7 @@ exports.login = (req, res, next) => {
 };
 
 exports.info = async (req, res, next) => {
+
     let username = req.user.username;
     let account = await adminAccountModel.findAdminByUsername(username);
   
@@ -18,12 +19,19 @@ exports.info = async (req, res, next) => {
 }
 
 exports.changePassword = async (req, res, next) => {
+  if (req.user.isSuperAdmin)
+  {
+    req.flash("info", "Super admin can't change their info from here.");
+    res.redirect(req.get("referer"));
+  }
+
     const currentPassword = req.body.currentPassword;
     const newPassword = req.body.newPassword;
     const comfirmNewPassword = req.body.reNewPassword;
+    
   
     const username = req.user.username;
-    const account = await adminAccountModel.findAdminByUsername(username);
+    let account = await adminAccountModel.findAdminByUsername(username);
   
     if (account)
     {
@@ -44,7 +52,7 @@ exports.changePassword = async (req, res, next) => {
     //Hash password and save to DB.
     let hash = bcrypt.hashSync(newPassword, saltRounds);
     let accountReturn = await adminAccountModel.updatePassword({username: username}, hash);
-    
+
     if (accountReturn)
     {
       //Change pass successfull.
@@ -61,6 +69,12 @@ exports.changePassword = async (req, res, next) => {
   }
 
   exports.updateAccountInfo = async (req, res, next) => {
+    if (req.user.isSuperAdmin)
+  {
+    req.flash("info", "Super admin can't change their info from here.");
+    res.redirect(req.get("referer"));
+  }
+
     const form = formidable({ multiples: true });
     form.parse(req, async (err, fields, files) => {
     if (err) {
@@ -175,7 +189,13 @@ exports.checkSignupData = async (req, res, next) => {
   
     if (email !== "" && username !== "") {
       let usernameList = await adminAccountModel.findAdminByUsername(username);
-  
+      let isSuperAdmin = await adminAccountModel.checkSuperAdmin(username);
+
+      if (isSuperAdmin)
+      {
+        res.send({status: 0});
+      }
+
       if (usernameList)
       {
         res.send({status: 0});
@@ -190,4 +210,9 @@ exports.checkSignupData = async (req, res, next) => {
     }
   
     res.send({status: 1});
+}
+
+exports.logout = async (req, res, next) => {
+  req.logout();
+  res.redirect(req.get('referer'));
 }

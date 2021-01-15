@@ -89,9 +89,9 @@
           </div>
           <div id="lock-button-displayer" class="col-lg-5 mt-4 form-group">
             {{#if account.isLocked }}
-              <button id="lock-unlock-btn" class="btn btn-danger form-control"><img style="width:20px;height:20px;filter: invert(1);" src="/img/open-padlock.png" /> Unlock this user's account</button>
+              <button style="cursor: pointer;" id="lock-unlock-btn" class="btn btn-danger form-control"><img style="width:20px;height:20px;filter: invert(1);" src="/img/open-padlock.png" /> Unlock this user's account</button>
             {{else}}
-              <button id="lock-unlock-btn" class="btn btn-danger form-control"><img style="width:20px;height:20px;filter: invert(1);" src="/img/padlock.png" /> Lock this user's account</button>
+              <button style="cursor: pointer;" id="lock-unlock-btn" class="btn btn-danger form-control"><img style="width:20px;height:20px;filter: invert(1);" src="/img/padlock.png" /> Lock this user's account</button>
             {{/if}}
         </div>
       </div>

@@ -14,6 +14,12 @@ module.exports = (app) => {
 
     passport.deserializeUser(async (id, done) => {
         let account = await adminAccountModel.findAdminById(id);
+        let superAdmin = await adminAccountModel.checkSuperAdminId(id);
+
+        if (superAdmin)
+        {
+          return done(null, superAdmin);
+        }
 
         if (account == null) 
         {
@@ -28,9 +34,23 @@ module.exports = (app) => {
     passport.use(
       new LocalStrategy( async (username, password, done) => {
         let account = await adminAccountModel.findAdminByUsername(username);
+        let superAdmin = await adminAccountModel.checkSuperAdmin(username);
+
+        //Check if this is super admin
+        if (superAdmin)
+        {
+          //Check password
+          if (!bcrypt.compareSync(password, superAdmin.password))
+          {
+            //Incorrect
+            return done(null, false, {message: "Incorrect password!"});
+          }
+          console.dir(superAdmin);
+          return done(null, superAdmin);
+        }
         
         //Account doesn't exist
-        if (account == null) 
+        if (account === null) 
         {
           return done(null, false, {message: "This username doesn't exist!"});
         }
