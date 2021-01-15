@@ -19,7 +19,7 @@ router.get('/new-admin', ensureAuth, ensureSuperAdmin, adminAccountsController.g
 //Post login form
 router.post('/login', passport.authenticate('local', {
   successRedirect: '../',
-  failureRedirect: '/user/login',
+  failureRedirect: '/admin/login',
   failureFlash: true,
 })
 );
@@ -31,5 +31,10 @@ router.post('/new-admin/checkdata', adminAccountsController.checkSignupData);
 
 //Logout
 router.get('/logout', ensureAuth, adminAccountsController.logout);
+
+router.post('/lock', ensureAuth, adminAccountsController.lock);
+router.post('/unlock', ensureAuth, adminAccountsController.unlock);
+
+router.get('/:id', ensureAuth, adminAccountsController.getUserDetail);
 
 module.exports = router;

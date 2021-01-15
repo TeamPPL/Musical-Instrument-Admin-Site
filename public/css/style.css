@@ -6264,7 +6264,7 @@ i:before {
 }
 
 .showing_fillter .secand_fillter .bootstrap-select {
-  width: 140px !important;
+  width: 160px !important;
   display: inline-block;
   text-transform: uppercase;
   position: relative;
@@ -7029,4 +7029,20 @@ input[type=text] {
 .pagination_area .pagination li:hover a {
   background: #333333;
   color: #fff;
+}
+
+#product-filter-selector li {
+  cursor: pointer;
+}
+
+#manufacturer-selector li {
+  cursor: pointer;
+}
+
+#product-filter-selector li a.filter-selected {
+  background-color: gainsboro;
+}
+
+#manufacturer-selector li a.manufacturer-selected{
+  background-color: gainsboro;
 }

@@ -5,6 +5,6 @@ module.exports = (req, res, next) => {
   if (req.user.isSuperAdmin) {
       return next();
   }
-  req.flash("message-warning", "Only super admin can do this!")
-  res.redirect(req.get("referer"));
+  req.flash("message-warning", "Only super admin can do this!");
+  return res.redirect(req.get("referer"));
 }

@@ -42,7 +42,7 @@
   }
 </style>
 
-<div class="container">
+<div id="scrolling-anchor" class="container">
     <h2 style = "text-transform:uppercase;" class="text-center mb-4">{{account.name}}'S PERSONAL INFO</h2>
     <div class="row">
       <div class="col-4 mr-5">
@@ -111,13 +111,21 @@
       };
 
       let path = "/user/lock";
+      if ("{{account.isAdminAccount}}")
+        path = "/admin/lock";
       
       if ({{account.isLocked}})
       {
         path = "/user/unlock";
+        if ("{{account.isAdminAccount}}")
+          path = "/admin/unlock";
       }
 
       $.post(path, data, (result, status) => {
+          //Scroll to top
+            $('body,html').animate({
+                scrollTop: $("#scrolling-anchor").offset().top - 50,
+            }, 700);
           location.reload();            
       });
 

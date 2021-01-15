@@ -14,10 +14,9 @@ router.post('/detail/updateproduct', productController.updateProduct)
 router.get('/detail/:id', ensureAuth, detailController.index);
 router.get('/addproduct', ensureAuth, productController.getAddProduct);
 
-router.post('/', productController.filter);
-router.post('/upload', productController.addProduct);
-router.post('/remove', productController.removeProduct);
-//router.get('/addproduct', productController.getAddProduct)
-router.post('/addproduct', productController.addProduct);
+router.post('/', ensureAuth, productController.filter);
+router.post('/upload', ensureAuth, productController.addProduct);
+router.post('/remove', ensureAuth, productController.removeProduct);
+router.post('/addproduct', ensureAuth, productController.addProduct);
 
 module.exports = router;

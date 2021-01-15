@@ -125,7 +125,7 @@ exports.unlockAccount = async (id) => {
 }
 
 exports.updatePassword = async (identifier, hashedPass) => {
-  const accountCollection = db().collection('account');
+  const accountCollection = db().collection('admin-accounts');
   let result = undefined;
 
   try {
@@ -135,6 +135,75 @@ exports.updatePassword = async (identifier, hashedPass) => {
             $set : {
               password: hashedPass
             }
+          });
+  } catch (err) {
+      return console.log('Database Connection Error!', err.message);
+  }
+  return result;
+}
+
+exports.getTotalCount = async () => {
+  const accountCollection = db().collection('admin-accounts')
+  let totalNum = await accountCollection.countDocuments();
+  //console.log(totalNum);
+  return totalNum;
+}
+
+exports.filter = async (sorted, nPerPage, pageNumber) => {
+  const accountCollection = db().collection('admin-accounts');
+  let sortQuery = {};
+
+  if (sorted === "alphabet-asc") {
+      sortQuery.username = 1;
+  } else if (sorted === "alphabet-desc") {
+      sortQuery.username = -1;
+  } else if (sorted === "lastest") {
+      sortQuery.createdDate = -1;
+  } else if (sorted === "oldest") {
+      sortQuery.createdDate = 1;
+  }
+  let accounts = await accountCollection.find({})
+      .sort(sortQuery)
+      .skip( pageNumber > 0 ? ( ( pageNumber - 1 ) * nPerPage ) : 0 )
+      .limit(nPerPage)
+      .toArray();
+      
+  return accounts;
+}
+
+exports.lockAccount = async (id) => {
+  const accountCollection = db().collection('admin-accounts');
+  let result = undefined;
+
+  try {
+      result = await accountCollection.findOneAndUpdate(
+          {
+          _id: ObjectId(id)
+          },
+          {
+              $set : {
+                isLocked: true
+              }
+          });
+  } catch (err) {
+      return console.log('Database Connection Error!', err.message);
+  }
+  return result;
+}
+
+exports.unlockAccount = async (id) => {
+  const accountCollection = db().collection('admin-accounts');
+  let result = undefined;
+
+  try {
+      result = await accountCollection.findOneAndUpdate(
+          {
+          _id: ObjectId(id)
+          },
+          {
+              $set : {
+                isLocked: false
+              }
           });
   } catch (err) {
       return console.log('Database Connection Error!', err.message);

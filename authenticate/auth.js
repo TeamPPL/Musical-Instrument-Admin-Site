@@ -67,7 +67,7 @@ module.exports = (app) => {
         //Check if the account is locked by admin
         if (account.isLocked)
         {
-          return done(null, false, {message: "Your account has been locked.Contact admin to resolve this!"})
+          return done(null, false, {message: "Your account has been locked. Contact admin to resolve this!"})
         }
 
         return done(null, account);

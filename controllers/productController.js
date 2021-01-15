@@ -5,169 +5,276 @@ const fs = require('fs');
 const formidable = require('formidable');
 
 exports.index = async (req, res, next) => {
-  let pageNumber = req.query.page;
-  let nPerPage = req.query.show;
+  let sorted = req.query.sorted;
+    let nPerPage = req.query.nPerPage;
+    let pageNumber = req.query.pageNumber;
+    let searchText = req.query.search;
+    let priceMin = req.query.priceMin;
+    let priceMax = req.query.priceMax;
+    let filter = req.query.filter;
+    let manufacturer = req.query.manufacturer;
 
-  if (pageNumber === "" || isNaN(pageNumber)) {
-      pageNumber = 1;
-  } else {
-      pageNumber = parseInt(pageNumber);
-      if (pageNumber <= 0)
-          pageNumber = 1;
-  }
 
-  if (nPerPage === "" || isNaN(nPerPage)) {
-      nPerPage = 9;
-  } else {
-      nPerPage = parseInt(nPerPage);
-      if (nPerPage <= 0)
-          nPerPage = 9;
-  }
+    //Default pageNum
+    if (pageNumber === "" || isNaN(pageNumber)) {
+        pageNumber = 1;
+    } else {
+        pageNumber = parseInt(pageNumber);
+        if (pageNumber <= 0)
+            pageNumber = 1;
+    }
 
-  //console.log(`${pageNumber}  ${nPerPage}`);
-  const productItems = await productModel.getProductsAtPage(pageNumber, nPerPage);
-  const totalCount = await productModel.getTotalCount();
+    //Default item per page
+    if (nPerPage === "" || isNaN(nPerPage)) {
+        nPerPage = 9;
+    } else {
+        nPerPage = parseInt(nPerPage);
+        if (nPerPage <= 0)
+            nPerPage = 9;
+    }
 
-  let totalPage = Math.ceil(totalCount / nPerPage);
-  let isFirstPage = pageNumber === 1;
-  let isLastPage = pageNumber === totalPage;
+    //Default sort type
+    if (sorted)
+    {
+        if (sorted !== "alphabet-asc" && sorted !== "alphabet-desc" && sorted !== "lastest" && sorted !== "oldest")
+        {
+            req.flash("error", "Wrong type of sorting!");
+            res.redirect("/error");
+        }
+    } else {
+        sorted = "alphabet-asc";
+    }
 
-  let leftOverPage = 4;
-  let pageList = [];
+    //Default prices
+    if (priceMin && priceMax)
+    {
+        priceMin = priceMin.split("$")[1];
+        priceMax = priceMax.split("$")[1];
+        
+        priceMin = parseInt(priceMin);
+        priceMax = parseInt(priceMax);
+    } else {
+        priceMin = 0;
+        priceMax = 9000;
+    }
 
-  //go backward
-  for(let i = pageNumber - 1; i >= pageNumber - (leftOverPage / 2) && i > 0; --i)
-  {
-      pageList.push({
-          index: i,
-          isCurrentPage: false
-      });
-      leftOverPage--;
-  }
+    //Default filter: all products
+    if (!filter || filter === "")
+    {
+        filter = "all";
+    }
 
-  pageList.push({
-      index: pageNumber,
-      isCurrentPage: true
-  });
+    //Default manufacturer: all manufacturer
+    if (!manufacturer || manufacturer === "")
+    {
+        manufacturer = "all"
+    }
 
-  //go forward
-  for(let i = pageNumber + 1; i <= pageNumber + (leftOverPage / 2) && i <= totalPage; ++i)
-  {
-      pageList.push({
-          index: i,
-          isCurrentPage: false
-      });
-      leftOverPage--;
-  }
+    //console.log(`${pageNumber}  ${nPerPage}`);
+    const productItems = await productModel.filter(sorted, nPerPage, pageNumber, searchText, priceMin, priceMax, filter, manufacturer);
+    const totalCount = await productModel.getTotalCount(searchText, priceMin, priceMax, filter, manufacturer);
 
-  //console.log(productItems);
-  let pageInfo = {
-      totalCount,
-      totalPage,
-      currentPage: pageNumber,
-      prevPage: pageNumber - 1,
-      nextPage: pageNumber + 1,
-      firstItemOfPage: pageNumber > 0 ? (pageNumber - 1) * nPerPage + 1 : 1,
-      lastItemOfPage: productItems.length < nPerPage ? (pageNumber - 1) * nPerPage +  productItems.length :  pageNumber * nPerPage - 1,
-      isFirstPage,
-      isLastPage,
-      pageList
-  }
-  //console.log(pageInfo);
-  res.render('products/products', {pageInfo, productItems});
+    let totalPage = Math.ceil(totalCount / nPerPage);
+    let isFirstPage = pageNumber === 1;
+    let isLastPage = pageNumber === totalPage;
+
+    let leftOverPage = 4;
+    let pageList = [];
+
+    //go backward
+    for(let i = pageNumber - 1; i >= pageNumber - (leftOverPage / 2) && i > 0; --i)
+    {
+        pageList.push({
+            index: i,
+            isCurrentPage: false
+        });
+        leftOverPage--;
+    }
+
+    pageList.push({
+        index: pageNumber,
+        isCurrentPage: true
+    });
+
+    //go forward
+    for(let i = pageNumber + 1; i <= pageNumber + (leftOverPage / 2) && i <= totalPage; ++i)
+    {
+        pageList.push({
+            index: i,
+            isCurrentPage: false
+        });
+        leftOverPage--;
+    }
+    let isNotEmpty = totalPage > 0;
+    //console.log(productItems);
+    let pageInfo = {
+        totalCount,
+        totalPage,
+        currentPage: pageNumber,
+        prevPage: pageNumber - 1,
+        nextPage: pageNumber + 1,
+        firstItemOfPage: totalPage > 0 ? (pageNumber - 1) * nPerPage + 1 : 0,
+        lastItemOfPage: productItems.length < nPerPage ? (pageNumber - 1) * nPerPage +  productItems.length :  pageNumber * nPerPage - 1,
+        isFirstPage,
+        isLastPage,
+        pageList,
+        isNotEmpty,
+    }
+    
+    //filterOption
+    let filterOption = {};
+
+    switch (filter) {
+        case "guitar":
+            filterOption.isGuitar = true;
+            break;
+        case "violin":
+            filterOption.isViolin = true;
+            break;
+        case "piano":
+            filterOption.isPiano = true;
+            break;
+        case "drum":
+            filterOption.isDrum = true;
+            break;
+        default:
+            filterOption.isAll = true;
+            break;
+    }
+
+    switch (manufacturer) {
+        case "gibson":
+            filterOption.isGibson = true;
+            break;
+        case "steinway":
+            filterOption.isSteinway = true;
+            break;
+        case "sennheiser":
+            filterOption.isSennheiser = true;
+            break;
+        case "yamaha":
+            filterOption.isYamaha = true;
+            break;
+        case "roland":
+            filterOption.isRoland = true;
+            break;
+        default:
+            filterOption.isAllManufacturer = true;
+            break;
+    }
+
+    res.render('products/products', {pageInfo, productItems, filterOption});
 };
 
 exports.filter = async (req, res, next) => {
   let sorted = req.body.sorted;
-  let nPerPage = req.body.nPerPage;
-  let pageNumber = req.body.pageNumber;
-  let searchText = req.body.search;
+    let nPerPage = req.body.nPerPage;
+    let pageNumber = req.body.pageNumber;
+    let searchText = req.body.search;
+    let priceMin = req.body.priceMin;
+    let priceMax = req.body.priceMax;
+    let filter = req.body.filter;
+    let manufacturer = req.body.manufacturer;
 
-  console.log(searchText);
+    //console.log(`${priceMin} ${priceMax}`);
+    if (priceMin && priceMax)
+    {
+        priceMin = priceMin.split("$")[1];
+        priceMax = priceMax.split("$")[1];
+        
+        priceMin = parseInt(priceMin);
+        priceMax = parseInt(priceMax);
+    } else{
+        priceMin = 0;
+        priceMax = 9000;
+    }
 
-  console.log(`${sorted} ${nPerPage}`);
+    console.log(`${sorted} ${nPerPage}`);
 
-  if (nPerPage === "" || isNaN(nPerPage)) {
-      nPerPage = 9;
-  } else {
-      nPerPage = parseInt(nPerPage);
-      if (nPerPage <= 0)
-          nPerPage = 9;
-  }
-  if (pageNumber === "" || isNaN(pageNumber)) {
-      pageNumber = 1;
-  } else {
-      pageNumber = parseInt(pageNumber);
-      if (pageNumber <= 0)
-          pageNumber = 1;
-  }
+    if (nPerPage === "" || isNaN(nPerPage)) {
+        nPerPage = 9;
+    } else {
+        nPerPage = parseInt(nPerPage);
+        if (nPerPage <= 0)
+            nPerPage = 9;
+    }
+    if (pageNumber === "" || isNaN(pageNumber)) {
+        pageNumber = 1;
+    } else {
+        pageNumber = parseInt(pageNumber);
+        if (pageNumber <= 0)
+            pageNumber = 1;
+    }
 
-  //console.log(`${pageNumber}  ${nPerPage}`);
-  const productItems = await productModel.filter(sorted, nPerPage, pageNumber, searchText);
-  const totalCount = await productModel.getTotalCount(searchText);
+    //Default filter: all products
+    if (!filter || filter === '')
+    {
+        filter = "$all";
+    }
 
-  //console.log(productItems);
+    //Default manufacturer: all manufacturer
+    if (!manufacturer || manufacturer === '')
+    {
+        manufacturer = "$all";
+    }
 
-  let totalPage = Math.ceil(totalCount / nPerPage);
-  let isFirstPage = pageNumber === 1;
-  let isLastPage = pageNumber === totalPage;
+    //console.log(`${pageNumber}  ${nPerPage}`);
+    const productItems = await productModel.filter(sorted, nPerPage, pageNumber, searchText, priceMin, priceMax, filter, manufacturer);
+    const totalCount = await productModel.getTotalCount(searchText, priceMin, priceMax, filter, manufacturer);
 
-  let leftOverPage = 4;
-  let pageList = [];
+    //console.log(productItems);
 
-  //go backward
-  for(let i = pageNumber - 1; i >= pageNumber - (leftOverPage / 2) && i > 0; --i)
-  {
-      pageList.push({
-          index: i,
-          isCurrentPage: false
-      });
-      leftOverPage--;
-  }
+    let totalPage = Math.ceil(totalCount / nPerPage);
+    let isFirstPage = pageNumber === 1;
+    let isLastPage = pageNumber === totalPage;
 
-  pageList.push({
-      index: pageNumber,
-      isCurrentPage: true
-  });
+    let leftOverPage = 4;
+    let pageList = [];
 
-  //go forward
-  for(let i = pageNumber + 1; i <= pageNumber + (leftOverPage / 2) && i <= totalPage; ++i)
-  {
-      pageList.push({
-          index: i,
-          isCurrentPage: false
-      });
-      leftOverPage--;
-  }
-  
-  let pageInfo = {
-      totalCount,
-      totalPage,
-      currentPage: pageNumber,
-      prevPage: pageNumber - 1,
-      nextPage: pageNumber + 1,
-      firstItemOfPage: pageNumber > 0 ? (pageNumber - 1) * nPerPage + 1 : 1,
-      lastItemOfPage: productItems.length < nPerPage ? (pageNumber - 1) * nPerPage +  productItems.length :  pageNumber * nPerPage - 1,
-      isFirstPage,
-      isLastPage,
-      pageList
-  }
+    //go backward
+    for(let i = pageNumber - 1; i >= pageNumber - (leftOverPage / 2) && i > 0; --i)
+    {
+        pageList.push({
+            index: i,
+            isCurrentPage: false
+        });
+        leftOverPage--;
+    }
 
-  partials = fs.readFileSync('./views/partials/productItems.hbs', {encoding:'utf8', flag:'r'});
-  console.log(pageInfo);
-  res.send({partials, pageInfo, productItems});
-  /*
-  res.render('partials/productItems', { 
-      pageInfo, 
-      productItems
-  });*/
-  /*
-  layout : false,
-      data : {
-          pageInfo, 
-          productItems
-      }
-  });*/
+    pageList.push({
+        index: pageNumber,
+        isCurrentPage: true
+    });
+
+    //go forward
+    for(let i = pageNumber + 1; i <= pageNumber + (leftOverPage / 2) && i <= totalPage; ++i)
+    {
+        pageList.push({
+            index: i,
+            isCurrentPage: false
+        });
+        leftOverPage--;
+    }
+
+    //Check empty
+    let isNotEmpty = totalPage > 0;
+
+    let pageInfo = {
+        totalCount,
+        totalPage,
+        currentPage: pageNumber,
+        prevPage: pageNumber - 1,
+        nextPage: pageNumber + 1,
+        firstItemOfPage: totalPage > 0 ? (pageNumber - 1) * nPerPage + 1 : 0,
+        lastItemOfPage: productItems.length < nPerPage ? (pageNumber - 1) * nPerPage +  productItems.length :  pageNumber * nPerPage - 1,
+        isFirstPage,
+        isLastPage,
+        pageList,
+        isNotEmpty,
+    }
+
+    console.log(pageInfo);
+    res.send({pageInfo, productItems});
 };
 
 // exports.addProduct1 = (req,res) => {
