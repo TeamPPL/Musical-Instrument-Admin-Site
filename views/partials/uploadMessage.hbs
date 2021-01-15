@@ -1,0 +1,20 @@
+{{#if productDetail}}
+<p>{{message}}</p>
+<ul>
+    <li>Name: {{productDetail.title}}</li>
+    <li>Manufacturer: {{productDetail.manufacturer}}</li>
+    <li>Image 1 (cover): {{productDetail.cover}}</li>
+    <li>Image 2: {{productDetail.cover}}</li>
+    <li>Image 3: {{productDetail.cover}}</li>
+    <li>Image 4: {{productDetail.cover}}</li>
+    <li>Des: {{productDetail.description}}</li>
+    <li>Tag: {{productDetail.filter}}</li>
+    <li>Price: {{productDetail.price}}</li>
+    <li>In Stock: {{productDetail.inStock}}</li>
+    <li>Sold: {{productDetail.sold}}</li>
+    <li>Date Added: {{productDetail.createdDate}}</li>
+</ul>
+<h2>Add another product</h2>
+{{else}}
+<h2>Add a product</h2>
+{{/if}}

@@ -6927,6 +6927,12 @@ i:before {
   border:initial;
   height: 100%;
 }
+
+#blah, #blah2, #blah3, #blah4{
+  width: 150px;
+  height: 200px;
+}
+
 #buttonImage {
   float: right;
   position: absolute;

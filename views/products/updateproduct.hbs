@@ -5,17 +5,14 @@
             <div class="row">
                 <div class="col"></div>
                 <div class="col-lg-8">
-                    <div class="login_title">
-                        {{>uploadMessage}}
-                    </div>
-                    <form class="login_form row" action="/products/addproduct" method="POST" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
+                    <form class="login_form row" action="/products/detail/updateproduct" method="POST" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
                         <div class="col-lg-6 form-group">
                             <label>Product Title:</label>
-                            <input class="form-control" type="text" name="title" placeholder="Product name" required>
+                            <input class="form-control" type="text" name="title" placeholder="Product name" value="{{product.title}}" required>
                         </div>
                         <div class="col-lg-6 form-group">
                             <label>Manufacturer:</label>
-                            <input class="form-control" type="text" name="manufacturer" list="manufacturerList" placeholder="Manufacturer" required>
+                            <input class="form-control" type="text" name="manufacturer" list="manufacturerList" placeholder="Manufacturer" value="{{product.manufacturer}}" required>
                             <datalist id="manufacturerList">
                                 <option value="Yamaha">
                                 <option value="Steinway">
@@ -34,7 +31,7 @@
                                 <input type="file" id="selectedFile" name="cover" onchange="readURL(this);" required/>
                                 <input type="text" id="fakeInput" readonly="readonly"/>
                                 <span onclick="document.getElementById('selectedFile').click();" id="buttonImage" >Browse</span>
-                                <img id="blah" src="#" alt="your image" />
+                                <img id="blah" src="{{product.cover}}" alt="your image" />
 
                             </div>
                         </div>
@@ -45,7 +42,7 @@
                                 <input type="file" id="selectedFile2" name="cover2" onchange="readURL2(this);"/>
                                 <input type="text" id="fakeInput2" readonly="readonly"/>
                                 <span onclick="document.getElementById('selectedFile2').click();" id="buttonImage" >Browse</span>
-                                <img id="blah2" src="#" alt="your image" />
+                                <img id="blah2" src="{{product.cover2}}" alt="your image" />
 
                             </div>
                         </div>
@@ -56,8 +53,7 @@
                                 <input type="file" id="selectedFile3" name="cover3" onchange="readURL3(this);"/>
                                 <input type="text" id="fakeInput3" readonly="readonly"/>
                                 <span onclick="document.getElementById('selectedFile3').click();" id="buttonImage" >Browse</span>
-                                <img id="blah3" src="#" alt="your image" />
-
+                                <img id="blah3" src="{{product.cover3}}" alt="your image" />
                             </div>
                         </div>
 
@@ -67,18 +63,18 @@
                                 <input type="file" id="selectedFile4" name="cover4" onchange="readURL4(this);"/>
                                 <input type="text" id="fakeInput4" readonly="readonly"/>
                                 <span onclick="document.getElementById('selectedFile4').click();" id="buttonImage" >Browse</span>
-                                <img id="blah4" src="#" alt="your image" />
+                                <img id="blah4" src="{{product.cover4}}" alt="your image" />
                             </div>
                         </div>
                         
 
                         <div class="col-lg-12 form-group">
                             <label>Description:</label>
-                            <textarea class="form-control" type="text" name="description" placeholder="Description" required></textarea>
+                            <textarea class="form-control" type="text" name="description" placeholder="Description" required>{{product.description}}</textarea>
                         </div>
                         <div class="col-lg-12 form-group">
                             <label>Type:</label>
-                            <input class="form-control" type="text" list="typeList" name="filter" placeholder="Filter" required>
+                            <input class="form-control" type="text" list="typeList" name="filter" placeholder="Filter" value="{{product.filter}}" required>
                             <datalist id="typeList">
                                 <option value="Guitar">
                                 <option value="Violin">
@@ -89,24 +85,19 @@
                         </div>
                         <div class="col-lg-4 form-group">
                             <label>Price:</label>
-                            <input class="form-control" type="number" name="price" min="0" placeholder="Price ($)" required>
+                            <input class="form-control" type="number" name="price" min="0" placeholder="Price ($)" value="{{product.price}}" required>
                         </div>
                         <div class="col-lg-4 form-group">
                             <label>Amount:</label>
-                            <input class="form-control" type="number" name="inStock" min="0" placeholder="In stock" required>
+                            <input class="form-control" type="number" name="inStock" min="0" placeholder="In stock" value="{{product.inStock}}" required>
                         </div>
                         <div class="col-lg-4 form-group">
                             <label>Sold:</label>
-                            <input class="form-control" type="number" name="sold" min="0" placeholder="sold" value="0" required>
-                        </div>
-                        <div class="col-lg-4 form-group">
-                            <label>Discount:</label>
-                            <input class="form-control" type="number" name="discount" min="0" placeholder="($)" required>
+                            <input class="form-control" type="number" name="sold" min="0" placeholder="sold" value="{{product.sold}}" required>
                         </div>
                         <div class="col-lg-6 form-group">
-                            <button type="submit" value="submit" class="btn subs_btn form-control" onkeydown="return event.key != 'Enter';">Add Product</button>
+                            <button type="submit" value="submit" class="btn subs_btn form-control" onkeydown="return event.key != 'Enter';">Update Product</button>
                         </div>
-                        
                     </form>
                 </div>
                 <div class="col"></div>
