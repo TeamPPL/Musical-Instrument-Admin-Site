@@ -716,7 +716,68 @@ function readURL(input) {
                 .width(150)
                 .height(200);
         };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 
+$('#selectedFile2').change(function () {
+    var a = $('#selectedFile2').val().toString().split('\\');
+    $('#fakeInput2').val(a[a.length -1]);
+});
+
+
+function readURL2(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah2')
+                .attr('src', e.target.result)
+                .width(150)
+                .height(200);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
+$('#selectedFile3').change(function () {
+    var a = $('#selectedFile3').val().toString().split('\\');
+    $('#fakeInput3').val(a[a.length -1]);
+});
+
+
+function readURL3(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah3')
+                .attr('src', e.target.result)
+                .width(150)
+                .height(200);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
+$('#selectedFile4').change(function () {
+    var a = $('#selectedFile4').val().toString().split('\\');
+    $('#fakeInput4').val(a[a.length -1]);
+});
+
+
+function readURL4(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah4')
+                .attr('src', e.target.result)
+                .width(150)
+                .height(200);
+        };
         reader.readAsDataURL(input.files[0]);
     }
 }

@@ -26,41 +26,93 @@
                     </div>
                     <form class="login_form row" action="/products/addproduct" method="POST" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
                         <div class="col-lg-6 form-group">
+                            <label>Product Title:</label>
                             <input class="form-control" type="text" name="title" placeholder="Product name" required>
                         </div>
                         <div class="col-lg-6 form-group">
-                            <input class="form-control" type="text" name="manufacturer" placeholder="Manufacturer" required>
+                            <label>Manufacturer:</label>
+                            <input class="form-control" type="text" name="manufacturer" list="manufacturerList" placeholder="Manufacturer" required>
+                            <datalist id="manufacturerList">
+                                <option value="Yamaha">
+                                <option value="Steinway">
+                                <option value="Roland">
+                                <option value="Gibson">
+                                <option value="Sennheiser">
+                                <option value="All">
+                            </datalist>
                         </div>
                         <!-- <div class="col-lg-6 form-group">
                             <input class="form-control" type="file" name="cover">
                         </div> -->
                         <div class="col-lg-3 form-group">
                             <label class="upload-label">Upload cover image:</label>
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            {{!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> --}}
                             <div id="fakeDiv">
-                                <input type="file" id="selectedFile" name="cover" onchange="readURL(this);"/>
+                                <input type="file" id="selectedFile" name="cover" onchange="readURL(this);" required/>
                                 <input type="text" id="fakeInput" readonly="readonly"/>
                                 <span onclick="document.getElementById('selectedFile').click();" id="buttonImage" >Browse</span>
+                                <img id="blah" src="#" alt="your image" />
+
                             </div>
                         </div>
+
                         <div class="col-lg-3 form-group">
-                            <img id="blah" src="#" alt="your image" />
+                            <label class="upload-label">Upload cover image:</label>
+                            <div id="fakeDiv2">
+                                <input type="file" id="selectedFile2" name="cover2" onchange="readURL2(this);" required/>
+                                <input type="text" id="fakeInput2" readonly="readonly"/>
+                                <span onclick="document.getElementById('selectedFile2').click();" id="buttonImage" >Browse</span>
+                                <img id="blah2" src="#" alt="your image" />
+
+                            </div>
                         </div>
+
+                        <div class="col-lg-3 form-group">
+                            <label class="upload-label">Upload cover image:</label>
+                            <div id="fakeDiv3">
+                                <input type="file" id="selectedFile3" name="cover3" onchange="readURL3(this);" required/>
+                                <input type="text" id="fakeInput3" readonly="readonly"/>
+                                <span onclick="document.getElementById('selectedFile3').click();" id="buttonImage" >Browse</span>
+                                <img id="blah3" src="#" alt="your image" />
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 form-group">
+                            <label class="upload-label">Upload cover image:</label>
+                            <div id="fakeDiv4">
+                                <input type="file" id="selectedFile4" name="cover4" onchange="readURL4(this);" required/>
+                                <input type="text" id="fakeInput4" readonly="readonly"/>
+                                <span onclick="document.getElementById('selectedFile4').click();" id="buttonImage" >Browse</span>
+                                <img id="blah4" src="#" alt="your image" />
+                            </div>
+                        </div>
+                        
+
                         <div class="col-lg-12 form-group">
+                            <label>Description:</label>
                             <textarea class="form-control" type="text" name="description" placeholder="Description" required></textarea>
                         </div>
                         <div class="col-lg-12 form-group">
-                            <input class="form-control" type="text" name="filter" placeholder="Filter" required>
+                            <label>Type:</label>
+                            <input class="form-control" type="text" list="typeList" name="filter" placeholder="Filter" required>
+                            <datalist id="typeList">
+                                <option value="Guitar">
+                                <option value="Violin">
+                                <option value="Piano">
+                                <option value="Drum">
+                                <option value="All">
+                            </datalist>
                         </div>
                         <div class="col-lg-4 form-group">
+                            <label>Price:</label>
                             <input class="form-control" type="number" name="price" min="0" placeholder="Price ($)" required>
                         </div>
                         <div class="col-lg-4 form-group">
+                            <label>Amount:</label>
                             <input class="form-control" type="number" name="inStock" min="0" placeholder="In stock" required>
                         </div>
                         <div class="col-lg-4 form-group">
+                            <label>Sold:</label>
                             <input class="form-control" type="number" name="sold" min="0" placeholder="sold" value="0" required>
                         </div>
                         <div class="col-lg-6 form-group">

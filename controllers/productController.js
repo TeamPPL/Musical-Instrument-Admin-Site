@@ -303,8 +303,22 @@ exports.addProduct = async (req, res, next) => {
     if (files) {
       let temp_path = files.cover.path;
       let upload = await cloudinary.uploader.upload(temp_path ,{folder: "imgdb"}, function(error, result) {console.log(result, error)});
+
+      let temp_path2 = files.cover2.path;
+      let upload2 = await cloudinary.uploader.upload(temp_path2 ,{folder: "imgdb"}, function(error, result) {console.log(result, error)});
+
+      let temp_path3 = files.cover3.path;
+      let upload3 = await cloudinary.uploader.upload(temp_path3 ,{folder: "imgdb"}, function(error, result) {console.log(result, error)});
+
+      let temp_path4 = files.cover4.path;
+      let upload4 = await cloudinary.uploader.upload(temp_path4 ,{folder: "imgdb"}, function(error, result) {console.log(result, error)});
+
       const title = fields.title;
       const cover = upload.secure_url;
+      const cover2 = upload2.secure_url;
+      const cover3 = upload3.secure_url;
+      const cover4 = upload4.secure_url;
+
       const description = fields.description;
       const filter = fields.filter;
       const price = fields.price;
@@ -315,6 +329,10 @@ exports.addProduct = async (req, res, next) => {
       let productDetail = {
           "title": title,
           "cover": cover,
+          "cover2": cover2,
+          "cover3": cover3,
+          "cover4": cover4,
+
           "description": description,
           "filter": filter,
           "price": price,
@@ -329,7 +347,7 @@ exports.addProduct = async (req, res, next) => {
         var message="ADDED SUCCESSFULLY";
         res.render('products/addproduct',{productDetail,message});
       }
-      catch(err){
+      catch(error){
         
       }  
     }
