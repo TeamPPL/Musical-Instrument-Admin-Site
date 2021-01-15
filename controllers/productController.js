@@ -485,7 +485,7 @@ exports.removeProduct = async (req, res, next) => {
   if (result.deletedCount === 0)
     res.send("Remove failed!");
   else
-    res.redirect(req.get('referer')); //refresh
+    res.redirect('/products'); //refresh
   //console.log(productItems);
 };
 
