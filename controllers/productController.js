@@ -364,6 +364,8 @@ exports.updateProduct = async (req, res, next) => {
       const discount = parseFloat(fields.discount);
       const sellPrice = price - discount;
 
+      console.log(discount);
+
       let productDetail = {
         "id": id,
         "title": title,

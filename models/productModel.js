@@ -96,11 +96,19 @@ exports.updateAProduct = async (updatedProduct) => {
                 $set :
                 {
                     cover: updatedProduct.cover,
+                    cover2: updatedProduct.cover,
+                    cover3: updatedProduct.cover,
+                    cover4: updatedProduct.cover,
                     title: updatedProduct.title,
                     description: updatedProduct.description,
                     filter: updatedProduct.filter,
                     price: updatedProduct.price,
                     inStock: updatedProduct.inStock,
+                    discount: updatedProduct.discount,
+                    sold: updatedProduct.sold,
+                    sellPrice: updatedProduct.sellPrice,
+                    modifiedDate: updatedProduct.modifiedDate,
+                    manufacturer: updatedProduct.manufacturer
                 }
             });
         
