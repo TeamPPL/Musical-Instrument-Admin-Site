@@ -96,9 +96,9 @@ exports.updateAProduct = async (updatedProduct) => {
                 $set :
                 {
                     cover: updatedProduct.cover,
-                    cover2: updatedProduct.cover,
-                    cover3: updatedProduct.cover,
-                    cover4: updatedProduct.cover,
+                    cover2: updatedProduct.cover2,
+                    cover3: updatedProduct.cover3,
+                    cover4: updatedProduct.cover4,
                     title: updatedProduct.title,
                     description: updatedProduct.description,
                     filter: updatedProduct.filter,
